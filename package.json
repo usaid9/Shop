@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite --port 3000",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@react-three/drei": "^9.99.0",
