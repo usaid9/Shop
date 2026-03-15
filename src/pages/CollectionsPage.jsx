@@ -7,13 +7,13 @@ import CategoryIcon from '../components/CategoryIcon'
 import ScrollFloat from '../components/ScrollFloat'
 
 const collectionImages = {
-  shirts:      'https://images.unsplash.com/photo-1596848212624-754a98e4d815?w=800&h=600&fit=crop',
-  trousers:    'https://images.unsplash.com/photo-1473100356510-8cebb687410d?w=800&h=600&fit=crop',
-  jackets:     'https://images.unsplash.com/photo-1505025114519-299cd07602b4?w=800&h=600&fit=crop',
-  shoes:       'https://images.unsplash.com/photo-1543163521-9efbd06b3f3d?w=800&h=600&fit=crop',
-  watches:     'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=600&fit=crop',
-  accessories: 'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800&h=600&fit=crop',
-  kurta:       'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=600&fit=crop',
+  shirts:      'https://images.unsplash.com/photo-1607345366928-199ea26cfe3e?w=800&h=500&fit=crop&q=80',
+  trousers:    'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&h=500&fit=crop&q=80',
+  jackets:     'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&h=500&fit=crop&q=80',
+  shoes:       'https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=800&h=500&fit=crop&q=80',
+  watches:     'https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=800&h=500&fit=crop&q=80',
+  accessories: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=500&fit=crop&q=80',
+  kurta:       'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=500&fit=crop&q=80',
 }
 
 export default function CollectionsPage() {

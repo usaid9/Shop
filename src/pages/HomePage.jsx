@@ -67,8 +67,7 @@ export default function HomePage() {
         <Hero onShopClick={() => productsRef.current?.scrollIntoView({ behavior: 'smooth' })} />
 
         {/* ── Shop by Category ──────────────────────────────────────────── */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-primary relative section-depth">
-          {/* Subtle dot-grid pattern */}
+        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-primary relative section-depth">
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -80,32 +79,26 @@ export default function HomePage() {
           />
           <div className="max-w-7xl mx-auto relative">
             <SectionTitle eyebrow="Browse" title="Shop by" accent="Category" align="left" />
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {/* Compact category chips — horizontal scroll on mobile */}
+            <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
               {categories.filter(c => c.id !== 'all').map((cat, i) => (
                 <motion.div
                   key={cat.id}
-                  initial={{ opacity: 0, scale: 0.97 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.35, delay: i * 0.05 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: i * 0.04 }}
                   viewport={{ once: true }}
+                  className="flex-shrink-0"
                 >
                   <Link
                     to={`/shop/${cat.id}`}
-                    className="group flex flex-col items-start gap-3 p-5 panel-inset border border-white/[0.05] hover:border-accent/30 transition-all duration-300 rounded-xl"
+                    className="group flex items-center gap-2.5 px-4 py-2.5 panel-inset border border-white/[0.07] hover:border-accent/40 hover:bg-accent/[0.04] transition-all duration-200 rounded-xl"
                   >
-                    <div className="w-10 h-10 flex items-center justify-center border border-white/[0.08] group-hover:border-accent/50 text-muted group-hover:text-accent transition-all duration-300 bg-white/[0.02] group-hover:bg-accent/[0.06] rounded-lg">
-                      <CategoryIcon id={cat.id} className="w-5 h-5" />
+                    <div className="w-7 h-7 flex items-center justify-center border border-white/[0.08] group-hover:border-accent/50 text-muted group-hover:text-accent transition-all duration-200 bg-white/[0.02] group-hover:bg-accent/[0.08] rounded-lg flex-shrink-0">
+                      <CategoryIcon id={cat.id} className="w-3.5 h-3.5" />
                     </div>
-                    <div>
-                      <p className="font-medium text-sm text-foreground/90 group-hover:text-foreground transition-colors">{cat.label}</p>
-                      <p className="text-[10px] text-muted mt-0.5 font-mono">{cat.count} items</p>
-                    </div>
-                    <span className="text-[10px] text-muted/0 group-hover:text-accent transition-colors flex items-center gap-1">
-                      Shop
-                      <svg className="w-3 h-3 -translate-x-1 group-hover:translate-x-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </span>
+                    <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground transition-colors whitespace-nowrap">{cat.label}</span>
+                    <span className="text-[10px] font-mono text-muted/60 group-hover:text-accent/60 transition-colors">{cat.count}</span>
                   </Link>
                 </motion.div>
               ))}
@@ -115,7 +108,6 @@ export default function HomePage() {
 
         {/* ── Featured Products ─────────────────────────────────────────── */}
         <section ref={productsRef} className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #0d0d0d 0%, #101010 50%, #0a0a0a 100%)' }}>
-          {/* Side accent glow */}
           <div className="absolute -left-40 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(200,16,46,0.06) 0%, transparent 70%)' }} />
           <div className="absolute -right-40 top-1/3 w-80 h-80 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(200,16,46,0.04) 0%, transparent 70%)' }} />
           <div className="max-w-7xl mx-auto">
@@ -128,8 +120,7 @@ export default function HomePage() {
                 </svg>
               </Link>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {featured.map((product, i) => (
                 <motion.div
                   key={product.id}
@@ -150,49 +141,35 @@ export default function HomePage() {
 
         {/* ── Eid Banner ────────────────────────────────────────────────── */}
         <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #0f0608 40%, #0a0408 60%, #080808 100%)', borderTop: '1px solid rgba(200,16,46,0.15)', borderBottom: '1px solid rgba(200,16,46,0.15)' }}>
-          {/* Deep radial glow */}
           <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 70% at 50% 50%, rgba(200,16,46,0.09) 0%, transparent 70%)' }} />
-          {/* Decorative corner lines */}
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-0 left-1/4 bottom-0 w-px bg-gradient-to-b from-transparent via-accent/[0.08] to-transparent" />
             <div className="absolute top-0 right-1/4 bottom-0 w-px bg-gradient-to-b from-transparent via-accent/[0.08] to-transparent" />
-            {/* Corner accents */}
             <div className="absolute top-6 left-6 w-8 h-8 border-t border-l border-accent/20" />
             <div className="absolute top-6 right-6 w-8 h-8 border-t border-r border-accent/20" />
             <div className="absolute bottom-6 left-6 w-8 h-8 border-b border-l border-accent/20" />
             <div className="absolute bottom-6 right-6 w-8 h-8 border-b border-r border-accent/20" />
           </div>
           <div className="max-w-4xl mx-auto text-center relative">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
+            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <p className="text-[10px] tracking-superwide uppercase text-accent font-semibold mb-5 flex items-center justify-center gap-2">
                 <span className="w-8 h-px bg-accent/40" />
                 Limited Time Offer
                 <span className="w-8 h-px bg-accent/40" />
               </p>
               <h2 className="font-display text-5xl md:text-7xl font-bold mb-4 leading-tight text-emboss">
-                <ScrollFloat scrollOffset={['start 90%', 'start 40%']}>
-                  Eid Special
-                </ScrollFloat>
+                <ScrollFloat scrollOffset={['start 90%', 'start 40%']}>Eid Special</ScrollFloat>
                 <br />
                 <span className="text-accent italic" style={{ textShadow: '0 0 30px rgba(200,16,46,0.45), 0 0 60px rgba(200,16,46,0.2)' }}>
-                  <ScrollFloat scrollOffset={['start 85%', 'start 35%']} accentWords={['Up','to','30%','Off']}>
-                    Up to 30% Off
-                  </ScrollFloat>
+                  <ScrollFloat scrollOffset={['start 85%', 'start 35%']} accentWords={['Up','to','30%','Off']}>Up to 30% Off</ScrollFloat>
                 </span>
               </h2>
               <p className="text-muted mb-10 text-sm max-w-sm mx-auto leading-relaxed">
                 On our premium Kurta &amp; Shalwar collection — delivered before Eid, guaranteed.
               </p>
               <Link to="/shop/kurta">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="px-12 py-4 bg-accent text-white font-semibold text-sm tracking-wide hover:bg-accent-hover transition-colors animate-glow rounded-xl"
-                >
+                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+                  className="px-12 py-4 bg-accent text-white font-semibold text-sm tracking-wide hover:bg-accent-hover transition-colors animate-glow rounded-xl">
                   Shop Kurta Collection
                 </motion.button>
               </Link>
@@ -212,7 +189,7 @@ export default function HomePage() {
                 </svg>
               </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {newArrivals.map((product, i) => (
                 <motion.div
                   key={product.id}
