@@ -5,10 +5,8 @@
   <title>PREMIUM Pakistan</title>
   <script>
     var l = window.location;
-    var base = '/Shop';
-    var path = l.pathname.slice(base.length) || '/';
-    sessionStorage.setItem('spa_redirect', path + l.search + l.hash);
-    l.replace(l.origin + base + '/');
+    sessionStorage.setItem('spa_redirect', l.pathname + l.search + l.hash);
+    l.replace(l.origin + '/Shop/');
   </script>
 </head>
 <body></body>
