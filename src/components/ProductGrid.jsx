@@ -22,9 +22,10 @@ function Dropdown({ value, onChange, options, prefix = '' }) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(o => !o)}
-        className={`flex items-center gap-2 px-3 py-2 bg-secondary border text-[0.775rem] sm:text-sm font-medium transition-all duration-200 rounded-xl flex-shrink-0 justify-between ${
+        className={`flex items-center gap-2 px-3 py-2 bg-secondary border font-medium transition-all duration-200 rounded-xl flex-shrink-0 justify-between ${
           open ? 'border-accent text-foreground' : 'border-white/[0.08] text-muted hover:border-white/20 hover:text-foreground'
         }`}
+        style={{ fontSize: '0.675rem' }}
       >
         <span>{prefix && <span className="text-muted mr-1 font-normal">{prefix}</span>}{active?.label}</span>
         <motion.svg

@@ -100,13 +100,13 @@ export default function Checkout({ isOpen, onClose }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-end sm:items-center justify-center sm:p-4"
     >
       <motion.div
         initial={{ scale: 0.94, y: 24 }}
         animate={{ scale: 1, y: 0 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="bg-secondary max-w-lg w-full max-h-[92vh] overflow-y-auto border border-white/[0.06] rounded-2xl"
+        className="bg-secondary w-full sm:max-w-lg max-h-[92vh] sm:max-h-[92vh] overflow-y-auto border-t sm:border border-white/[0.06] sm:rounded-2xl rounded-t-2xl"
       >
         {/* Header */}
         <div className="sticky top-0 bg-secondary/95 backdrop-blur border-b border-white/[0.06] px-6 py-5 flex justify-between items-center z-10">
@@ -160,7 +160,7 @@ export default function Checkout({ isOpen, onClose }) {
               <textarea name="address" placeholder="Full Street Address" value={form.address} onChange={handleInput} required rows={2}
                 className={`${inputClass} resize-none`} />
               <input type="text" name="zipCode" placeholder="Postal Code" value={form.zipCode} onChange={handleInput} required className={inputClass} />
-              <button type="submit" className="w-full py-3.5 bg-accent text-white text-sm font-semibold tracking-wide hover:bg-accent-hover transition-colors mt-2 rounded-xl">
+              <button type="submit" className="w-full py-3.5 bg-accent text-white text-sm font-semibold tracking-wide hover:bg-accent/90 transition-colors mt-2 rounded-xl">
                 Continue to Payment →
               </button>
             </form>
@@ -187,7 +187,7 @@ export default function Checkout({ isOpen, onClose }) {
                       <p className="text-xs text-muted mt-0.5">{opt.sub}</p>
                     </div>
                     <div className={`w-4 h-4 border flex-shrink-0 mt-0.5 flex items-center justify-center transition-all ${
-                      paymentMethod === opt.id ? 'border-accent bg-accent' : 'border-white/20'
+                      paymentMethod === opt.id ? 'border-accent bg-accent rounded-full' : 'border-white/20 rounded-full'
                     }`}>
                       {paymentMethod === opt.id && <div className="w-1.5 h-1.5 bg-white" />}
                     </div>
@@ -196,7 +196,7 @@ export default function Checkout({ isOpen, onClose }) {
               </div>
 
               {/* Order Summary */}
-              <div className="bg-primary border border-white/[0.06] p-4 mt-4 space-y-2 text-sm">
+              <div className="bg-primary border border-white/[0.06] p-4 mt-4 space-y-2 text-sm rounded-xl">
                 <p className="text-[10px] text-muted uppercase tracking-superwide mb-3">Order Summary</p>
                 {items.map(i => (
                   <div key={i._cartKey} className="flex justify-between text-muted">
@@ -217,11 +217,11 @@ export default function Checkout({ isOpen, onClose }) {
 
               <div className="flex gap-3 mt-2">
                 <button type="button" onClick={() => setStep(0)}
-                  className="flex-1 py-3 border border-white/[0.08] text-sm font-medium text-muted hover:border-white/20 hover:text-foreground transition-colors">
+                  className="flex-1 py-3 border border-white/[0.08] text-sm font-medium text-muted hover:border-white/20 hover:text-foreground transition-colors rounded-xl">
                   ← Back
                 </button>
                 <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }} type="submit" disabled={loading}
-                  className="flex-1 py-3 bg-accent text-white text-sm font-semibold hover:bg-accent-hover transition-colors disabled:opacity-60">
+                  className="flex-1 py-3 bg-accent text-white text-sm font-semibold hover:bg-accent/90 transition-colors disabled:opacity-60 rounded-xl accent-glow">
                   {loading ? 'Processing…' : 'Place Order'}
                 </motion.button>
               </div>
@@ -244,13 +244,13 @@ export default function Checkout({ isOpen, onClose }) {
               <h3 className="font-display text-3xl font-bold mb-2">Order Placed</h3>
               <p className="text-muted text-sm mb-1">Thank you, <span className="text-foreground font-medium">{form.fullName}</span></p>
               <p className="text-muted text-sm mb-6">Delivering to <span className="text-foreground">{form.city}</span> in 3–5 business days</p>
-              <div className="bg-primary border border-white/[0.06] p-4 mb-6 text-sm">
+              <div className="bg-primary border border-white/[0.06] p-4 mb-6 text-sm rounded-2xl">
                 <p className="text-[10px] text-muted uppercase tracking-superwide mb-1">Order ID</p>
                 <p className="font-display text-2xl text-accent font-bold">#{orderId}</p>
                 <p className="text-muted text-xs mt-1">Save this for tracking your order</p>
               </div>
               {paymentMethod === 'bank' && (
-                <div className="text-xs text-muted mb-5 border border-white/[0.06] p-4 text-left">
+                <div className="text-xs text-muted mb-5 border border-white/[0.06] p-4 text-left rounded-xl">
                   <p className="text-foreground/80 font-medium mb-1.5">Bank Transfer Details</p>
                   <p>Transfer <span className="text-accent font-semibold">Rs {total.toLocaleString()}</span> to:</p>
                   <p className="mt-1 text-foreground/70 font-mono">HBL: 0123-456789012</p>
@@ -259,7 +259,7 @@ export default function Checkout({ isOpen, onClose }) {
                 </div>
               )}
               <button onClick={handleClose}
-                className="px-10 py-3.5 bg-accent text-white text-sm font-semibold hover:bg-accent-hover transition-colors">
+                className="px-10 py-3.5 bg-accent text-white text-sm font-semibold hover:bg-accent/90 transition-colors rounded-xl accent-glow">
                 Continue Shopping
               </button>
             </div>

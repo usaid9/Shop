@@ -14,6 +14,7 @@ import ContactPage from './pages/ContactPage'
 import OrdersPage from './pages/OrdersPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import NotFoundPage from './pages/NotFoundPage'
+import AdminPage from './pages/AdminPage'
 
 function PageTransition({ children }) {
   const location = useLocation()
@@ -51,6 +52,7 @@ export default function App() {
               <Route path="/about"        element={<AboutPage />} />
               <Route path="/contact"      element={<ContactPage />} />
               <Route path="/orders"       element={<OrdersPage />} />
+              <Route path="/admin"        element={<AdminPage />} />
               <Route path="*"             element={<NotFoundPage />} />
             </Routes>
           </main>

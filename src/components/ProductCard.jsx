@@ -3,17 +3,14 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import { useCart } from '../hooks/useCart'
 
-// ── 3D tilt wrapper — only active on non-touch devices ───────────────────────
 function TiltCard({ children, className }) {
   const ref = useRef(null)
   const x = useMotionValue(0)
   const y = useMotionValue(0)
-
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { stiffness: 300, damping: 30 })
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { stiffness: 300, damping: 30 })
   const glareX  = useTransform(x, [-0.5, 0.5], ['0%', '100%'])
   const glareY  = useTransform(y, [-0.5, 0.5], ['0%', '100%'])
-
   const handleMouseMove = (e) => {
     if (!ref.current) return
     const rect = ref.current.getBoundingClientRect()
@@ -21,7 +18,6 @@ function TiltCard({ children, className }) {
     y.set((e.clientY - rect.top)  / rect.height - 0.5)
   }
   const handleMouseLeave = () => { x.set(0); y.set(0) }
-
   return (
     <motion.div
       ref={ref}
@@ -30,7 +26,6 @@ function TiltCard({ children, className }) {
       style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 800 }}
       className={className}
     >
-      {/* Glare layer */}
       <motion.div
         className="absolute inset-0 pointer-events-none z-20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{
@@ -47,10 +42,10 @@ function TiltCard({ children, className }) {
 
 export default function ProductCard({ product, listView = false }) {
   const { addItem } = useCart()
-  const [showQuick, setShowQuick]     = useState(false)
+  const [showQuick, setShowQuick]         = useState(false)
   const [selectedSize, setSelectedSize]   = useState(product.sizes[0])
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [added, setAdded] = useState(false)
+  const [added, setAdded]                 = useState(false)
 
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -118,7 +113,7 @@ export default function ProductCard({ product, listView = false }) {
     <TiltCard className="group relative bg-secondary overflow-hidden card-depth rounded-xl cursor-pointer">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent pointer-events-none z-10" />
 
-      {/* Image container */}
+      {/* Image */}
       <Link to={`/product/${product.id}`} className="block relative overflow-hidden bg-tertiary rounded-t-xl" style={{ aspectRatio: '3/4' }}>
         <motion.img
           src={product.image}
@@ -143,7 +138,7 @@ export default function ProductCard({ product, listView = false }) {
           </div>
         )}
 
-        {/* Hover overlay with Quick Add */}
+        {/* Hover overlay */}
         {product.inStock && (
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button
@@ -176,52 +171,102 @@ export default function ProductCard({ product, listView = false }) {
         </div>
       </div>
 
-      {/* Quick Add Modal */}
+      {/* ── QUICK ADD OVERLAY ─────────────────────────────────────────────── */}
       <AnimatePresence>
         {showQuick && (
           <motion.div
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.22 }}
-            className="absolute inset-0 bg-secondary/98 backdrop-blur-sm z-30 flex flex-col p-4 rounded-xl"
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 z-30 flex flex-col rounded-xl overflow-hidden"
+            style={{ background: 'linear-gradient(160deg, #1c1c1c 0%, #141414 100%)' }}
           >
-            <div className="flex items-start justify-between mb-3">
-              <p className="text-sm font-semibold line-clamp-1 pr-4">{product.name}</p>
-              <button onClick={() => setShowQuick(false)} className="text-muted hover:text-foreground flex-shrink-0 transition-colors">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {/* Top strip — product name + close */}
+            <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-white/[0.07]">
+              <div className="min-w-0 pr-2">
+                <p className="text-xs text-accent font-semibold uppercase tracking-wider mb-0.5">{product.category}</p>
+                <p className="text-sm font-bold text-white line-clamp-1">{product.name}</p>
+              </div>
+              <button
+                onClick={() => setShowQuick(false)}
+                className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/[0.06] hover:bg-white/[0.12] text-white/60 hover:text-white transition-colors flex-shrink-0"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
-            <p className="text-[10px] text-muted uppercase tracking-wider mb-2">Size</p>
-            <div className="flex flex-wrap gap-1.5 mb-3">
-              {product.sizes.map(s => (
-                <button key={s} onClick={() => setSelectedSize(s)}
-                  className={`px-2.5 py-1 text-xs transition-all duration-150 border rounded-lg ${
-                    selectedSize === s ? 'border-accent bg-accent text-white' : 'border-white/[0.08] text-muted hover:border-white/30 hover:text-foreground'
-                  }`}>
-                  {s}
-                </button>
-              ))}
+
+            {/* Size */}
+            <div className="px-4 pt-3 pb-2">
+              <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">Size</p>
+              <div className="flex flex-wrap gap-1.5">
+                {product.sizes.map(s => (
+                  <button
+                    key={s}
+                    onClick={() => setSelectedSize(s)}
+                    className={`px-2.5 py-1.5 text-xs font-semibold transition-all duration-150 border rounded-lg ${
+                      selectedSize === s
+                        ? 'border-accent bg-accent text-white shadow-[0_0_12px_rgba(200,16,46,0.35)]'
+                        : 'border-white/[0.15] text-white/75 hover:border-white/40 hover:text-white bg-white/[0.04]'
+                    }`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
             </div>
-            <p className="text-[10px] text-muted uppercase tracking-wider mb-2">Color</p>
-            <div className="flex flex-wrap gap-1.5 mb-4">
-              {product.colors.map(c => (
-                <button key={c} onClick={() => setSelectedColor(c)}
-                  className={`px-2.5 py-1 text-xs transition-all duration-150 border rounded-lg ${
-                    selectedColor === c ? 'border-accent bg-accent text-white' : 'border-white/[0.08] text-muted hover:border-white/30 hover:text-foreground'
-                  }`}>
-                  {c}
-                </button>
-              ))}
+
+            {/* Color */}
+            <div className="px-4 pt-2 pb-3">
+              <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">Color</p>
+              <div className="flex flex-wrap gap-1.5">
+                {product.colors.map(c => (
+                  <button
+                    key={c}
+                    onClick={() => setSelectedColor(c)}
+                    className={`px-2.5 py-1.5 text-xs font-semibold transition-all duration-150 border rounded-lg ${
+                      selectedColor === c
+                        ? 'border-accent bg-accent text-white shadow-[0_0_12px_rgba(200,16,46,0.35)]'
+                        : 'border-white/[0.15] text-white/75 hover:border-white/40 hover:text-white bg-white/[0.04]'
+                    }`}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
             </div>
-            <motion.button onClick={handleAdd} whileTap={{ scale: 0.98 }}
-              className={`mt-auto py-2.5 text-sm font-semibold tracking-wide transition-colors duration-200 rounded-lg ${
-                added ? 'bg-green-700 text-white' : 'bg-accent hover:bg-accent-hover text-white'
-              }`}>
-              {added ? '✓  Added to Cart' : 'Add to Cart'}
-            </motion.button>
+
+            {/* Price + Add button */}
+            <div className="mt-auto px-4 pb-4 pt-2 border-t border-white/[0.07]">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-base font-bold text-accent">Rs {product.price.toLocaleString()}</span>
+                  {product.originalPrice && (
+                    <span className="text-xs text-white/35 line-through">Rs {product.originalPrice.toLocaleString()}</span>
+                  )}
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="text-[10px] text-white/40">Size:</span>
+                  <span className="text-[10px] font-bold text-white/70">{selectedSize}</span>
+                  <span className="text-[10px] text-white/25 mx-0.5">·</span>
+                  <span className="text-[10px] text-white/40">Color:</span>
+                  <span className="text-[10px] font-bold text-white/70">{selectedColor}</span>
+                </div>
+              </div>
+              <motion.button
+                onClick={handleAdd}
+                whileTap={{ scale: 0.97 }}
+                className={`w-full py-3 text-sm font-bold tracking-wide transition-all duration-200 rounded-xl ${
+                  added
+                    ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                    : 'bg-accent hover:bg-accent/90 text-white accent-glow'
+                }`}
+              >
+                {added ? '✓  Added to Cart' : 'Add to Cart'}
+              </motion.button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

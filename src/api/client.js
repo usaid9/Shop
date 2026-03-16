@@ -22,3 +22,8 @@ export const verifyJazzCash = (payload) => api.post('/payment/jazzcash/verify', 
 export const subscribeNewsletter = (email) => api.post('/newsletter', { email })
 
 export default api
+
+// ── Admin ─────────────────────────────────────────────────────────────────────
+export const fetchAllOrders   = (params = {}) => api.get('/orders', { params })
+export const updateOrderStatus = (id, status, note) => api.patch(`/orders/${id}/status`, { status, note })
+export const fetchSubscribers = () => api.get('/newsletter')

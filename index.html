@@ -5,6 +5,17 @@
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PREMIUM – Men's Fashion Store</title>
+    <!-- GitHub Pages SPA routing fix -->
+    <script>
+      (function() {
+        var p = window.location.search;
+        if (p && p[1] === 'p' && p[2] === '=') {
+          var path = p.slice(3).split('&q=');
+          var url = decodeURIComponent(path[0]) + (path[1] ? '?' + decodeURIComponent(path[1]) : '') + window.location.hash;
+          window.history.replaceState(null, null, url);
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet" />
