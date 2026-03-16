@@ -5,12 +5,10 @@
   <title>PREMIUM Pakistan</title>
   <script>
     var l = window.location;
-    l.replace(
-      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-      l.pathname.split('/').slice(0, 2).join('/') + '/?p=/' +
-      l.pathname.slice(1).split('/').slice(1).join('/') +
-      (l.search ? '&q=' + l.search.slice(1) : '') + l.hash
-    );
+    var base = '/Shop';
+    var path = l.pathname.slice(base.length) || '/';
+    sessionStorage.setItem('spa_redirect', path + l.search + l.hash);
+    l.replace(l.origin + base + '/');
   </script>
 </head>
 <body></body>
