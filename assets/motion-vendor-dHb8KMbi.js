@@ -1,4 +1,4 @@
-import{r as kr,a as v}from"./react-vendor-DgvsxExo.js";var fe={exports:{}},xt={};/**
+import{r as kr,a as v}from"./react-vendor-BI_kUsK8.js";var fe={exports:{}},xt={};/**
  * @license React
  * react-jsx-runtime.production.min.js
  *
