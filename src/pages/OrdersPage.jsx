@@ -8,7 +8,7 @@ const STAGES = ['Order Placed', 'Processing', 'Shipped', 'Out for Delivery', 'De
 export default function OrdersPage() {
   const [query, setQuery]     = useState('')
   const [type, setType]       = useState('id')
-  const [order, setOrder]     = useState(null)
+  const [orders, setOrders]   = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError]     = useState('')
   const [notFound, setNotFound] = useState(false)
@@ -18,20 +18,24 @@ export default function OrdersPage() {
   const handleSearch = async (e) => {
     e.preventDefault()
     if (!query.trim()) return
-    setLoading(true); setError(''); setOrder(null); setNotFound(false)
+    setLoading(true); setError(''); setOrders([]); setNotFound(false)
     try {
-      let result = null
       if (type === 'id') {
         const { data } = await fetchOrderById(query.trim())
-        result = data
+        if (data && data._id) {
+          setOrders([data])
+        } else {
+          setNotFound(true)
+        }
       } else {
         const { data } = await fetchOrdersByPhone(query.trim())
-        result = Array.isArray(data) ? data[0] : data
-      }
-      if (result && result._id) {
-        setOrder(result)
-      } else {
-        setNotFound(true)
+        if (Array.isArray(data) && data.length > 0) {
+          setOrders(data)
+        } else if (data && data._id) {
+          setOrders([data])
+        } else {
+          setNotFound(true)
+        }
       }
     } catch {
       setNotFound(true)
@@ -134,18 +138,19 @@ export default function OrdersPage() {
         )}
 
         {/* Results */}
-        {order && (
+        {orders.length > 0 && orders.map((order, idx) => (
           <motion.div
+            key={order._id || idx}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-4"
+            className="space-y-4 mb-8"
           >
             {/* Progress tracker */}
             <div className="panel-inset border border-white/[0.06] rounded-2xl p-6 card-depth">
               <div className="flex items-start justify-between mb-6">
                 <div>
                   <p className="text-[10px] text-muted uppercase tracking-wider mb-0.5">Order ID</p>
-                  <p className="font-bold text-accent font-mono">#{order._id}</p>
+                  <p className="font-bold text-accent font-mono">#PRE{order._id?.slice(-6)}</p>
                 </div>
                 <div className="text-right">
                   <p className="text-[10px] text-muted uppercase tracking-wider mb-0.5">Placed on</p>
@@ -236,7 +241,7 @@ export default function OrdersPage() {
               <a href="https://wa.me/923001234567" className="text-accent hover:underline">0300-1234567</a>
             </p>
           </motion.div>
-        )}
+        ))}
       </div>
     </div>
   )

@@ -68,7 +68,7 @@ export default function Checkout({ isOpen, onClose }) {
         items: items.map(i => ({ product: i.id, name: i.name, price: i.price, quantity: i.quantity, selectedSize: i.selectedSize, selectedColor: i.selectedColor, image: i.image })),
         shippingAddress: form, paymentMethod, subtotal, shippingCost: shipping, total,
       })
-      setOrderId(order._id || order.orderId || `PRE${Date.now().toString().slice(-6)}`)
+      setOrderId(order._id ? `PRE${order._id.slice(-6)}` : order.orderId || `PRE${Date.now().toString().slice(-6)}`)
       if (paymentMethod === 'jazzcash') {
         const { data: jd } = await initiateJazzCash({ orderId: order._id, amount: total, phone: form.phone, description: `PREMIUM Order - ${items.length} items` })
         if (jd.redirectUrl) window.open(jd.redirectUrl, '_blank')
@@ -100,7 +100,8 @@ export default function Checkout({ isOpen, onClose }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-end sm:items-center justify-center sm:p-4"
+      className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-0 sm:p-4 overflow-y-auto"
+      style={{ overscrollBehavior: 'contain' }}
     >
       <motion.div
         initial={{ scale: 0.94, y: 24 }}
@@ -246,16 +247,16 @@ export default function Checkout({ isOpen, onClose }) {
               <p className="text-muted text-sm mb-6">Delivering to <span className="text-foreground">{form.city}</span> in 3–5 business days</p>
               <div className="bg-primary border border-white/[0.06] p-4 mb-6 text-sm rounded-2xl">
                 <p className="text-[10px] text-muted uppercase tracking-superwide mb-1">Order ID</p>
-                <p className="font-display text-2xl text-accent font-bold">#{orderId}</p>
+                <p className="font-mono text-2xl text-accent font-bold tracking-widest">#{orderId}</p>
                 <p className="text-muted text-xs mt-1">Save this for tracking your order</p>
               </div>
               {paymentMethod === 'bank' && (
                 <div className="text-xs text-muted mb-5 border border-white/[0.06] p-4 text-left rounded-xl">
                   <p className="text-foreground/80 font-medium mb-1.5">Bank Transfer Details</p>
-                  <p>Transfer <span className="text-accent font-semibold">Rs {total.toLocaleString()}</span> to:</p>
+                  <p>Transfer <span className="text-accent font-mono font-semibold">Rs {total.toLocaleString()}</span> to:</p>
                   <p className="mt-1 text-foreground/70 font-mono">HBL: 0123-456789012</p>
                   <p className="text-foreground/70 font-mono">Meezan: 9876-543210987</p>
-                  <p className="mt-1">Use Order ID <span className="text-accent">#{orderId}</span> as reference.</p>
+                  <p className="mt-1">Use Order ID <span className="text-accent font-mono">#{orderId}</span> as reference.</p>
                 </div>
               )}
               <button onClick={handleClose}

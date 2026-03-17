@@ -1,29 +1,32 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 15000,
 })
 
 // ── Products ──────────────────────────────────────────────────────────────────
-export const fetchProducts = (params = {}) => api.get('/products', { params })
-export const fetchProductById = (id) => api.get(`/products/${id}`)
+export const fetchProducts      = (params = {}) => api.get('/products', { params })
+export const fetchProductById   = (id)          => api.get(`/products/${id}`)
+export const createProduct      = (fd)          => api.post('/products', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+export const updateProduct      = (id, fd)      => api.put(`/products/${id}`, fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+export const deleteProduct      = (id)          => api.delete(`/products/${id}`)
 
 // ── Orders ────────────────────────────────────────────────────────────────────
-export const createOrder = (orderData) => api.post('/orders', orderData)
-export const fetchOrderById = (id) => api.get(`/orders/${id}`)
-export const fetchOrdersByPhone = (phone) => api.get(`/orders/by-phone/${phone}`)
+export const createOrder        = (orderData)   => api.post('/orders', orderData)
+export const fetchOrderById     = (id)          => api.get(`/orders/${id}`)
+export const fetchOrdersByPhone = (phone)       => api.get(`/orders/by-phone/${phone}`)
 
 // ── Payment ───────────────────────────────────────────────────────────────────
-export const initiateJazzCash = (payload) => api.post('/payment/jazzcash', payload)
-export const verifyJazzCash = (payload) => api.post('/payment/jazzcash/verify', payload)
+export const initiateJazzCash   = (payload)     => api.post('/payment/jazzcash', payload)
+export const verifyJazzCash     = (payload)     => api.post('/payment/jazzcash/verify', payload)
 
 // ── Newsletter ────────────────────────────────────────────────────────────────
-export const subscribeNewsletter = (email) => api.post('/newsletter', { email })
+export const subscribeNewsletter = (email)      => api.post('/newsletter', { email })
 
 export default api
 
 // ── Admin ─────────────────────────────────────────────────────────────────────
-export const fetchAllOrders   = (params = {}) => api.get('/orders', { params })
+export const fetchAllOrders    = (params = {}) => api.get('/orders', { params })
 export const updateOrderStatus = (id, status, note) => api.patch(`/orders/${id}/status`, { status, note })
-export const fetchSubscribers = () => api.get('/newsletter')
+export const fetchSubscribers  = ()            => api.get('/newsletter')

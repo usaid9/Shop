@@ -138,9 +138,9 @@ export default function ProductCard({ product, listView = false }) {
           </div>
         )}
 
-        {/* Hover overlay */}
+        {/* Hover overlay for desktop only */}
         {product.inStock && (
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:flex">
             <button
               onClick={(e) => { e.preventDefault(); setShowQuick(true) }}
               className="w-full py-2.5 bg-foreground text-primary text-xs font-semibold tracking-wider uppercase hover:bg-accent hover:text-white transition-colors duration-200 rounded-lg"
@@ -169,6 +169,15 @@ export default function ProductCard({ product, listView = false }) {
             <span className="text-xs text-muted line-through">Rs {product.originalPrice.toLocaleString()}</span>
           )}
         </div>
+        {/* Mobile quick add button */}
+        {product.inStock && (
+          <button
+            onClick={(e) => { e.preventDefault(); setShowQuick(true) }}
+            className="mt-2 w-full py-2 bg-accent text-white text-xs font-semibold tracking-wider uppercase rounded-lg sm:hidden"
+          >
+            Quick Add
+          </button>
+        )}
       </div>
 
       {/* ── QUICK ADD OVERLAY ─────────────────────────────────────────────── */}
@@ -179,8 +188,8 @@ export default function ProductCard({ product, listView = false }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0 z-30 flex flex-col rounded-xl overflow-hidden"
-            style={{ background: 'linear-gradient(160deg, #1c1c1c 0%, #141414 100%)' }}
+            className="fixed inset-0 z-50 flex flex-col rounded-none sm:rounded-xl overflow-y-auto"
+            style={{ background: 'linear-gradient(160deg, #1c1c1c 0%, #141414 100%)', WebkitOverflowScrolling: 'touch' }}
           >
             {/* Top strip — product name + close */}
             <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-white/[0.07]">
@@ -190,9 +199,11 @@ export default function ProductCard({ product, listView = false }) {
               </div>
               <button
                 onClick={() => setShowQuick(false)}
-                className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/[0.06] hover:bg-white/[0.12] text-white/60 hover:text-white transition-colors flex-shrink-0"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.15] text-white/70 hover:text-white transition-colors flex-shrink-0 fixed top-3 right-3 sm:static sm:w-7 sm:h-7 sm:rounded-lg sm:bg-white/[0.06] sm:hover:bg-white/[0.12] sm:text-white/60"
+                style={{ zIndex: 60 }}
+                aria-label="Close quick add"
               >
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -200,17 +211,18 @@ export default function ProductCard({ product, listView = false }) {
 
             {/* Size */}
             <div className="px-4 pt-3 pb-2">
-              <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">Size</p>
-              <div className="flex flex-wrap gap-1.5">
+              <p className="text-xs sm:text-[10px] font-bold text-white/60 uppercase tracking-widest mb-3">Select Size</p>
+              <div className="flex flex-wrap gap-2 sm:gap-1.5 mb-2">
                 {product.sizes.map(s => (
                   <button
                     key={s}
                     onClick={() => setSelectedSize(s)}
-                    className={`px-2.5 py-1.5 text-xs font-semibold transition-all duration-150 border rounded-lg ${
+                    className={`min-w-[48px] sm:min-w-[36px] px-3 sm:px-2.5 py-2 sm:py-1.5 text-base sm:text-xs font-semibold transition-all duration-150 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/60 ${
                       selectedSize === s
                         ? 'border-accent bg-accent text-white shadow-[0_0_12px_rgba(200,16,46,0.35)]'
                         : 'border-white/[0.15] text-white/75 hover:border-white/40 hover:text-white bg-white/[0.04]'
                     }`}
+                    style={{ marginBottom: 4 }}
                   >
                     {s}
                   </button>
@@ -220,17 +232,18 @@ export default function ProductCard({ product, listView = false }) {
 
             {/* Color */}
             <div className="px-4 pt-2 pb-3">
-              <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">Color</p>
-              <div className="flex flex-wrap gap-1.5">
+              <p className="text-xs sm:text-[10px] font-bold text-white/60 uppercase tracking-widest mb-3">Select Color</p>
+              <div className="flex flex-wrap gap-2 sm:gap-1.5 mb-2">
                 {product.colors.map(c => (
                   <button
                     key={c}
                     onClick={() => setSelectedColor(c)}
-                    className={`px-2.5 py-1.5 text-xs font-semibold transition-all duration-150 border rounded-lg ${
+                    className={`min-w-[48px] sm:min-w-[36px] px-3 sm:px-2.5 py-2 sm:py-1.5 text-base sm:text-xs font-semibold transition-all duration-150 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/60 ${
                       selectedColor === c
                         ? 'border-accent bg-accent text-white shadow-[0_0_12px_rgba(200,16,46,0.35)]'
                         : 'border-white/[0.15] text-white/75 hover:border-white/40 hover:text-white bg-white/[0.04]'
                     }`}
+                    style={{ marginBottom: 4 }}
                   >
                     {c}
                   </button>
@@ -240,19 +253,19 @@ export default function ProductCard({ product, listView = false }) {
 
             {/* Price + Add button */}
             <div className="mt-auto px-4 pb-4 pt-2 border-t border-white/[0.07]">
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-base font-bold text-accent">Rs {product.price.toLocaleString()}</span>
+                  <span className="text-lg sm:text-base font-bold text-accent">Rs {product.price.toLocaleString()}</span>
                   {product.originalPrice && (
                     <span className="text-xs text-white/35 line-through">Rs {product.originalPrice.toLocaleString()}</span>
                   )}
                 </div>
-                <div className="flex items-center gap-1">
-                  <span className="text-[10px] text-white/40">Size:</span>
-                  <span className="text-[10px] font-bold text-white/70">{selectedSize}</span>
-                  <span className="text-[10px] text-white/25 mx-0.5">·</span>
-                  <span className="text-[10px] text-white/40">Color:</span>
-                  <span className="text-[10px] font-bold text-white/70">{selectedColor}</span>
+                <div className="flex items-center gap-2 sm:gap-1">
+                  <span className="text-xs text-white/40">Size:</span>
+                  <span className="text-xs font-bold text-white/70">{selectedSize}</span>
+                  <span className="text-xs text-white/25 mx-0.5">·</span>
+                  <span className="text-xs text-white/40">Color:</span>
+                  <span className="text-xs font-bold text-white/70">{selectedColor}</span>
                 </div>
               </div>
               <motion.button

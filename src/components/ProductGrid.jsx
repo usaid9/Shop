@@ -24,8 +24,7 @@ function Dropdown({ value, onChange, options, prefix = '' }) {
         onClick={() => setOpen(o => !o)}
         className={`flex items-center gap-2 px-3 py-2 bg-secondary border font-medium transition-all duration-200 rounded-xl flex-shrink-0 justify-between ${
           open ? 'border-accent text-foreground' : 'border-white/[0.08] text-muted hover:border-white/20 hover:text-foreground'
-        }`}
-        style={{ fontSize: '0.675rem' }}
+        } text-xs sm:text-sm`}
       >
         <span>{prefix && <span className="text-muted mr-1 font-normal">{prefix}</span>}{active?.label}</span>
         <motion.svg
@@ -57,7 +56,7 @@ function Dropdown({ value, onChange, options, prefix = '' }) {
               >
                 <button
                   onClick={() => { onChange(opt.value); setOpen(false) }}
-                  className={`w-full text-left px-4 py-2.5 text-[0.775rem] sm:text-sm transition-colors duration-150 ${
+                  className={`w-full text-left px-4 py-2.5 text-xs sm:text-sm transition-colors duration-150 ${
                     opt.value === value
                       ? 'text-accent bg-accent/[0.08]'
                       : 'text-muted hover:text-foreground hover:bg-white/[0.04]'
@@ -264,7 +263,7 @@ export default function ProductGrid({ products, showFilters = true, title, subti
                     key={cat.id}
                     onClick={() => setSelectedCat(cat.id)}
                     whileTap={{ scale: 0.97 }}
-                    className={`relative flex-shrink-0 flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 overflow-hidden group rounded-xl ${
+                    className={`relative flex-shrink-0 flex items-center gap-2 px-3 py-2 text-xs sm:text-sm font-medium transition-all duration-200 overflow-hidden group rounded-xl ${
                       isActive
                         ? 'bg-accent text-white'
                         : 'bg-tertiary text-muted border border-white/[0.06] hover:text-foreground hover:border-white/20'
@@ -287,7 +286,7 @@ export default function ProductGrid({ products, showFilters = true, title, subti
               <Dropdown value={sortBy} onChange={setSortBy} options={SORT_OPTIONS} prefix="Sort:" />
               <Dropdown value={priceRange} onChange={setPriceRange} options={PRICE_OPTIONS} prefix="Price:" />
               <div className="ml-auto flex items-center gap-3 flex-shrink-0">
-                <span className="text-xs text-muted font-mono hidden sm:block">{filtered.length} items</span>
+                <span className="text-xs sm:text-xs text-muted font-mono hidden sm:block">{filtered.length} items</span>
                 <GridToggle cols={gridCols} onChange={setGridCols} />
               </div>
             </div>
