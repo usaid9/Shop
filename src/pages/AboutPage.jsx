@@ -38,8 +38,8 @@ export default function AboutPage() {
   return (
     <div className="pt-[68px] min-h-screen">
       {/* Header */}
-      <div className="border-b border-white/[0.06] py-10 px-4 sm:px-6 lg:px-8"
-        style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', boxShadow: '0 1px 0 rgba(255,255,255,0.03) inset' }}>
+      <div className="py-10 px-4 sm:px-6 lg:px-8"
+        style={{ borderBottom: "1px solid var(--border-default)", background: "var(--surface-cart)", boxShadow: "inset 0 1px 0 var(--inset-highlight)" }}>
         <div className="max-w-7xl mx-auto">
           <Breadcrumb />
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="mt-4">
@@ -89,7 +89,7 @@ export default function AboutPage() {
               { stat: '50+',  label: 'Cities' },
               { stat: '4.8',  label: 'Avg Rating' },
             ].map(({ stat, label }) => (
-              <div key={label} className="panel-inset border border-white/[0.05] p-6 text-center rounded-xl card-depth">
+              <div key={label} className="panel-inset border-subtle-themed p-6 text-center rounded-xl card-depth">
                 <p className="font-display text-4xl font-bold text-accent mb-1"
                   style={{ textShadow: '0 0 20px rgba(200,16,46,0.4)' }}>{stat}</p>
                 <p className="text-muted text-xs uppercase tracking-wider">{label}</p>
@@ -100,7 +100,7 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 section-depth border-y border-white/[0.04]">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 section-depth">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-[10px] tracking-superwide uppercase text-accent font-semibold mb-3 flex items-center justify-center gap-2">
@@ -127,7 +127,7 @@ export default function AboutPage() {
                     style={{ boxShadow: '0 0 16px rgba(200,16,46,0.35)' }}>
                     {m.year.slice(2)}
                   </div>
-                  <div className="panel-inset border border-white/[0.05] p-4 flex-1 rounded-xl">
+                  <div className="panel-inset border-subtle-themed p-4 flex-1 rounded-xl">
                     <p className="text-accent text-[10px] font-semibold tracking-wider mb-1 font-mono">{m.year}</p>
                     <p className="text-muted text-sm">{m.event}</p>
                   </div>
@@ -158,7 +158,7 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 className="group flex flex-col items-center"
               >
-                <div className="w-24 h-24 overflow-hidden border border-white/[0.07] mb-4 group-hover:border-accent/40 transition-colors duration-300 rounded-2xl card-depth">
+                <div className="w-24 h-24 overflow-hidden border-themed mb-4 group-hover:border-accent/40 transition-colors duration-300 rounded-2xl card-depth">
                   <img src={member.img} alt={member.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <p className="font-medium text-sm">{member.name}</p>
@@ -170,7 +170,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section id="privacy" className="py-16 px-4 sm:px-6 lg:px-8 section-depth border-y border-white/[0.04]">
+      <section id="privacy" className="py-16 px-4 sm:px-6 lg:px-8 section-depth">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-[10px] tracking-superwide uppercase text-accent font-semibold mb-3 flex items-center justify-center gap-2">
@@ -189,9 +189,9 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.06 }}
                 viewport={{ once: true }}
-                className="panel-inset border border-white/[0.05] p-6 group hover:border-accent/20 transition-colors duration-300 rounded-xl card-depth"
+                className="panel-inset border-subtle-themed p-6 group hover:border-accent/20 transition-colors duration-300 rounded-xl card-depth"
               >
-                <div className="w-9 h-9 border border-white/[0.08] flex items-center justify-center text-accent mb-4 group-hover:border-accent/40 group-hover:bg-accent/[0.06] transition-all rounded-lg">
+                <div className="w-9 h-9 border-themed flex items-center justify-center text-accent mb-4 group-hover:border-accent/40 group-hover:bg-accent/[0.06] transition-all rounded-lg">
                   <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                     {ValueIcons[v.key]}
                   </svg>

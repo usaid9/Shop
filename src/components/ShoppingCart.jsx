@@ -16,7 +16,8 @@ export default function ShoppingCart({ isOpen, onClose, onCheckout }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+            className="fixed inset-0 backdrop-blur-sm z-40"
+            style={{ background: 'rgba(0,0,0,0.5)' }}
           />
 
           <motion.div
@@ -24,21 +25,30 @@ export default function ShoppingCart({ isOpen, onClose, onCheckout }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 22, stiffness: 280 }}
-            className="fixed right-0 top-0 h-screen w-full max-w-md border-l border-white/[0.07] z-50 flex flex-col rounded-l-2xl"
+            className="fixed right-0 top-0 h-screen w-full max-w-md z-50 flex flex-col rounded-l-2xl"
             style={{
-              background: 'linear-gradient(180deg, #141414 0%, #111111 100%)',
-              boxShadow: '-8px 0 40px rgba(0,0,0,0.7), -1px 0 0 rgba(255,255,255,0.04) inset',
+              background: 'var(--surface-cart)',
+              boxShadow: 'var(--shadow-cart)',
+              borderLeft: '1px solid var(--border-default)',
             }}
           >
             {/* Top inner highlight */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent pointer-events-none" />
+            <div className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+              style={{ background: 'linear-gradient(90deg, transparent, var(--border-default), transparent)' }} />
+
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.06]" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%)' }}>
+            <div
+              className="flex items-center justify-between px-6 py-5"
+              style={{
+                borderBottom: '1px solid var(--border-default)',
+                background: 'var(--inset-highlight)',
+              }}
+            >
               <div>
                 <h2 className="text-xl font-bold text-emboss">Shopping Cart</h2>
                 <p className="text-xs text-muted mt-0.5">{items.length} item{items.length !== 1 ? 's' : ''}</p>
               </div>
-              <button onClick={onClose} className="p-2 text-muted hover:text-white transition-colors">
+              <button onClick={onClose} className="p-2 text-muted hover:text-foreground transition-colors">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -70,11 +80,15 @@ export default function ShoppingCart({ isOpen, onClose, onCheckout }) {
                       initial={{ opacity: 0, x: 30 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 30 }}
-                      className="flex gap-3 p-3 border border-white/[0.05]"
-                      style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.025) 0%, rgba(8,8,8,0.8) 100%)', boxShadow: '0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 12px -4px rgba(0,0,0,0.5)' }}
+                      className="flex gap-3 p-3 rounded-xl"
+                      style={{
+                        background: 'var(--surface-item-card)',
+                        border: '1px solid var(--border-item)',
+                        boxShadow: '0 1px 0 var(--inset-highlight) inset, 0 4px 12px -4px rgba(0,0,0,0.12)',
+                      }}
                     >
                       <Link to={`/product/${item.id}`} onClick={onClose}>
-                        <img src={item.image} alt={item.name} className="w-18 h-20 w-[72px] object-cover " />
+                        <img src={item.image} alt={item.name} className="w-[72px] h-20 object-cover rounded-lg" />
                       </Link>
                       <div className="flex-1 min-w-0">
                         <Link to={`/product/${item.id}`} onClick={onClose}>
@@ -86,12 +100,12 @@ export default function ShoppingCart({ isOpen, onClose, onCheckout }) {
                         <div className="flex items-center gap-2 mt-2">
                           <button
                             onClick={() => updateQty(item._cartKey, item.quantity - 1)}
-                            className="w-7 h-7 flex items-center justify-center  bg-secondary hover:bg-accent transition-colors text-sm font-bold"
+                            className="w-7 h-7 flex items-center justify-center bg-secondary hover:bg-accent hover:text-white transition-colors text-sm font-bold rounded-lg"
                           >−</button>
                           <span className="text-sm font-semibold w-5 text-center">{item.quantity}</span>
                           <button
                             onClick={() => updateQty(item._cartKey, item.quantity + 1)}
-                            className="w-7 h-7 flex items-center justify-center  bg-secondary hover:bg-accent transition-colors text-sm font-bold"
+                            className="w-7 h-7 flex items-center justify-center bg-secondary hover:bg-accent hover:text-white transition-colors text-sm font-bold rounded-lg"
                           >+</button>
                           <button
                             onClick={() => removeItem(item._cartKey)}
@@ -112,7 +126,13 @@ export default function ShoppingCart({ isOpen, onClose, onCheckout }) {
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className="border-t border-white/[0.06] px-6 py-5 space-y-4" style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(200,16,46,0.03) 100%)' }}>
+              <div
+                className="px-6 py-5 space-y-4"
+                style={{
+                  borderTop: '1px solid var(--border-default)',
+                  background: 'linear-gradient(180deg, transparent 0%, rgba(200,16,46,0.03) 100%)',
+                }}
+              >
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between text-muted">
                     <span>Subtotal</span><span>Rs {subtotal.toLocaleString()}</span>
@@ -120,7 +140,7 @@ export default function ShoppingCart({ isOpen, onClose, onCheckout }) {
                   <div className="flex justify-between text-muted">
                     <span>Shipping</span><span>Rs {shipping.toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between font-bold text-base pt-2 border-t border-white/[0.06]">
+                  <div className="flex justify-between font-bold text-base pt-2" style={{ borderTop: '1px solid var(--border-default)' }}>
                     <span>Total</span>
                     <span className="text-accent" style={{ textShadow: '0 0 16px rgba(200,16,46,0.5)' }}>Rs {total.toLocaleString()}</span>
                   </div>

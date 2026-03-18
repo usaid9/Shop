@@ -7,13 +7,13 @@ import CategoryIcon from '../components/CategoryIcon'
 import ScrollFloat from '../components/ScrollFloat'
 
 const collectionImages = {
-  shirts:      'https://images.unsplash.com/photo-1596848212624-754a98e4d815?w=800&h=600&fit=crop',
-  trousers:    'https://images.unsplash.com/photo-1473100356510-8cebb687410d?w=800&h=600&fit=crop',
-  jackets:     'https://images.unsplash.com/photo-1505025114519-299cd07602b4?w=800&h=600&fit=crop',
-  shoes:       'https://images.unsplash.com/photo-1543163521-9efbd06b3f3d?w=800&h=600&fit=crop',
-  watches:     'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=600&fit=crop',
-  accessories: 'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800&h=600&fit=crop',
-  kurta:       'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=600&fit=crop',
+  shirts:      'https://images.unsplash.com/photo-1607345366928-199ea26cfe3e?w=800&h=500&fit=crop&q=80',
+  trousers:    'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&h=500&fit=crop&q=80',
+  jackets:     'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&h=500&fit=crop&q=80',
+  shoes:       'https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=800&h=500&fit=crop&q=80',
+  watches:     'https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=800&h=500&fit=crop&q=80',
+  accessories: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=500&fit=crop&q=80',
+  kurta:       'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=500&fit=crop&q=80',
 }
 
 export default function CollectionsPage() {
@@ -23,8 +23,8 @@ export default function CollectionsPage() {
   return (
     <div className="pt-[68px] min-h-screen">
       {/* Header */}
-      <div className="border-b border-white/[0.06] py-10 px-4 sm:px-6 lg:px-8"
-        style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', boxShadow: '0 1px 0 rgba(255,255,255,0.03) inset' }}>
+      <div className="py-10 px-4 sm:px-6 lg:px-8"
+        style={{ borderBottom: "1px solid var(--border-default)", background: "var(--surface-cart)", boxShadow: "inset 0 1px 0 var(--inset-highlight)" }}>
         <div className="max-w-7xl mx-auto">
           <Breadcrumb />
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="mt-4">
@@ -61,7 +61,7 @@ export default function CollectionsPage() {
                 >
                   <Link
                     to={`/shop/${cat.id}`}
-                    className="group block relative overflow-hidden bg-secondary border border-white/[0.05] hover:border-accent/25 transition-all duration-300 card-depth rounded-xl"
+                    className="group block relative overflow-hidden bg-secondary border-subtle-themed hover:border-accent/25 transition-all duration-300 card-depth rounded-xl"
                   >
                     {/* Top highlight */}
                     <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.07] to-transparent pointer-events-none z-10" />
@@ -77,7 +77,7 @@ export default function CollectionsPage() {
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-                      <div className="absolute bottom-4 left-4 w-10 h-10 flex items-center justify-center border border-white/20 bg-black/40 backdrop-blur-sm text-white rounded-lg">
+                      <div className="absolute bottom-4 left-4 w-10 h-10 flex items-center justify-center backdrop-blur-sm text-foreground rounded-lg" style={{ border: "1px solid var(--border-default)", background: "rgba(0,0,0,0.35)" }}>
                         <CategoryIcon id={cat.id} className="w-5 h-5" />
                       </div>
                       <div className="absolute top-4 right-4 bg-accent text-white text-[10px] px-2.5 py-1 font-bold tracking-wide rounded-md">
@@ -117,7 +117,7 @@ export default function CollectionsPage() {
 
       {/* Seasonal banner */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden"
-        style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #0f0608 40%, #0a0408 60%, #080808 100%)', borderTop: '1px solid rgba(200,16,46,0.15)', borderBottom: '1px solid rgba(200,16,46,0.15)' }}>
+        style={{ background: 'var(--surface-footer)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 70% at 50% 50%, rgba(200,16,46,0.08) 0%, transparent 70%)' }} />
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-1/3 bottom-0 w-px bg-gradient-to-b from-transparent via-accent/[0.07] to-transparent" />

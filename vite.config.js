@@ -12,10 +12,17 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
-
-    
   },
   build: {
     chunkSizeWarningLimit: 1500,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor':  ['react', 'react-dom', 'react-router-dom'],
+          'motion-vendor': ['framer-motion'],
+          'three-vendor':  ['three', '@react-three/fiber', '@react-three/drei'],
+        },
+      },
+    },
   },
 })

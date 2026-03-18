@@ -37,7 +37,7 @@ export default function Hero({ onShopClick }) {
         className="absolute inset-0 will-change-transform"
         style={{ transform: `translateY(${parallaxY}px)` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-primary/60 to-primary" />
+        <div className="absolute inset-0" style={{ background: 'var(--surface-hero-overlay)' }} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-5%,rgba(200,16,46,0.18),transparent)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_30%_at_20%_80%,rgba(200,16,46,0.06),transparent)]" />
       </div>
@@ -58,18 +58,19 @@ export default function Hero({ onShopClick }) {
           initial={{ scaleY: 0, opacity: 0 }}
           animate={{ scaleY: 1, opacity: 1 }}
           transition={{ duration: 1.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          style={{ transformOrigin: 'top' }}
-          className="absolute left-[8%] sm:left-[12%] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/[0.09] to-transparent"
+          className="absolute left-[8%] sm:left-[12%] top-0 bottom-0 w-px"
+          style={{ transformOrigin: 'top', background: 'linear-gradient(to bottom, transparent, var(--border-default), transparent)' }}
         />
         <motion.div
           initial={{ scaleY: 0, opacity: 0 }}
           animate={{ scaleY: 1, opacity: 1 }}
           transition={{ duration: 1.4, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          style={{ transformOrigin: 'top' }}
-          className="absolute right-[8%] sm:right-[12%] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/[0.09] to-transparent"
+          style={{ transformOrigin: 'top', background: 'linear-gradient(to bottom, transparent, var(--border-default), transparent)' }}
+          className="absolute right-[8%] sm:right-[12%] top-0 bottom-0 w-px"
         />
-        {/* Bottom vignette */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-primary to-transparent" />
+        {/* Bottom vignette — fades into the section below */}
+        <div className="hero-vignette absolute bottom-0 left-0 right-0 h-40"
+          style={{ background: 'linear-gradient(to top, var(--color-primary) 0%, transparent 100%)' }} />
       </div>
 
       {/* Content */}
@@ -145,7 +146,8 @@ export default function Hero({ onShopClick }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="flex gap-10 mt-16 pt-10 border-t border-white/[0.07]"
+            className="flex gap-10 mt-16 pt-10"
+            style={{ borderTop: '1px solid var(--border-subtle)' }}
           >
             {[
               { value: '200+', label: 'Products' },
@@ -153,7 +155,7 @@ export default function Hero({ onShopClick }) {
               { value: '50+',  label: 'Cities' },
             ].map((s, i) => (
               <div key={s.label} className="flex flex-col relative">
-                {i > 0 && <div className="absolute -left-5 top-1 bottom-1 w-px bg-white/[0.07]" />}
+                {i > 0 && <div className="absolute -left-5 top-1 bottom-1 w-px" style={{ background: 'var(--border-subtle)' }} />}
                 <span
                   className="font-display text-3xl font-bold text-accent leading-none"
                   style={{ textShadow: '0 0 20px rgba(200,16,46,0.5), 0 0 40px rgba(200,16,46,0.2)' }}

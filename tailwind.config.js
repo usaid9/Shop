@@ -4,16 +4,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#080808',
-        secondary: '#141414',
-        tertiary: '#1e1e1e',
-        foreground: '#f0ede8',
-        muted: '#6b6460',
-        accent: '#c8102e',
-        'accent-hover': '#a50d26',
+        primary:        'rgb(var(--tw-color-primary) / <alpha-value>)',
+        secondary:      'rgb(var(--tw-color-secondary) / <alpha-value>)',
+        tertiary:       'rgb(var(--tw-color-tertiary) / <alpha-value>)',
+        foreground:     'rgb(var(--tw-color-foreground) / <alpha-value>)',
+        muted:          'rgb(var(--tw-color-muted) / <alpha-value>)',
+        accent:         'rgb(var(--tw-color-accent) / <alpha-value>)',
+        'accent-hover': 'rgb(var(--tw-color-accent-hover) / <alpha-value>)',
       },
       fontFamily: {
-        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+        sans:    ['"DM Sans"', 'system-ui', 'sans-serif'],
         display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
       },
       letterSpacing: {

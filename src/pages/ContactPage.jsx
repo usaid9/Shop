@@ -23,7 +23,8 @@ const contactInfo = [
     icon: <><circle cx="12" cy="12" r="9" /><path strokeLinecap="round" d="M12 7v5l3 3" /></> },
 ]
 
-const inputClass = "w-full px-4 py-3 bg-primary/80 border border-white/[0.07] focus:outline-none focus:border-accent text-sm placeholder:text-muted/40 transition-colors font-sans rounded-xl"
+const inputClass = "w-full px-4 py-3 focus:outline-none focus:ring-1 focus:ring-accent/60 text-sm transition-colors font-sans rounded-xl"
+const inputStyle = { background: 'var(--surface-input)', border: '1px solid var(--border-default)', color: 'var(--color-foreground)' }
 
 export default function ContactPage() {
   const [form, setForm]       = useState({ name: '', email: '', phone: '', subject: '', message: '' })
@@ -43,8 +44,8 @@ export default function ContactPage() {
   return (
     <div className="pt-[68px] min-h-screen">
       {/* Header */}
-      <div className="border-b border-white/[0.06] py-10 px-4 sm:px-6 lg:px-8"
-        style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', boxShadow: '0 1px 0 rgba(255,255,255,0.03) inset' }}>
+      <div className="py-10 px-4 sm:px-6 lg:px-8"
+        style={{ borderBottom: "1px solid var(--border-default)", background: "var(--surface-cart)", boxShadow: "inset 0 1px 0 var(--inset-highlight)" }}>
         <div className="max-w-7xl mx-auto">
           <Breadcrumb />
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="mt-4">
@@ -70,8 +71,8 @@ export default function ContactPage() {
             </p>
             <div className="space-y-3 mb-10">
               {contactInfo.map(({ key, title, value, href, icon }) => (
-                <div key={key} className="flex items-start gap-4 panel-inset border border-white/[0.05] p-4 group hover:border-accent/20 transition-colors rounded-xl">
-                  <div className="w-9 h-9 flex-shrink-0 border border-white/[0.08] flex items-center justify-center text-accent group-hover:border-accent/40 group-hover:bg-accent/[0.06] transition-all rounded-lg">
+                <div key={key} className="flex items-start gap-4 panel-inset border-subtle-themed p-4 group hover:border-accent/20 transition-colors rounded-xl">
+                  <div className="w-9 h-9 flex-shrink-0 border-themed flex items-center justify-center text-accent group-hover:border-accent/40 group-hover:bg-accent/[0.06] transition-all rounded-lg">
                     <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">{icon}</svg>
                   </div>
                   <div>
@@ -94,7 +95,7 @@ export default function ContactPage() {
                 { label: 'TikTok',    href: 'https://tiktok.com' },
               ].map(s => (
                 <a key={s.label} href={s.href} target="_blank" rel="noreferrer"
-                  className="px-4 py-2 border border-white/[0.07] text-xs text-muted hover:text-accent hover:border-accent/30 transition-all underline-hover rounded-lg">
+                  className="px-4 py-2 border-themed text-xs text-muted hover:text-accent hover:border-accent/30 transition-all underline-hover rounded-lg">
                   {s.label}
                 </a>
               ))}
@@ -123,10 +124,10 @@ export default function ContactPage() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
                 <div className="grid grid-cols-2 gap-3">
-                  <input name="name"  placeholder="Full Name"  value={form.name}  onChange={handleInput} required className={inputClass} />
-                  <input name="phone" type="tel" placeholder="Phone" value={form.phone} onChange={handleInput} className={inputClass} />
+                  <input name="name"  placeholder="Full Name"  value={form.name}  onChange={handleInput} required className={inputClass} style={inputStyle} />
+                  <input name="phone" type="tel" placeholder="Phone" value={form.phone} onChange={handleInput} className={inputClass} style={inputStyle} />
                 </div>
-                <input name="email" type="email" placeholder="Email address" value={form.email} onChange={handleInput} required className={inputClass} />
+                <input name="email" type="email" placeholder="Email address" value={form.email} onChange={handleInput} required className={inputClass} style={inputStyle} />
                 <div className="relative">
                   <select name="subject" value={form.subject} onChange={handleInput} required
                     className={`${inputClass} ${form.subject ? '' : 'text-muted/40'} pr-10`}>
@@ -140,7 +141,7 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <textarea name="message" placeholder="Your message…" value={form.message} onChange={handleInput} required rows={5}
-                  className={`${inputClass} resize-none`} />
+                  className={`${inputClass} resize-none`} style={inputStyle} />
                 <button type="submit" className="w-full py-3.5 bg-accent text-white text-sm font-semibold hover:bg-accent-hover transition-colors rounded-xl accent-glow">
                   Send Message
                 </button>
@@ -150,7 +151,7 @@ export default function ContactPage() {
         </div>
 
         {/* FAQ */}
-        <div id="faq" className="mt-20 pt-16 border-t border-white/[0.06]">
+        <div id="faq" className="mt-20 pt-16 border-t border-themed">
           <div className="text-center mb-10">
             <p className="text-[10px] tracking-superwide uppercase text-accent font-semibold mb-3 flex items-center justify-center gap-2">
               <span className="w-5 h-px bg-accent" /> Common Questions <span className="w-5 h-px bg-accent" />
