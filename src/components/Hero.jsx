@@ -146,7 +146,7 @@ export default function Hero({ onShopClick }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="flex gap-10 mt-10 pt-7"
+            className="flex gap-10 mt-16 pt-10"
             style={{ borderTop: '1px solid var(--border-subtle)' }}
           >
             {[
@@ -158,7 +158,7 @@ export default function Hero({ onShopClick }) {
                 {i > 0 && <div className="absolute -left-5 top-1 bottom-1 w-px" style={{ background: 'var(--border-subtle)' }} />}
                 <span
                   className="font-display text-3xl font-bold text-accent leading-none"
-                  style={{ textShadow: '0 0 8px rgba(200,16,46,0.18), 0 0 16px rgba(200,16,46,0.08)' }}
+                  style={{ textShadow: '0 0 20px rgba(200,16,46,0.5), 0 0 40px rgba(200,16,46,0.2)' }}
                 >
                   {s.value}
                 </span>
@@ -176,7 +176,7 @@ export default function Hero({ onShopClick }) {
         transition={{ delay: 1.6 }}
         className="absolute bottom-8 right-10 flex flex-col items-center gap-3"
       >
-        <span className="text-[9px] hidden sm:inline-block  text-muted tracking-superwide uppercase rotate-90 origin-center mb-4">Scroll</span>
+        <span className="text-[9px] text-muted tracking-superwide uppercase rotate-90 origin-center mb-4">Scroll</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}

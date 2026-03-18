@@ -18,14 +18,14 @@ function Dropdown({ value, onChange, options, prefix = '' }) {
   }, [open])
 
   return (
-    <div ref={ref} className="relative flex-1 sm:flex-none min-w-0">
+    <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(o => !o)}
-        className={`w-full flex items-center gap-1.5 px-3 py-2 bg-secondary border font-medium transition-all duration-200 rounded-xl justify-between ${
+        className={`flex items-center gap-2 px-3 py-2 bg-secondary border font-medium transition-all duration-200 rounded-xl flex-shrink-0 justify-between ${
           open ? 'border-accent text-foreground' : 'text-muted hover:text-foreground'
         } text-xs sm:text-sm`}
       >
-        <span className="truncate min-w-0">{prefix && <span className="text-muted mr-0.5 font-normal">{prefix}</span>}{active?.label}</span>
+        <span>{prefix && <span className="text-muted mr-1 font-normal">{prefix}</span>}{active?.label}</span>
         <motion.svg
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2 }}
@@ -281,12 +281,10 @@ export default function ProductGrid({ products, showFilters = true, title, subti
 
             {/* Controls row */}
             <div className="flex items-center gap-2">
-              <div className="flex flex-col sm:flex-row gap-2 flex-1 min-w-0">
-                <Dropdown value={sortBy} onChange={setSortBy} options={SORT_OPTIONS} prefix="Sort:" />
-                <Dropdown value={priceRange} onChange={setPriceRange} options={PRICE_OPTIONS} prefix="Price:" />
-              </div>
-              <div className="flex items-center gap-3 flex-shrink-0">
-                <span className="text-xs text-muted font-mono hidden sm:block">{filtered.length} items</span>
+              <Dropdown value={sortBy} onChange={setSortBy} options={SORT_OPTIONS} prefix="Sort:" />
+              <Dropdown value={priceRange} onChange={setPriceRange} options={PRICE_OPTIONS} prefix="Price:" />
+              <div className="ml-auto flex items-center gap-3 flex-shrink-0">
+                <span className="text-xs sm:text-xs text-muted font-mono hidden sm:block">{filtered.length} items</span>
                 <GridToggle cols={gridCols} onChange={setGridCols} />
               </div>
             </div>

@@ -1,0 +1,79 @@
+{
+  "hash": "d2d7a494",
+  "configHash": "487eb515",
+  "lockfileHash": "3793897f",
+  "browserHash": "2e66b454",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "edc3facf",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "f3ce661c",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "71c5606f",
+      "needsInterop": false
+    },
+    "framer-motion": {
+      "src": "../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "f9fd7bd4",
+      "needsInterop": false
+    },
+    "@react-three/fiber": {
+      "src": "../../node_modules/@react-three/fiber/dist/react-three-fiber.esm.js",
+      "file": "@react-three_fiber.js",
+      "fileHash": "0018c3e9",
+      "needsInterop": false
+    },
+    "@react-three/drei": {
+      "src": "../../node_modules/@react-three/drei/index.js",
+      "file": "@react-three_drei.js",
+      "fileHash": "628ea170",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "7330885e",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "vision_bundle-CLHVUQTO": {
+      "file": "vision_bundle-CLHVUQTO.js"
+    },
+    "chunk-ZM7WIUHA": {
+      "file": "chunk-ZM7WIUHA.js"
+    },
+    "chunk-YJHHC4DW": {
+      "file": "chunk-YJHHC4DW.js"
+    },
+    "chunk-62HKZ5ZB": {
+      "file": "chunk-62HKZ5ZB.js"
+    },
+    "chunk-RZSASJON": {
+      "file": "chunk-RZSASJON.js"
+    },
+    "chunk-TWJRYSII": {
+      "file": "chunk-TWJRYSII.js"
+    },
+    "hls-MKIZWS3V": {
+      "file": "hls-MKIZWS3V.js"
+    },
+    "chunk-TXGQJFWJ": {
+      "file": "chunk-TXGQJFWJ.js"
+    },
+    "chunk-DC5AMYBS": {
+      "file": "chunk-DC5AMYBS.js"
+    }
+  }
+}

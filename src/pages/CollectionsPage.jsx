@@ -23,7 +23,8 @@ export default function CollectionsPage() {
   return (
     <div className="pt-[68px] min-h-screen">
       {/* Header */}
-        <div style={{ borderBottom: "1px solid var(--border-default)", background: "var(--surface-cart)", boxShadow: "inset 0 1px 0 var(--inset-highlight)" }}>
+      <div className="py-10 px-4 sm:px-6 lg:px-8"
+        style={{ borderBottom: "1px solid var(--border-default)", background: "var(--surface-cart)", boxShadow: "inset 0 1px 0 var(--inset-highlight)" }}>
         <div className="max-w-7xl mx-auto">
           <Breadcrumb />
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="mt-4">
