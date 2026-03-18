@@ -2,25 +2,12 @@ import { useEffect } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ProductGrid from '../components/ProductGrid'
+import { GhostGrid } from '../components/GhostCard'
 import Breadcrumb from '../components/Breadcrumb'
 import CategoryIcon from '../components/CategoryIcon'
 import ScrollFloat from '../components/ScrollFloat'
 import { useProducts } from '../hooks/useProducts'
 import { categories } from '../data/products'
-
-function ProductGridSkeleton() {
-  return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-      {Array.from({ length: 8 }).map((_, i) => (
-        <div key={i} className="animate-pulse">
-          <div className="bg-white/[0.06] rounded-2xl mb-3" style={{ aspectRatio: '3/4' }} />
-          <div className="bg-white/[0.06] rounded h-3 w-3/4 mb-2" />
-          <div className="bg-white/[0.06] rounded h-3 w-1/2" />
-        </div>
-      ))}
-    </div>
-  )
-}
 
 export default function ShopPage() {
   const { category } = useParams()
@@ -35,8 +22,24 @@ export default function ShopPage() {
 
   const { products, loading } = useProducts(params)
 
-  const catInfo  = categories.find(c => c.id === category)
-  const title    = filterNew ? 'New Arrivals' : catInfo ? catInfo.label : 'All Products'
+  // Dynamically generate categories from products
+  const dynamicCategories = [
+    { id: 'all', label: 'All Products', count: products.length },
+    ...Array.from(
+      products.reduce((set, p) => {
+        if (p.category) set.add(p.category)
+        return set
+      }, new Set()),
+      cat => ({
+        id: cat,
+        label: cat.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        count: products.filter(p => p.category === cat).length
+      })
+    )
+  ]
+
+  const catInfo = dynamicCategories.find(c => c.id === category)
+  const title = filterNew ? 'New Arrivals' : catInfo ? catInfo.label : 'All Products'
   const subtitle = filterNew
     ? 'Fresh styles, just dropped'
     : catInfo
@@ -52,8 +55,7 @@ export default function ShopPage() {
 
   return (
     <div className="pt-[68px] min-h-screen">
-      <div className="border-b border-white/[0.06] py-10 px-4 sm:px-6 lg:px-8"
-        style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', boxShadow: '0 1px 0 rgba(255,255,255,0.03) inset' }}>
+      <div className="py-10 px-4 sm:px-6 lg:px-8" style={{ borderBottom: "1px solid var(--border-default)", background: "var(--surface-cart)", boxShadow: "inset 0 1px 0 var(--inset-highlight)" }}>
         <div className="max-w-7xl mx-auto">
           <Breadcrumb items={breadcrumbs} />
           <div className="flex items-end gap-4 mt-6">
@@ -72,11 +74,11 @@ export default function ShopPage() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {loading ? <ProductGridSkeleton /> : products.length === 0 ? (
+        {loading ? <GhostGrid count={8} /> : products.length === 0 ? (
           <div className="text-center py-24"><p className="text-muted text-lg">No products found</p></div>
         ) : (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <ProductGrid products={products} />
+            <ProductGrid products={products} categories={dynamicCategories} />
           </motion.div>
         )}
       </div>

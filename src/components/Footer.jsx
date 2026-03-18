@@ -100,9 +100,9 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative z-20 border-t border-white/[0.06]" style={{ background: 'linear-gradient(180deg, #101010 0%, #0c0c0c 100%)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' }}>
+    <footer className="relative z-20" style={{ background: 'var(--surface-footer)', boxShadow: 'inset 0 1px 0 var(--inset-highlight)', borderTop: '1px solid var(--border-default)' }}>
       {/* Trust bar */}
-      <div className="border-b border-white/[0.05]" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 100%)' }}>
+      <div style={{ background: 'var(--surface-footer-trust)', borderBottom: '1px solid var(--border-subtle)' }}>
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {trust.map(({ Icon, title, sub }, i) => (
@@ -114,7 +114,7 @@ export default function Footer() {
                 viewport={{ once: true }}
                 className="flex items-start gap-3 group"
               >
-                <div className="flex-shrink-0 w-9 h-9 flex items-center justify-center border border-white/[0.08] text-accent group-hover:border-accent/40 group-hover:bg-accent/[0.06] transition-all duration-300 rounded-xl">
+                <div className="flex-shrink-0 w-9 h-9 flex items-center justify-center text-accent group-hover:border-accent/40 group-hover:bg-accent/[0.06] transition-all duration-300 rounded-xl" style={{ border: '1px solid var(--border-default)' }}>
                   <Icon />
                 </div>
                 <div>
@@ -134,7 +134,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link to="/" className="inline-flex flex-col leading-none mb-5">
-              <span className="font-display text-3xl font-bold text-foreground" style={{ textShadow: '0 1px 0 rgba(0,0,0,0.8), 0 -1px 0 rgba(255,255,255,0.04)' }}>PREMIUM</span>
+              <span className="font-display text-3xl font-bold text-foreground text-emboss">PREMIUM</span>
               <span className="text-[9px] text-muted tracking-superwide uppercase mt-0.5">Pakistan</span>
             </Link>
             <p className="text-muted text-sm leading-relaxed max-w-xs mb-6">
@@ -142,7 +142,7 @@ export default function Footer() {
             </p>
             <div className="flex flex-wrap items-center gap-2">
               {['JazzCash', 'EasyPaisa', 'HBL', 'COD'].map(p => (
-                <span key={p} className="text-[10px] border border-white/[0.07] px-2.5 py-1 text-muted tracking-wide" style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%)' }}>
+                <span key={p} className="text-[10px] px-2.5 py-1 text-muted tracking-wide" style={{ border: '1px solid var(--border-default)', background: 'var(--surface-newsletter)' }}>
                   {p}
                 </span>
               ))}
@@ -173,7 +173,7 @@ export default function Footer() {
         </div>
 
         {/* Newsletter */}
-        <div className="p-6 mb-10 relative overflow-hidden rounded-2xl" style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(200,16,46,0.03) 100%)', border: '1px solid rgba(255,255,255,0.06)', boxShadow: '0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 24px -4px rgba(0,0,0,0.6)' }}>
+        <div className="p-6 mb-10 relative overflow-hidden rounded-2xl" style={{ background: 'var(--surface-newsletter)', border: '1px solid var(--border-default)', boxShadow: '0 1px 0 var(--inset-highlight) inset, 0 4px 24px -4px rgba(0,0,0,0.15)' }}>
           {/* Corner accent */}
           <div className="absolute top-0 right-0 w-32 h-32 pointer-events-none" style={{ background: 'radial-gradient(circle at top right, rgba(200,16,46,0.06) 0%, transparent 70%)' }} />
           <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between relative">
@@ -193,8 +193,8 @@ export default function Footer() {
                   onChange={e => setEmail(e.target.value)}
                   placeholder="your@email.com"
                   required
-                  className="flex-1 sm:w-60 px-4 py-2.5 border border-white/[0.08] border-r-0 text-sm text-foreground placeholder:text-muted/40 focus:outline-none focus:border-accent transition-colors rounded-l-xl"
-                  style={{ background: 'rgba(8,8,8,0.8)' }}
+                  className="flex-1 sm:w-60 px-4 py-2.5 border-r-0 text-sm text-foreground placeholder:text-muted/40 focus:outline-none focus:border-accent transition-colors rounded-l-xl"
+                  style={{ background: 'var(--surface-input)', border: '1px solid var(--border-default)' }}
                 />
                 <button
                   type="submit"
@@ -208,7 +208,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-white/[0.05]">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6" style={{ borderTop: '1px solid var(--border-subtle)' }}>
           <p className="text-muted text-xs">© {year} PREMIUM Pakistan. All rights reserved.</p>
           <div className="flex items-center gap-2">
             {socials.map(s => (
@@ -218,8 +218,8 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={s.label}
-                className="w-8 h-8 flex items-center justify-center border border-white/[0.07] text-muted hover:text-accent hover:border-accent/40 transition-all duration-200 rounded-lg"
-                style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%)' }}
+                className="w-8 h-8 flex items-center justify-center text-muted hover:text-accent hover:border-accent/40 transition-all duration-200 rounded-lg"
+                style={{ border: '1px solid var(--border-default)', background: 'var(--surface-newsletter)' }}
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
                   {s.icon}

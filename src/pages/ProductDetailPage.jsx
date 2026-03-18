@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useCart } from '../hooks/useCart'
+import { useWishlist } from '../hooks/useWishlist'
 import ProductCard from '../components/ProductCard'
+import { GhostProductDetail, GhostCard } from '../components/GhostCard'
 import Breadcrumb from '../components/Breadcrumb'
 import ScrollFloat from '../components/ScrollFloat'
 import { fetchProductById } from '../api/client'
@@ -12,6 +14,7 @@ export default function ProductDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { addToCart } = useCart()
+  const { toggleItem, isWishlisted } = useWishlist()
 
   const [product, setProduct]   = useState(null)
   const [loading, setLoading]   = useState(true)
@@ -46,19 +49,7 @@ export default function ProductDetailPage() {
     setTimeout(() => setAdded(false), 1800)
   }
 
-  if (loading) return (
-    <div className="pt-[68px] min-h-screen px-4 sm:px-6 lg:px-8 py-12">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 animate-pulse">
-        <div className="bg-white/[0.06] rounded-2xl" style={{ aspectRatio: '3/4' }} />
-        <div className="space-y-4 pt-4">
-          <div className="bg-white/[0.06] rounded h-4 w-1/3" />
-          <div className="bg-white/[0.06] rounded h-10 w-3/4" />
-          <div className="bg-white/[0.06] rounded h-6 w-1/4" />
-          <div className="bg-white/[0.06] rounded h-20 w-full" />
-        </div>
-      </div>
-    </div>
-  )
+  if (loading) return <GhostProductDetail />
 
   if (notFound) return (
     <div className="pt-[68px] min-h-screen flex items-center justify-center px-4">
@@ -89,7 +80,7 @@ export default function ProductDetailPage() {
         <div className="grid md:grid-cols-2 gap-10 mt-8">
           {/* Image */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
-            className="relative overflow-hidden rounded-2xl border border-white/[0.06]" style={{ aspectRatio: '3/4' }}>
+            className="relative overflow-hidden rounded-2xl border-themed" style={{ aspectRatio: '3/4' }}>
             <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
             {discount && (
               <div className="absolute top-4 left-4 px-3 py-1 bg-accent text-white text-sm font-bold rounded-full">
@@ -97,7 +88,7 @@ export default function ProductDetailPage() {
               </div>
             )}
             {product.newArrival && (
-              <div className="absolute top-4 right-4 px-3 py-1 bg-white/10 backdrop-blur border border-white/20 text-white text-xs font-bold rounded-full uppercase tracking-wider">
+              <div className="absolute top-4 right-4 px-3 py-1 backdrop-blur text-foreground text-xs font-bold rounded-full uppercase tracking-wider" style={{ background: "var(--surface-item-card)", border: "1px solid var(--border-default)" }}>
                 New
               </div>
             )}
@@ -129,7 +120,7 @@ export default function ProductDetailPage() {
                   {product.sizes.map(s => (
                     <button key={s} onClick={() => setSelectedSize(s)}
                       className={`px-4 py-2 rounded-xl text-sm font-semibold border transition-all ${
-                        selectedSize === s ? 'bg-accent/20 text-accent border-accent/40' : 'border-white/[0.08] text-muted hover:border-white/20 hover:text-foreground'
+                        selectedSize === s ? 'bg-accent/20 text-accent border-accent/40' : 'border-themed text-muted hover:text-foreground'
                       }`}>{s}</button>
                   ))}
                 </div>
@@ -144,7 +135,7 @@ export default function ProductDetailPage() {
                   {product.colors.map(c => (
                     <button key={c} onClick={() => setSelectedColor(c)}
                       className={`px-4 py-2 rounded-xl text-sm font-semibold border transition-all ${
-                        selectedColor === c ? 'bg-accent/20 text-accent border-accent/40' : 'border-white/[0.08] text-muted hover:border-white/20 hover:text-foreground'
+                        selectedColor === c ? 'bg-accent/20 text-accent border-accent/40' : 'border-themed text-muted hover:text-foreground'
                       }`}>{c}</button>
                   ))}
                 </div>
@@ -156,22 +147,51 @@ export default function ProductDetailPage() {
               <p className="text-[10px] uppercase tracking-widest text-muted mb-2">Quantity</p>
               <div className="flex items-center gap-3">
                 <button onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                  className="w-9 h-9 rounded-xl border border-white/[0.08] text-foreground hover:border-white/20 transition-colors flex items-center justify-center">−</button>
+                  className="w-9 h-9 rounded-xl text-foreground transition-colors flex items-center justify-center" style={{ border: '1px solid var(--border-default)' }}>−</button>
                 <span className="w-8 text-center font-semibold">{quantity}</span>
                 <button onClick={() => setQuantity(q => q + 1)}
-                  className="w-9 h-9 rounded-xl border border-white/[0.08] text-foreground hover:border-white/20 transition-colors flex items-center justify-center">+</button>
+                  className="w-9 h-9 rounded-xl text-foreground transition-colors flex items-center justify-center" style={{ border: '1px solid var(--border-default)' }}>+</button>
               </div>
             </div>
 
-            <motion.button whileTap={{ scale: 0.97 }} onClick={handleAddToCart}
-              disabled={!product.inStock}
-              className={`w-full py-4 rounded-xl font-bold text-sm transition-all ${
-                added ? 'bg-green-500/20 text-green-400 border border-green-500/20'
-                : product.inStock ? 'bg-accent text-white hover:bg-accent/90 accent-glow'
-                : 'bg-white/[0.04] text-muted cursor-not-allowed border border-white/[0.06]'
-              }`}>
-              {added ? '✓ Added to Cart' : product.inStock ? 'Add to Cart' : 'Out of Stock'}
-            </motion.button>
+            <div className="flex gap-3">
+              <motion.button whileTap={{ scale: 0.97 }} onClick={handleAddToCart}
+                disabled={!product.inStock}
+                className={`flex-1 py-4 rounded-xl font-bold text-sm transition-all ${
+                  added ? 'bg-green-500/20 text-green-400 border border-green-500/20'
+                  : product.inStock ? 'bg-accent text-white hover:bg-accent/90 accent-glow'
+                  : 'text-muted cursor-not-allowed border-themed'
+                }`}>
+                {added ? '✓ Added to Cart' : product.inStock ? 'Add to Cart' : 'Out of Stock'}
+              </motion.button>
+
+              {/* Wishlist toggle */}
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                onClick={() => toggleItem({ ...product, id: product._id })}
+                className="w-14 py-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center flex-shrink-0"
+                style={{
+                  border: '1px solid var(--border-default)',
+                  background: isWishlisted(product._id)
+                    ? 'rgba(200,16,46,0.1)'
+                    : 'transparent',
+                  borderColor: isWishlisted(product._id)
+                    ? 'rgba(200,16,46,0.3)'
+                    : 'var(--border-default)',
+                }}
+                aria-label={isWishlisted(product._id) ? 'Remove from wishlist' : 'Save to wishlist'}
+              >
+                <svg
+                  className="w-5 h-5 transition-all duration-200"
+                  fill={isWishlisted(product._id) ? '#c8102e' : 'none'}
+                  stroke={isWishlisted(product._id) ? '#c8102e' : 'currentColor'}
+                  strokeWidth={1.8} viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round"
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </motion.button>
+            </div>
           </motion.div>
         </div>
 

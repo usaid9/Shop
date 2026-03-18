@@ -52,8 +52,7 @@ export default function OrdersPage() {
   return (
     <div className="pt-[68px] min-h-screen">
       {/* Page header */}
-      <div className="border-b border-white/[0.06] py-10 px-4 sm:px-6 lg:px-8"
-        style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', boxShadow: '0 1px 0 rgba(255,255,255,0.03) inset' }}>
+        <div style={{ borderBottom: "1px solid var(--border-default)", background: "var(--surface-cart)", boxShadow: "inset 0 1px 0 var(--inset-highlight)" }}>
         <div className="max-w-2xl mx-auto">
           <Breadcrumb />
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="mt-4">
@@ -75,7 +74,7 @@ export default function OrdersPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="panel-inset border border-white/[0.06] rounded-2xl p-6 mb-8 card-depth"
+          className="panel-inset border-themed rounded-2xl p-6 mb-8 card-depth"
         >
           {/* Toggle tabs */}
           <div className="flex gap-2 mb-5">
@@ -84,7 +83,7 @@ export default function OrdersPage() {
                 key={t.id}
                 onClick={() => { setType(t.id); setQuery(''); setOrder(null); setNotFound(false) }}
                 className={`flex-1 py-2.5 text-sm font-semibold transition-all rounded-xl ${
-                  type === t.id ? 'bg-accent text-white' : 'bg-primary/80 text-muted hover:text-foreground hover:bg-white/[0.05] border border-white/[0.06]'
+                  type === t.id ? 'bg-accent text-white' : 'text-muted hover:text-foreground'
                 }`}
               >
                 {t.label}
@@ -98,7 +97,7 @@ export default function OrdersPage() {
               onChange={e => setQuery(e.target.value)}
               placeholder={type === 'id' ? 'e.g. PRE123456' : 'e.g. 03001234567'}
               required
-              className="flex-1 px-4 py-3 bg-primary/80 border border-white/[0.07] rounded-xl text-sm text-foreground focus:outline-none focus:border-accent placeholder:text-muted/60 transition-colors"
+              className="flex-1 px-4 py-3 bg-primary/80 border-themed rounded-xl text-sm text-foreground focus:outline-none focus:border-accent placeholder:text-muted/60 transition-colors"
             />
             <motion.button
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
@@ -117,9 +116,9 @@ export default function OrdersPage() {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="panel-inset border border-white/[0.06] rounded-2xl p-8 text-center card-depth"
+            className="panel-inset border-themed rounded-2xl p-8 text-center card-depth"
           >
-            <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
+            <div className="w-14 h-14 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ background: "var(--inset-highlight)", border: "1px solid var(--border-default)" }}>
               <svg className="w-6 h-6 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="7" strokeWidth={1.5} />
                 <path strokeLinecap="round" strokeWidth={1.5} d="M21 21l-4.35-4.35" />
@@ -146,7 +145,7 @@ export default function OrdersPage() {
             className="space-y-4 mb-8"
           >
             {/* Progress tracker */}
-            <div className="panel-inset border border-white/[0.06] rounded-2xl p-6 card-depth">
+            <div className="panel-inset border-themed rounded-2xl p-6 card-depth">
               <div className="flex items-start justify-between mb-6">
                 <div>
                   <p className="text-[10px] text-muted uppercase tracking-wider mb-0.5">Order ID</p>
@@ -163,7 +162,7 @@ export default function OrdersPage() {
               {/* Step indicators */}
               <div className="relative">
                 {/* Background track */}
-                <div className="absolute top-4 left-4 right-4 h-0.5 bg-white/[0.08] rounded-full" />
+                <div className="absolute top-4 left-4 right-4 h-0.5 rounded-full" style={{ background: "var(--border-default)" }} />
                 {/* Progress fill */}
                 <div
                   className="absolute top-4 left-4 h-0.5 bg-accent rounded-full transition-all duration-700"
@@ -174,9 +173,12 @@ export default function OrdersPage() {
                     const done = i <= getStageIndex(order.status)
                     return (
                       <div key={stage} className="flex flex-col items-center gap-2" style={{ width: '20%' }}>
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center z-10 border-2 transition-all duration-300 text-xs font-bold ${
-                          done ? 'bg-accent border-accent text-white shadow-[0_0_12px_rgba(200,16,46,0.4)]' : 'bg-primary border-white/[0.1] text-white/20'
-                        }`}>
+                        <div
+                          className={`w-8 h-8 rounded-full flex items-center justify-center z-10 border-2 transition-all duration-300 text-xs font-bold ${
+                            done ? 'bg-accent border-accent text-white shadow-[0_0_12px_rgba(200,16,46,0.4)]' : 'text-muted'
+                          }`}
+                          style={!done ? { borderColor: 'var(--border-default)', background: 'var(--color-primary)' } : {}}
+                        >
                           {done ? '✓' : ''}
                         </div>
                         <p className="text-[9px] text-center text-muted leading-tight">{stage}</p>
@@ -200,14 +202,14 @@ export default function OrdersPage() {
             </div>
 
             {/* Order items */}
-            <div className="panel-inset border border-white/[0.06] rounded-2xl p-5 card-depth">
+            <div className="panel-inset border-themed rounded-2xl p-5 card-depth">
               <h3 className="font-bold text-sm mb-4 text-foreground/90">Items in This Order</h3>
               <div className="space-y-3">
                 {order.items?.map((item, i) => (
                   <div key={i} className="flex gap-3 items-center">
                     {item.image && (
                       <img src={item.image} alt={item.name}
-                        className="w-14 h-14 rounded-xl object-cover border border-white/[0.06] flex-shrink-0" />
+                        className="w-14 h-14 rounded-xl object-cover border-themed flex-shrink-0" />
                     )}
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold truncate">{item.name}</p>
@@ -217,7 +219,7 @@ export default function OrdersPage() {
                   </div>
                 ))}
               </div>
-              <div className="border-t border-white/[0.06] mt-4 pt-4 flex justify-between font-bold">
+              <div className="border-t border-themed mt-4 pt-4 flex justify-between font-bold">
                 <span className="text-foreground/80">Total Paid</span>
                 <span className="text-accent" style={{ textShadow: '0 0 12px rgba(200,16,46,0.4)' }}>
                   Rs {order.total?.toLocaleString()}
@@ -226,7 +228,7 @@ export default function OrdersPage() {
             </div>
 
             {/* Delivery address */}
-            <div className="panel-inset border border-white/[0.06] rounded-2xl p-5 card-depth">
+            <div className="panel-inset border-themed rounded-2xl p-5 card-depth">
               <h3 className="font-bold text-sm mb-3 text-foreground/90">Delivery Address</h3>
               <div className="space-y-1">
                 <p className="text-sm font-medium text-foreground/90">{order.shippingAddress?.fullName}</p>
@@ -244,5 +246,6 @@ export default function OrdersPage() {
         ))}
       </div>
     </div>
+    
   )
 }

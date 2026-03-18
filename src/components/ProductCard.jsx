@@ -2,7 +2,50 @@ import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import { useCart } from '../hooks/useCart'
+import { useWishlist } from '../hooks/useWishlist'
 
+function WishlistHeart({ product }) {
+  const { isWishlisted, toggleItem } = useWishlist()
+  const [popped, setPopped] = useState(false)
+  const saved = isWishlisted(product._id || product.id)
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    toggleItem(product)
+    if (!saved) {
+      setPopped(true)
+      setTimeout(() => setPopped(false), 400)
+    }
+  }
+
+  return (
+    <motion.button
+      onClick={handleClick}
+      whileTap={{ scale: 0.85 }}
+      className={`absolute top-2.5 right-2.5 z-20 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-200 ${
+        saved ? 'wishlist-btn-active' : 'opacity-0 group-hover:opacity-100'
+      }`}
+      style={{
+        background: saved ? 'rgba(200,16,46,0.15)' : 'rgba(0,0,0,0.4)',
+        backdropFilter: 'blur(6px)',
+        border: saved ? '1px solid rgba(200,16,46,0.3)' : '1px solid rgba(255,255,255,0.1)',
+      }}
+      aria-label={saved ? 'Remove from wishlist' : 'Save to wishlist'}
+    >
+      <svg
+        className={`w-4 h-4 transition-all duration-200 ${popped ? 'animate-heart-pop' : ''}`}
+        fill={saved ? '#c8102e' : 'none'}
+        stroke={saved ? '#c8102e' : 'white'}
+        strokeWidth={1.8}
+        viewBox="0 0 24 24"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round"
+          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+      </svg>
+    </motion.button>
+  )
+}
 function TiltCard({ children, className }) {
   const ref = useRef(null)
   const x = useMotionValue(0)
@@ -64,7 +107,8 @@ export default function ProductCard({ product, listView = false }) {
       <motion.div
         whileTap={{ scale: 0.99 }}
         transition={{ duration: 0.15 }}
-        className="group flex gap-5 bg-secondary border border-white/[0.04] hover:border-white/[0.1] transition-colors p-4 rounded-xl"
+        className="group flex gap-5 bg-secondary hover:border-accent/20 transition-colors p-4 rounded-xl"
+        style={{ border: '1px solid var(--border-subtle)' }}
       >
         <Link to={`/product/${product.id}`} className="relative flex-shrink-0 w-24 h-28 overflow-hidden bg-tertiary rounded-lg">
           <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
@@ -80,7 +124,7 @@ export default function ProductCard({ product, listView = false }) {
             </Link>
             <div className="flex items-center gap-1 mt-1.5">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className={`text-[10px] ${i < Math.floor(product.rating) ? 'text-accent' : 'text-white/15'}`}>★</span>
+                <span key={i} className={`text-[10px] ${i < Math.floor(product.rating) ? 'text-accent' : ''}`} style={{ color: i < Math.floor(product.rating) ? undefined : 'var(--star-empty)' }}>★</span>
               ))}
               <span className="text-[10px] text-muted ml-1">({product.reviews})</span>
             </div>
@@ -95,7 +139,7 @@ export default function ProductCard({ product, listView = false }) {
             {product.inStock ? (
               <button
                 onClick={() => setShowQuick(true)}
-                className="text-xs px-3 py-1.5 border border-white/10 text-muted hover:border-accent hover:text-accent transition-colors rounded-lg"
+                className="text-xs px-3 py-1.5 text-muted hover:border-accent hover:text-accent transition-colors rounded-lg" style={{ border: "1px solid var(--border-default)" }}
               >
                 Quick Add
               </button>
@@ -111,7 +155,8 @@ export default function ProductCard({ product, listView = false }) {
   // ── GRID VIEW ────────────────────────────────────────────────────────────
   return (
     <TiltCard className="group relative bg-secondary overflow-hidden card-depth rounded-xl cursor-pointer">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent pointer-events-none z-10" />
+      <div className="absolute top-0 left-0 right-0 h-px pointer-events-none z-10"
+        style={{ background: 'linear-gradient(90deg, transparent, var(--border-default), transparent)' }} />
 
       {/* Image */}
       <Link to={`/product/${product.id}`} className="block relative overflow-hidden bg-tertiary rounded-t-xl" style={{ aspectRatio: '3/4' }}>
@@ -121,6 +166,9 @@ export default function ProductCard({ product, listView = false }) {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
+
+        {/* Wishlist heart */}
+        <WishlistHeart product={product} />
 
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
@@ -133,8 +181,8 @@ export default function ProductCard({ product, listView = false }) {
         </div>
 
         {!product.inStock && (
-          <div className="absolute inset-0 bg-black/65 flex items-center justify-center">
-            <span className="text-white/80 text-xs font-medium tracking-wider uppercase">Sold Out</span>
+          <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.55)' }}>
+            <span className="text-white text-xs font-medium tracking-wider uppercase">Sold Out</span>
           </div>
         )}
 
@@ -152,14 +200,14 @@ export default function ProductCard({ product, listView = false }) {
       </Link>
 
       {/* Info */}
-      <div className="p-3.5 pt-3 bg-gradient-to-b from-secondary to-[#111111]">
+      <div className="p-3.5 pt-3" style={{ background: 'linear-gradient(to bottom, var(--color-secondary), var(--color-tertiary))' }}>
         <p className="text-[10px] text-accent font-semibold uppercase tracking-wider mb-1.5">{product.category}</p>
         <Link to={`/product/${product.id}`}>
           <h3 className="font-medium text-sm line-clamp-1 text-foreground/90 underline-hover">{product.name}</h3>
         </Link>
         <div className="flex items-center gap-1 mt-2 mb-2.5">
           {[...Array(5)].map((_, i) => (
-            <span key={i} className={`text-[10px] ${i < Math.floor(product.rating) ? 'text-accent' : 'text-white/15'}`}>★</span>
+            <span key={i} className={`text-[10px] ${i < Math.floor(product.rating) ? 'text-accent' : ''}`} style={{ color: i < Math.floor(product.rating) ? undefined : 'var(--star-empty)' }}>★</span>
           ))}
           <span className="text-[10px] text-muted ml-1">({product.reviews})</span>
         </div>
@@ -189,18 +237,20 @@ export default function ProductCard({ product, listView = false }) {
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-50 flex flex-col rounded-none sm:rounded-xl overflow-y-auto"
-            style={{ background: 'linear-gradient(160deg, #1c1c1c 0%, #141414 100%)', WebkitOverflowScrolling: 'touch' }}
+            style={{ background: 'var(--surface-card)', WebkitOverflowScrolling: 'touch' }}
           >
             {/* Top strip — product name + close */}
-            <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-white/[0.07]">
+            <div className="flex items-center justify-between px-4 pt-4 pb-3" style={{ borderBottom: '1px solid var(--border-default)' }}>
               <div className="min-w-0 pr-2">
                 <p className="text-xs text-accent font-semibold uppercase tracking-wider mb-0.5">{product.category}</p>
-                <p className="text-sm font-bold text-white line-clamp-1">{product.name}</p>
+                <p className="text-sm font-bold text-foreground line-clamp-1">{product.name}</p>
               </div>
               <button
                 onClick={() => setShowQuick(false)}
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.15] text-white/70 hover:text-white transition-colors flex-shrink-0 fixed top-3 right-3 sm:static sm:w-7 sm:h-7 sm:rounded-lg sm:bg-white/[0.06] sm:hover:bg-white/[0.12] sm:text-white/60"
-                style={{ zIndex: 60 }}
+                className="w-9 h-9 flex items-center justify-center rounded-full text-muted hover:text-foreground transition-colors flex-shrink-0 fixed top-3 right-3 sm:static sm:w-7 sm:h-7 sm:rounded-lg"
+                style={{ background: 'var(--surface-quick-add-close)', zIndex: 60 }}
+                onMouseEnter={e => e.currentTarget.style.background = 'var(--surface-quick-add-close-h)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'var(--surface-quick-add-close)'}
                 aria-label="Close quick add"
               >
                 <svg className="w-5 h-5 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -211,7 +261,7 @@ export default function ProductCard({ product, listView = false }) {
 
             {/* Size */}
             <div className="px-4 pt-3 pb-2">
-              <p className="text-xs sm:text-[10px] font-bold text-white/60 uppercase tracking-widest mb-3">Select Size</p>
+              <p className="text-xs sm:text-[10px] font-bold uppercase tracking-widest mb-3 text-muted">Select Size</p>
               <div className="flex flex-wrap gap-2 sm:gap-1.5 mb-2">
                 {product.sizes.map(s => (
                   <button
@@ -220,9 +270,12 @@ export default function ProductCard({ product, listView = false }) {
                     className={`min-w-[48px] sm:min-w-[36px] px-3 sm:px-2.5 py-2 sm:py-1.5 text-base sm:text-xs font-semibold transition-all duration-150 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/60 ${
                       selectedSize === s
                         ? 'border-accent bg-accent text-white shadow-[0_0_12px_rgba(200,16,46,0.35)]'
-                        : 'border-white/[0.15] text-white/75 hover:border-white/40 hover:text-white bg-white/[0.04]'
+                        : 'text-muted hover:text-foreground'
                     }`}
-                    style={{ marginBottom: 4 }}
+                    style={{
+                      marginBottom: 4,
+                      ...(selectedSize !== s ? { borderColor: 'var(--border-default)', background: 'var(--inset-highlight)' } : {}),
+                    }}
                   >
                     {s}
                   </button>
@@ -232,7 +285,7 @@ export default function ProductCard({ product, listView = false }) {
 
             {/* Color */}
             <div className="px-4 pt-2 pb-3">
-              <p className="text-xs sm:text-[10px] font-bold text-white/60 uppercase tracking-widest mb-3">Select Color</p>
+              <p className="text-xs sm:text-[10px] font-bold uppercase tracking-widest mb-3 text-muted">Select Color</p>
               <div className="flex flex-wrap gap-2 sm:gap-1.5 mb-2">
                 {product.colors.map(c => (
                   <button
@@ -241,9 +294,12 @@ export default function ProductCard({ product, listView = false }) {
                     className={`min-w-[48px] sm:min-w-[36px] px-3 sm:px-2.5 py-2 sm:py-1.5 text-base sm:text-xs font-semibold transition-all duration-150 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/60 ${
                       selectedColor === c
                         ? 'border-accent bg-accent text-white shadow-[0_0_12px_rgba(200,16,46,0.35)]'
-                        : 'border-white/[0.15] text-white/75 hover:border-white/40 hover:text-white bg-white/[0.04]'
+                        : 'text-muted hover:text-foreground'
                     }`}
-                    style={{ marginBottom: 4 }}
+                    style={{
+                      marginBottom: 4,
+                      ...(selectedColor !== c ? { borderColor: 'var(--border-default)', background: 'var(--inset-highlight)' } : {}),
+                    }}
                   >
                     {c}
                   </button>
@@ -252,20 +308,20 @@ export default function ProductCard({ product, listView = false }) {
             </div>
 
             {/* Price + Add button */}
-            <div className="mt-auto px-4 pb-4 pt-2 border-t border-white/[0.07]">
+            <div className="mt-auto px-4 pb-4 pt-2" style={{ borderTop: '1px solid var(--border-default)' }}>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
                 <div className="flex items-baseline gap-1.5">
                   <span className="text-lg sm:text-base font-bold text-accent">Rs {product.price.toLocaleString()}</span>
                   {product.originalPrice && (
-                    <span className="text-xs text-white/35 line-through">Rs {product.originalPrice.toLocaleString()}</span>
+                    <span className="text-xs text-muted line-through">Rs {product.originalPrice.toLocaleString()}</span>
                   )}
                 </div>
                 <div className="flex items-center gap-2 sm:gap-1">
-                  <span className="text-xs text-white/40">Size:</span>
-                  <span className="text-xs font-bold text-white/70">{selectedSize}</span>
-                  <span className="text-xs text-white/25 mx-0.5">·</span>
-                  <span className="text-xs text-white/40">Color:</span>
-                  <span className="text-xs font-bold text-white/70">{selectedColor}</span>
+                  <span className="text-xs text-muted">Size:</span>
+                  <span className="text-xs font-bold text-foreground">{selectedSize}</span>
+                  <span className="text-xs text-muted mx-0.5">·</span>
+                  <span className="text-xs text-muted">Color:</span>
+                  <span className="text-xs font-bold text-foreground">{selectedColor}</span>
                 </div>
               </div>
               <motion.button

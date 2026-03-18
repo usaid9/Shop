@@ -23,8 +23,7 @@ export default function CollectionsPage() {
   return (
     <div className="pt-[68px] min-h-screen">
       {/* Header */}
-      <div className="border-b border-white/[0.06] py-10 px-4 sm:px-6 lg:px-8"
-        style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', boxShadow: '0 1px 0 rgba(255,255,255,0.03) inset' }}>
+        <div style={{ borderBottom: "1px solid var(--border-default)", background: "var(--surface-cart)", boxShadow: "inset 0 1px 0 var(--inset-highlight)" }}>
         <div className="max-w-7xl mx-auto">
           <Breadcrumb />
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="mt-4">
@@ -61,7 +60,7 @@ export default function CollectionsPage() {
                 >
                   <Link
                     to={`/shop/${cat.id}`}
-                    className="group block relative overflow-hidden bg-secondary border border-white/[0.05] hover:border-accent/25 transition-all duration-300 card-depth rounded-xl"
+                    className="group block relative overflow-hidden bg-secondary border-subtle-themed hover:border-accent/25 transition-all duration-300 card-depth rounded-xl"
                   >
                     {/* Top highlight */}
                     <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.07] to-transparent pointer-events-none z-10" />
@@ -77,7 +76,7 @@ export default function CollectionsPage() {
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-                      <div className="absolute bottom-4 left-4 w-10 h-10 flex items-center justify-center border border-white/20 bg-black/40 backdrop-blur-sm text-white rounded-lg">
+                      <div className="absolute bottom-4 left-4 w-10 h-10 flex items-center justify-center backdrop-blur-sm text-foreground rounded-lg" style={{ border: "1px solid var(--border-default)", background: "rgba(0,0,0,0.35)" }}>
                         <CategoryIcon id={cat.id} className="w-5 h-5" />
                       </div>
                       <div className="absolute top-4 right-4 bg-accent text-white text-[10px] px-2.5 py-1 font-bold tracking-wide rounded-md">
@@ -117,7 +116,7 @@ export default function CollectionsPage() {
 
       {/* Seasonal banner */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden"
-        style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #0f0608 40%, #0a0408 60%, #080808 100%)', borderTop: '1px solid rgba(200,16,46,0.15)', borderBottom: '1px solid rgba(200,16,46,0.15)' }}>
+        style={{ background: 'var(--surface-footer)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 70% at 50% 50%, rgba(200,16,46,0.08) 0%, transparent 70%)' }} />
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-1/3 bottom-0 w-px bg-gradient-to-b from-transparent via-accent/[0.07] to-transparent" />

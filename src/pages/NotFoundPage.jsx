@@ -31,7 +31,7 @@ export default function NotFoundPage() {
             </button>
           </Link>
           <Link to="/shop">
-            <button className="px-8 py-3 border border-white/[0.08] text-muted text-sm hover:text-foreground hover:border-white/20 transition-colors">
+            <button className="px-8 py-3 border-themed text-muted text-sm hover:text-foreground transition-colors">
               Browse Shop
             </button>
           </Link>

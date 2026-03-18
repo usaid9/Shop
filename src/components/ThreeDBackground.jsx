@@ -1,7 +1,7 @@
-import { Component, Suspense } from 'react'
+import { Component, Suspense, useRef, useEffect, useMemo } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Stars, PerspectiveCamera } from '@react-three/drei'
-import { useRef, useEffect, useMemo } from 'react'
+import { useTheme } from '../hooks/useTheme'
 
 class ThreeErrorBoundary extends Component {
   constructor(props) { super(props); this.state = { crashed: false } }
@@ -9,7 +9,7 @@ class ThreeErrorBoundary extends Component {
   render() { return this.state.crashed ? null : this.props.children }
 }
 
-function Particles({ count = 80 }) {
+function Particles({ count = 80, isDark }) {
   const mesh = useRef(null)
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3)
@@ -20,6 +20,7 @@ function Particles({ count = 80 }) {
     }
     return arr
   }, [count])
+
   useEffect(() => {
     let id
     const animate = () => {
@@ -36,17 +37,25 @@ function Particles({ count = 80 }) {
     animate()
     return () => cancelAnimationFrame(id)
   }, [])
+
   return (
     <points ref={mesh}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.1} color={0xc8102e} sizeAttenuation transparent opacity={0.5} />
+      {/* Light mode: deeper red dots, more visible against warm bg */}
+      <pointsMaterial
+        size={isDark ? 0.1 : 0.12}
+        color={isDark ? 0xc8102e : 0xb00e28}
+        sizeAttenuation
+        transparent
+        opacity={isDark ? 0.5 : 0.35}
+      />
     </points>
   )
 }
 
-function FloatingMesh() {
+function FloatingMesh({ isDark }) {
   const mesh = useRef(null)
   useEffect(() => {
     let id
@@ -61,29 +70,61 @@ function FloatingMesh() {
     animate()
     return () => cancelAnimationFrame(id)
   }, [])
+
   return (
     <mesh ref={mesh} position={[0, 0, -10]}>
       <icosahedronGeometry args={[8, 4]} />
-      <meshPhongMaterial color={0x1a1a1a} wireframe emissive={0xc8102e} emissiveIntensity={0.15} />
+      {isDark ? (
+        /* Dark mode: dark mesh with red glow */
+        <meshPhongMaterial
+          color={0x1a1a1a}
+          wireframe
+          emissive={0xc8102e}
+          emissiveIntensity={0.15}
+        />
+      ) : (
+        /* Light mode: warm parchment mesh with very subtle red tint — nearly invisible, depth only */
+        <meshPhongMaterial
+          color={0xe8d0c4}
+          wireframe
+          emissive={0xc8102e}
+          emissiveIntensity={0.04}
+          opacity={0.18}
+          transparent
+        />
+      )}
     </mesh>
   )
 }
 
 export default function ThreeDBackground() {
+  const { isDark } = useTheme()
+
   return (
     <ThreeErrorBoundary>
       <Suspense fallback={null}>
         <Canvas
-          style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 1 }}
+          style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}
           gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
         >
           <PerspectiveCamera makeDefault position={[0, 0, 30]} />
-          <ambientLight intensity={0.4} />
-          <pointLight position={[20, 20, 20]} intensity={0.8} color={0xc8102e} />
-          <pointLight position={[-20, -20, -20]} intensity={0.4} color={0x666666} />
-          <Particles count={80} />
-          <FloatingMesh />
-          <Stars radius={100} depth={50} count={500} factor={4} fade speed={0.1} />
+          <ambientLight intensity={isDark ? 0.15 : 0.7} />
+          <pointLight
+            position={[20, 20, 20]}
+            intensity={isDark ? 0.35 : 0.3}
+            color={0xc8102e}
+          />
+          <pointLight
+            position={[-20, -20, -20]}
+            intensity={isDark ? 0.2 : 0.15}
+            color={isDark ? 0x666666 : 0xd4a89a}
+          />
+          <Particles count={80} isDark={isDark} />
+          <FloatingMesh isDark={isDark} />
+          {/* Stars only in dark mode — look wrong on light bg */}
+          {isDark && (
+            <Stars radius={100} depth={50} count={500} factor={4} fade speed={0.1} />
+          )}
         </Canvas>
       </Suspense>
     </ThreeErrorBoundary>

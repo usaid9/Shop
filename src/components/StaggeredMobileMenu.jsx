@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../hooks/useCart'
+import { useTheme } from '../hooks/useTheme'
 
 const navLinks = [
   { to: '/',            label: 'Home',        num: '01' },
@@ -12,8 +13,6 @@ const navLinks = [
   { to: '/orders',      label: 'Track Order', num: '06' },
 ]
 
-// The ReactBits signature: text reveals upward from a hidden slot
-// Each word/item has overflow:hidden wrapper + child animates y: 100% → 0
 function SlotReveal({ children, delay = 0, className = '' }) {
   return (
     <div style={{ overflow: 'hidden' }}>
@@ -36,6 +35,7 @@ function SlotReveal({ children, delay = 0, className = '' }) {
 
 export default function StaggeredMobileMenu({ isOpen, onClose, onCartClick }) {
   const { itemCount } = useCart()
+  const { isDark } = useTheme()
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -54,11 +54,11 @@ export default function StaggeredMobileMenu({ isOpen, onClose, onCartClick }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[60]"
-            style={{ background: 'rgba(4,4,4,0.5)', backdropFilter: 'blur(6px)' }}
+            style={{ background: isDark ? 'rgba(4,4,4,0.5)' : 'rgba(200,16,46,0.15)', backdropFilter: 'blur(6px)' }}
             onClick={onClose}
           />
 
-          {/* Panel — slides in from top with clip */}
+          {/* Panel */}
           <motion.div
             key="panel"
             initial={{ clipPath: 'inset(0 0 100% 0)' }}
@@ -66,7 +66,7 @@ export default function StaggeredMobileMenu({ isOpen, onClose, onCartClick }) {
             exit={{ clipPath: 'inset(0 0 100% 0)' }}
             transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 z-[70] flex flex-col"
-            style={{ background: 'linear-gradient(160deg, #0e0e0e 0%, #080808 55%, #0b0203 100%)' }}
+            style={{ background: 'var(--surface-mobile-menu)' }}
           >
             {/* Corner glows */}
             <div className="absolute top-0 right-0 w-72 h-72 pointer-events-none"
@@ -75,7 +75,10 @@ export default function StaggeredMobileMenu({ isOpen, onClose, onCartClick }) {
               style={{ background: 'radial-gradient(circle at bottom left, rgba(200,16,46,0.07) 0%, transparent 65%)' }} />
 
             {/* Header */}
-            <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/[0.06] flex-shrink-0">
+            <div
+              className="flex items-center justify-between px-6 pt-5 pb-4 flex-shrink-0"
+              style={{ borderBottom: '1px solid var(--border-default)' }}
+            >
               <SlotReveal delay={0.15}>
                 <Link to="/" onClick={onClose} className="flex flex-col leading-none">
                   <span className="font-display text-2xl font-bold tracking-tight text-foreground">PREMIUM</span>
@@ -85,7 +88,8 @@ export default function StaggeredMobileMenu({ isOpen, onClose, onCartClick }) {
               <SlotReveal delay={0.18}>
                 <button
                   onClick={onClose}
-                  className="w-9 h-9 flex items-center justify-center border border-white/[0.1] text-muted hover:text-foreground hover:border-white/30 transition-all rounded-xl"
+                  className="w-9 h-9 flex items-center justify-center text-muted hover:text-foreground transition-all rounded-xl"
+                  style={{ border: '1px solid var(--border-default)' }}
                   aria-label="Close menu"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,10 +99,10 @@ export default function StaggeredMobileMenu({ isOpen, onClose, onCartClick }) {
               </SlotReveal>
             </div>
 
-            {/* Nav links — the staggered slot-reveal */}
+            {/* Nav links */}
             <nav className="flex-1 flex flex-col justify-center px-6 overflow-hidden">
               {navLinks.map(({ to, label, num }, i) => (
-                <div key={to} className="border-b border-white/[0.05] last:border-b-0">
+                <div key={to} style={{ borderBottom: i < navLinks.length - 1 ? '1px solid var(--border-subtle)' : 'none' }}>
                   <NavLink
                     to={to}
                     end={to === '/'}
@@ -106,25 +110,21 @@ export default function StaggeredMobileMenu({ isOpen, onClose, onCartClick }) {
                   >
                     {({ isActive }) => (
                       <div className="group flex items-center gap-4 py-3">
-                        {/* Index number slot-reveal */}
                         <SlotReveal delay={0.25 + i * 0.07}>
                           <span className="text-[10px] font-mono text-muted/40 w-6 flex-shrink-0 group-hover:text-accent/70 transition-colors">
                             {num}
                           </span>
                         </SlotReveal>
 
-                        {/* Label slot-reveal — the ReactBits signature move */}
                         <SlotReveal
                           delay={0.28 + i * 0.07}
                           className={`font-display font-bold leading-none tracking-tight transition-colors duration-150 ${
                             isActive ? 'text-accent' : 'text-foreground/85 group-hover:text-foreground'
                           }`}
-                          style={{ fontSize: 'clamp(1.6rem, 7vw, 2.2rem)' }}
                         >
                           <span style={{ fontSize: 'clamp(1.6rem, 7vw, 2.2rem)', display: 'block' }}>{label}</span>
                         </SlotReveal>
 
-                        {/* Arrow slot-reveal */}
                         <SlotReveal delay={0.3 + i * 0.07}>
                           <svg
                             className="w-4 h-4 ml-auto text-transparent group-hover:text-accent -translate-x-2 group-hover:translate-x-0 transition-all duration-200 flex-shrink-0"
@@ -141,7 +141,10 @@ export default function StaggeredMobileMenu({ isOpen, onClose, onCartClick }) {
             </nav>
 
             {/* Footer CTAs */}
-            <div className="px-6 pb-8 pt-4 flex items-center gap-3 flex-shrink-0 border-t border-white/[0.05]">
+            <div
+              className="px-6 pb-8 pt-4 flex items-center gap-3 flex-shrink-0"
+              style={{ borderTop: '1px solid var(--border-subtle)' }}
+            >
               <SlotReveal delay={0.72}>
                 <button
                   onClick={() => { onCartClick(); onClose() }}
@@ -157,7 +160,8 @@ export default function StaggeredMobileMenu({ isOpen, onClose, onCartClick }) {
                 <Link
                   to="/shop"
                   onClick={onClose}
-                  className="flex items-center justify-center py-3.5 px-6 border border-white/[0.1] text-sm font-semibold text-muted hover:text-foreground hover:border-white/20 rounded-xl transition-colors w-full"
+                  className="flex items-center justify-center py-3.5 px-6 text-sm font-semibold text-muted hover:text-foreground hover:border-accent/30 rounded-xl transition-colors w-full"
+                  style={{ border: '1px solid var(--border-default)' }}
                 >
                   Shop Now
                 </Link>

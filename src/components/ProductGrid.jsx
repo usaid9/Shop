@@ -2,7 +2,6 @@ import { useState, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ProductCard from './ProductCard'
 import CategoryIcon from './CategoryIcon'
-import { categories } from '../data/products'
 
 // ── Custom dropdown ──────────────────────────────────────────────────────────
 function Dropdown({ value, onChange, options, prefix = '' }) {
@@ -19,14 +18,14 @@ function Dropdown({ value, onChange, options, prefix = '' }) {
   }, [open])
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative flex-1 sm:flex-none min-w-0">
       <button
         onClick={() => setOpen(o => !o)}
-        className={`flex items-center gap-2 px-3 py-2 bg-secondary border font-medium transition-all duration-200 rounded-xl flex-shrink-0 justify-between ${
-          open ? 'border-accent text-foreground' : 'border-white/[0.08] text-muted hover:border-white/20 hover:text-foreground'
+        className={`w-full flex items-center gap-1.5 px-3 py-2 bg-secondary border font-medium transition-all duration-200 rounded-xl justify-between ${
+          open ? 'border-accent text-foreground' : 'text-muted hover:text-foreground'
         } text-xs sm:text-sm`}
       >
-        <span>{prefix && <span className="text-muted mr-1 font-normal">{prefix}</span>}{active?.label}</span>
+        <span className="truncate min-w-0">{prefix && <span className="text-muted mr-0.5 font-normal">{prefix}</span>}{active?.label}</span>
         <motion.svg
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2 }}
@@ -44,8 +43,7 @@ function Dropdown({ value, onChange, options, prefix = '' }) {
             animate={{ opacity: 1, y: 0, scaleY: 1 }}
             exit={{ opacity: 0, y: -8, scaleY: 0.9 }}
             transition={{ duration: 0.18, ease: [0.25, 0.46, 0.45, 0.94] }}
-            style={{ transformOrigin: 'top' }}
-            className="absolute top-[calc(100%+4px)] left-0 right-0 sm:right-auto z-30 sm:min-w-[170px] bg-secondary border border-white/[0.08] shadow-2xl shadow-black/60 overflow-hidden rounded-xl"
+            className="absolute top-[calc(100%+4px)] left-0 right-0 sm:right-auto z-30 sm:min-w-[170px] bg-secondary shadow-2xl overflow-hidden rounded-xl" style={{ transformOrigin: 'top', border: "1px solid var(--border-default)", boxShadow: "0 12px 40px rgba(0,0,0,0.25)" }}
           >
             {options.map((opt, i) => (
               <motion.li
@@ -59,7 +57,7 @@ function Dropdown({ value, onChange, options, prefix = '' }) {
                   className={`w-full text-left px-4 py-2.5 text-xs sm:text-sm transition-colors duration-150 ${
                     opt.value === value
                       ? 'text-accent bg-accent/[0.08]'
-                      : 'text-muted hover:text-foreground hover:bg-white/[0.04]'
+                      : 'text-muted hover:text-foreground hover:bg-accent/5'
                   }`}
                 >
                   {opt.label}
@@ -168,7 +166,7 @@ function GridToggle({ cols, onChange }) {
   return (
     <>
       {/* Desktop toggle — hidden on mobile */}
-      <div className="hidden sm:flex items-center gap-0.5 border border-white/[0.08] p-1 rounded-xl">
+      <div className="hidden sm:flex items-center gap-0.5 p-1 rounded-xl" style={{ border: "1px solid var(--border-default)" }}>
         {desktopOpts.map(opt => (
           <button key={opt.id} onClick={() => onChange(opt.id)}
             className={btnClass(opt.id)}
@@ -178,7 +176,7 @@ function GridToggle({ cols, onChange }) {
         ))}
       </div>
       {/* Mobile toggle — 2-col and list only */}
-      <div className="flex sm:hidden items-center gap-0.5 border border-white/[0.08] p-1 rounded-xl">
+      <div className="flex sm:hidden items-center gap-0.5 p-1 rounded-xl" style={{ border: "1px solid var(--border-default)" }}>
         {mobileOpts.map(opt => (
           <button key={opt.id} onClick={() => onChange(opt.id)}
             className={btnClass(opt.id)}
@@ -207,7 +205,7 @@ const PRICE_OPTIONS = [
   { value: 'over10k',  label: 'Over Rs 10,000' },
 ]
 
-export default function ProductGrid({ products, showFilters = true, title, subtitle }) {
+export default function ProductGrid({ products, showFilters = true, title, subtitle, categories }) {
   const [selectedCat, setSelectedCat] = useState('all')
   const [sortBy, setSortBy] = useState('popular')
   const [priceRange, setPriceRange] = useState('all')
@@ -255,7 +253,7 @@ export default function ProductGrid({ products, showFilters = true, title, subti
           <div className="flex flex-col gap-4 mb-10">
             {/* Category pills — horizontal scroll on mobile */}
             <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
-              {categories.map((cat, i) => {
+              {categories && categories.map((cat, i) => {
                 const count = cat.id === 'all' ? products.length : products.filter(p => p.category === cat.id).length
                 const isActive = selectedCat === cat.id
                 return (
@@ -266,13 +264,13 @@ export default function ProductGrid({ products, showFilters = true, title, subti
                     className={`relative flex-shrink-0 flex items-center gap-2 px-3 py-2 text-xs sm:text-sm font-medium transition-all duration-200 overflow-hidden group rounded-xl ${
                       isActive
                         ? 'bg-accent text-white'
-                        : 'bg-tertiary text-muted border border-white/[0.06] hover:text-foreground hover:border-white/20'
+                        : 'bg-tertiary text-muted hover:text-foreground'
                     }`}
                   >
                     <CategoryIcon id={cat.id} className="w-4 h-4 flex-shrink-0" />
                     <span className="whitespace-nowrap">{cat.label}</span>
                     <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-mono ${
-                      isActive ? 'bg-white/20 text-white' : 'bg-white/[0.06] text-muted'
+                      isActive ? 'bg-accent/20 text-accent' : 'text-muted hover:text-foreground'
                     }`}>
                       {count}
                     </span>
@@ -283,10 +281,12 @@ export default function ProductGrid({ products, showFilters = true, title, subti
 
             {/* Controls row */}
             <div className="flex items-center gap-2">
-              <Dropdown value={sortBy} onChange={setSortBy} options={SORT_OPTIONS} prefix="Sort:" />
-              <Dropdown value={priceRange} onChange={setPriceRange} options={PRICE_OPTIONS} prefix="Price:" />
-              <div className="ml-auto flex items-center gap-3 flex-shrink-0">
-                <span className="text-xs sm:text-xs text-muted font-mono hidden sm:block">{filtered.length} items</span>
+              <div className="flex flex-col sm:flex-row gap-2 flex-1 min-w-0">
+                <Dropdown value={sortBy} onChange={setSortBy} options={SORT_OPTIONS} prefix="Sort:" />
+                <Dropdown value={priceRange} onChange={setPriceRange} options={PRICE_OPTIONS} prefix="Price:" />
+              </div>
+              <div className="flex items-center gap-3 flex-shrink-0">
+                <span className="text-xs text-muted font-mono hidden sm:block">{filtered.length} items</span>
                 <GridToggle cols={gridCols} onChange={setGridCols} />
               </div>
             </div>
