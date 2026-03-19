@@ -10,6 +10,7 @@ import ShoppingCart from './components/ShoppingCart'
 import Checkout from './components/Checkout'
 import WishlistPanel from './components/WishlistPanel'
 import SearchOverlay from './components/SearchOverlay'
+import ScrollVideoBackground from './components/ScrollVideoBackground'
 import HomePage from './pages/HomePage'
 import ShopPage from './pages/ShopPage'
 import CollectionsPage from './pages/CollectionsPage'
@@ -60,6 +61,7 @@ export default function App() {
       <WishlistProvider>
         <CartProvider>
           <div className="relative w-full min-h-screen bg-primary text-foreground overflow-x-hidden">
+            <ScrollVideoBackground />
             <div className="relative z-10 flex flex-col min-h-screen">
               <Header
                 onCartClick={() => setIsCartOpen(true)}
