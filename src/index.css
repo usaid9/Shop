@@ -63,22 +63,22 @@
   --section-c: #111111;
 }
 
-/* ── Light mode — warm cream + true black ink ────────────────── */
+/* ── Light mode — warm cream + golden accent ────────────────── */
 [data-theme="light"] {
   --tw-color-primary:        244 238 230;
   --tw-color-secondary:      235 225 214;
   --tw-color-tertiary:       224 210 196;
   --tw-color-foreground:     10 8 6;
   --tw-color-muted:          80 64 56;
-  --tw-color-accent:         200 16 46;
-  --tw-color-accent-hover:   165 13 38;
+  --tw-color-accent:         212 165 116;
+  --tw-color-accent-hover:   166 124 82;
 
   --color-primary:    #f4ece6;
   --color-secondary:  #ebe1d6;
   --color-tertiary:   #e0d2c4;
   --color-foreground: #0a0806;
   --color-muted:      #504038;
-  --color-accent:     #c8102e;
+  --color-accent:     #d4a574;
 
   --surface-card:              linear-gradient(160deg, #ebe1d6 0%, #ede3d8 100%);
   --surface-cart:              linear-gradient(180deg, #f4ece6 0%, #ebe1d6 100%);
@@ -86,7 +86,7 @@
   --surface-mobile-menu:       linear-gradient(160deg, #f4ece6 0%, #ebe1d6 55%, #e4d4c4 100%);
   --surface-footer:            linear-gradient(180deg, #e4d4c4 0%, #dcc8b4 100%);
   --surface-footer-trust:      linear-gradient(180deg, rgba(10,8,6,0.03) 0%, transparent 100%);
-  --surface-newsletter:        linear-gradient(135deg, rgba(200,16,46,0.07) 0%, rgba(200,16,46,0.12) 100%);
+  --surface-newsletter:        linear-gradient(135deg, rgba(212,165,116,0.08) 0%, rgba(212,165,116,0.14) 100%);
   --surface-input:             rgba(255,252,248,0.95);
   --surface-hero-overlay:      linear-gradient(to bottom, rgba(30,10,5,0.5) 0%, rgba(20,8,4,0.35) 55%, rgba(244,236,230,0.6) 100%);
   --surface-categories:        linear-gradient(180deg, #ede3d8 0%, #ebe1d6 100%);
@@ -96,19 +96,22 @@
   --surface-item-card:         linear-gradient(135deg, rgba(10,8,6,0.03) 0%, rgba(235,225,214,0.95) 100%);
   --surface-search:            linear-gradient(180deg, #f4ece6 0%, #ebe1d6 100%);
 
-  --border-default:   rgba(10,8,6,0.22);
-  --border-subtle:    rgba(10,8,6,0.14);
-  --border-item:      rgba(10,8,6,0.18);
-  --star-empty:       rgba(10,8,6,0.25);
+  --border-default:   rgba(10,8,6,0.26);
+  --border-subtle:    rgba(10,8,6,0.16);
+  --border-item:      rgba(10,8,6,0.2);
+  --star-empty:       rgba(10,8,6,0.28);
   --scrollbar-track:  #ebe1d6;
 
-  --shadow-cart:   -8px 0 40px rgba(10,8,6,0.14), -1px 0 0 rgba(10,8,6,0.06) inset;
-  --shadow-header: 0 1px 0 rgba(255,255,255,0.7) inset, 0 4px 24px -4px rgba(10,8,6,0.12), 0 0 60px -20px rgba(200,16,46,0.1);
+  --shadow-cart:   -8px 0 40px rgba(10,8,6,0.18), -1px 0 0 rgba(212,165,116,0.1) inset;
+  --shadow-header: 0 1px 0 rgba(255,255,255,0.7) inset, 0 4px 32px -4px rgba(10,8,6,0.16), 0 0 80px -20px rgba(212,165,116,0.15);
   --inset-highlight: rgba(255,255,255,0.45);
 
   --ghost-base:  #d8c9b8;
   --ghost-panel: #cebfad;
   --ghost-shine: rgba(10,8,6,0.12);
+
+  /* Wishlist in light mode - golden */
+  --wishlist-heart-fill: #d4a574;
 
   /* Section alternating rhythm (light) */
   --section-a: #f4ece6;
@@ -204,19 +207,19 @@ body::before {
 
 [data-theme="light"] .card-depth {
   background: var(--color-secondary);
-  border: 1px solid rgba(10,8,6,0.16);
+  border: 1px solid rgba(10,8,6,0.2);
   box-shadow:
     0 1px 0 rgba(255,255,255,0.8) inset,
-    0 2px 6px rgba(10,8,6,0.1),
-    0 8px 24px -4px rgba(10,8,6,0.14);
+    0 2px 8px rgba(10,8,6,0.14),
+    0 12px 32px -4px rgba(10,8,6,0.18);
 }
 [data-theme="light"] .card-depth:hover {
   transform: translateY(-2px);
   box-shadow:
     0 1px 0 rgba(255,255,255,0.8) inset,
-    0 4px 12px rgba(10,8,6,0.14),
-    0 16px 40px -6px rgba(10,8,6,0.18),
-    0 0 0 1.5px rgba(200,16,46,0.25);
+    0 6px 16px rgba(10,8,6,0.18),
+    0 20px 48px -6px rgba(10,8,6,0.22),
+    0 0 0 1.5px rgba(212,165,116,0.35);
 }
 
 /* Card info panel in light */
@@ -226,7 +229,7 @@ body::before {
 
 /* Accent glow */
 .accent-glow { box-shadow: 0 0 32px -4px rgba(200,16,46,0.35), 0 0 8px -2px rgba(200,16,46,0.2); }
-[data-theme="light"] .accent-glow { box-shadow: 0 0 24px -4px rgba(200,16,46,0.5), 0 0 8px -2px rgba(200,16,46,0.35); }
+[data-theme="light"] .accent-glow { box-shadow: 0 0 28px -4px rgba(212,165,116,0.6), 0 0 10px -2px rgba(212,165,116,0.45); }
 
 /* Section depth */
 .section-depth {
@@ -237,7 +240,7 @@ body::before {
 }
 [data-theme="light"] .section-depth {
   background:
-    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(200,16,46,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(212,165,116,0.09) 0%, transparent 70%),
     linear-gradient(to bottom, rgba(10,8,6,0.02) 0%, transparent 100%);
 }
 
@@ -250,11 +253,11 @@ body::before {
     0 8px 32px -8px rgba(0,0,0,0.8);
 }
 [data-theme="light"] .panel-inset {
-  background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, transparent 50%), var(--color-secondary);
+  background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(212,165,116,0.05) 50%), var(--color-secondary);
   box-shadow:
     0 1px 0 rgba(255,255,255,0.8) inset,
-    0 -1px 0 rgba(10,8,6,0.05) inset,
-    0 4px 16px -4px rgba(10,8,6,0.09);
+    0 -1px 0 rgba(10,8,6,0.06) inset,
+    0 6px 20px -6px rgba(10,8,6,0.14);
 }
 
 /* Text emboss */
@@ -266,6 +269,7 @@ body::before {
 ═══════════════════════════════════════════════════════════════ */
 @keyframes float    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
 @keyframes glow     { 0%,100%{box-shadow:0 0 20px rgba(200,16,46,.3),0 0 60px rgba(200,16,46,.1)} 50%{box-shadow:0 0 40px rgba(200,16,46,.6),0 0 80px rgba(200,16,46,.2)} }
+[data-theme="light"] @keyframes glow { 0%,100%{box-shadow:0 0 24px rgba(212,165,116,.4),0 0 72px rgba(212,165,116,.15)} 50%{box-shadow:0 0 48px rgba(212,165,116,.7),0 0 96px rgba(212,165,116,.3)} }
 @keyframes shimmer  { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
 @keyframes fade-up  { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
 @keyframes pulse-ring { 0%{transform:scale(1);opacity:0.6} 100%{transform:scale(1.8);opacity:0} }
@@ -393,4 +397,4 @@ select { -webkit-appearance:none; appearance:none; }
 }
 
 /* Wishlist heart active in light */
-[data-theme="light"] .wishlist-btn-active svg { filter: drop-shadow(0 0 4px rgba(200,16,46,0.5)); }
+[data-theme="light"] .wishlist-btn-active svg { filter: drop-shadow(0 0 6px rgba(212,165,116,0.6)); }
