@@ -37,9 +37,19 @@ export default function Hero({ onShopClick }) {
         className="absolute inset-0 will-change-transform"
         style={{ transform: `translateY(${parallaxY}px)` }}
       >
+        {/* Fabric texture background for light mode */}
+        <div 
+          className="absolute inset-0"
+          style={{ 
+            backgroundImage: 'url(/fabric-bg.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed'
+          }} 
+        />
         <div className="absolute inset-0" style={{ background: 'var(--surface-hero-overlay)' }} />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-5%,rgba(200,16,46,0.18),transparent)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_30%_at_20%_80%,rgba(200,16,46,0.06),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-5%,rgba(218,180,105,0.12),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_30%_at_20%_80%,rgba(218,180,105,0.04),transparent)]" />
       </div>
 
       {/* Grain texture overlay */}
