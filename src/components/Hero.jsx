@@ -78,9 +78,9 @@ export default function Hero({ onShopClick }) {
           style={{ transformOrigin: 'top', background: 'linear-gradient(to bottom, transparent, var(--border-default), transparent)' }}
           className="absolute right-[8%] sm:right-[12%] top-0 bottom-0 w-px"
         />
-        {/* Bottom vignette — fades into the section below */}
-        <div className="hero-vignette absolute bottom-0 left-0 right-0 h-40"
-          style={{ background: 'linear-gradient(to top, var(--color-primary) 0%, transparent 100%)' }} />
+        {/* Bottom vignette — fades into the section below with smoother blend */}
+        <div className="hero-vignette absolute bottom-0 left-0 right-0 h-64"
+          style={{ background: 'linear-gradient(to top, var(--color-primary) 0%, var(--color-primary) 20%, transparent 100%)' }} />
       </div>
 
       {/* Content */}
@@ -129,21 +129,21 @@ export default function Hero({ onShopClick }) {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.95 }}
-              className="flex items-center gap-4"
+              className="flex items-center gap-3 sm:gap-4"
             >
               <Link to="/shop">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
-                  className="px-8 py-3.5 bg-accent text-white text-sm font-semibold tracking-wide hover:bg-accent-hover transition-colors duration-200 rounded-xl"
+                  className="px-5 sm:px-8 py-3 sm:py-3.5 bg-accent text-white text-xs sm:text-sm font-semibold tracking-wide hover:bg-accent-hover transition-colors duration-200 rounded-xl whitespace-nowrap"
                 >
                   Shop Now
                 </motion.button>
               </Link>
               <Link to="/collections">
-                <button className="group flex items-center gap-2 text-sm text-muted font-medium hover:text-foreground transition-colors">
+                <button className="group flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted font-medium hover:text-foreground transition-colors whitespace-nowrap">
                   <span className="underline-hover">Explore Collections</span>
-                  <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-1 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </button>

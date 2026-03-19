@@ -79,12 +79,12 @@ export default function Header({ onCartClick, onWishlistClick, onSearchClick }) 
   return (
     <>
       <header
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'backdrop-blur-xl' : 'bg-transparent'}`}
-        style={scrolled ? {
-          background: 'var(--surface-header-scrolled)',
-          boxShadow: 'var(--shadow-header)',
-          borderBottom: '1px solid var(--border-default)',
-        } : {}}
+        className="fixed top-0 w-full z-50 transition-all duration-500 backdrop-blur-md"
+        style={{
+          background: scrolled ? 'var(--surface-header-scrolled)' : 'rgba(8, 8, 8, 0.4)',
+          boxShadow: scrolled ? 'var(--shadow-header)' : 'none',
+          borderBottom: scrolled ? '1px solid var(--border-default)' : '1px solid transparent',
+        }}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
           <div className="flex items-center justify-between h-[68px]">

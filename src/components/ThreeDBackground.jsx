@@ -103,29 +103,54 @@ export default function ThreeDBackground() {
   return (
     <ThreeErrorBoundary>
       <Suspense fallback={null}>
-        <Canvas
-          style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}
-          gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
+        <div 
+          style={{ 
+            position: 'fixed', 
+            inset: 0, 
+            pointerEvents: 'none', 
+            zIndex: 0,
+            willChange: 'transform',
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden',
+          }}
         >
-          <PerspectiveCamera makeDefault position={[0, 0, 30]} />
-          <ambientLight intensity={isDark ? 0.15 : 0.7} />
-          <pointLight
-            position={[20, 20, 20]}
-            intensity={isDark ? 0.35 : 0.3}
-            color={0xc8102e}
+          <Canvas
+            style={{ width: '100%', height: '100%' }}
+            gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
+            frameloop="always"
+          >
+            <PerspectiveCamera makeDefault position={[0, 0, 30]} />
+            <ambientLight intensity={isDark ? 0.15 : 0.7} />
+            <pointLight
+              position={[20, 20, 20]}
+              intensity={isDark ? 0.35 : 0.3}
+              color={0xc8102e}
+            />
+            <pointLight
+              position={[-20, -20, -20]}
+              intensity={isDark ? 0.2 : 0.15}
+              color={isDark ? 0x666666 : 0xd4a89a}
+            />
+            <Particles count={80} isDark={isDark} />
+            <FloatingMesh isDark={isDark} />
+            {/* Stars only in dark mode — look wrong on light bg */}
+            {isDark && (
+              <Stars radius={100} depth={50} count={500} factor={4} fade speed={0.1} />
+            )}
+          </Canvas>
+          {/* Bottom gradient fade to blend with content below - extended and multi-stop */}
+          <div 
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: '50vh',
+              background: 'linear-gradient(to top, var(--color-primary) 0%, var(--color-primary) 15%, rgba(var(--tw-color-primary), 0.8) 40%, rgba(var(--tw-color-primary), 0.4) 70%, transparent 100%)',
+              pointerEvents: 'none',
+            }}
           />
-          <pointLight
-            position={[-20, -20, -20]}
-            intensity={isDark ? 0.2 : 0.15}
-            color={isDark ? 0x666666 : 0xd4a89a}
-          />
-          <Particles count={80} isDark={isDark} />
-          <FloatingMesh isDark={isDark} />
-          {/* Stars only in dark mode — look wrong on light bg */}
-          {isDark && (
-            <Stars radius={100} depth={50} count={500} factor={4} fade speed={0.1} />
-          )}
-        </Canvas>
+        </div>
       </Suspense>
     </ThreeErrorBoundary>
   )

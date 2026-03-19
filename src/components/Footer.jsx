@@ -173,32 +173,32 @@ export default function Footer() {
         </div>
 
         {/* Newsletter */}
-        <div className="p-6 mb-10 relative overflow-hidden rounded-2xl" style={{ background: 'var(--surface-newsletter)', border: '1px solid var(--border-default)', boxShadow: '0 1px 0 var(--inset-highlight) inset, 0 4px 24px -4px rgba(0,0,0,0.15)' }}>
+        <div className="p-4 sm:p-6 mb-10 relative overflow-hidden rounded-2xl" style={{ background: 'var(--surface-newsletter)', border: '1px solid var(--border-default)', boxShadow: '0 1px 0 var(--inset-highlight) inset, 0 4px 24px -4px rgba(0,0,0,0.15)' }}>
           {/* Corner accent */}
           <div className="absolute top-0 right-0 w-32 h-32 pointer-events-none" style={{ background: 'radial-gradient(circle at top right, rgba(200,16,46,0.06) 0%, transparent 70%)' }} />
-          <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between relative">
-            <div>
+          <div className="flex flex-col gap-4 items-center text-center sm:flex-row sm:text-left sm:justify-between relative">
+            <div className="w-full sm:w-auto">
               <h4 className="font-semibold text-sm text-foreground mb-1">Subscribe to our newsletter</h4>
-              <p className="text-muted text-sm">Exclusive deals and new arrivals directly to you.</p>
+              <p className="text-muted text-xs sm:text-sm">Exclusive deals and new arrivals directly to you.</p>
             </div>
             {subStatus === 'ok' ? (
               <p className="text-green-400 text-sm font-medium whitespace-nowrap">
                 <span className="mr-1.5">✓</span>Subscribed — thank you.
               </p>
             ) : (
-              <form onSubmit={handleSubscribe} className="flex gap-0 w-full sm:w-auto">
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2 sm:gap-0 w-full sm:w-auto">
                 <input
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="your@email.com"
                   required
-                  className="flex-1 sm:w-60 px-4 py-2.5 border-r-0 text-sm text-foreground placeholder:text-muted/40 focus:outline-none focus:border-accent transition-colors rounded-l-xl"
+                  className="w-full sm:w-60 px-3 sm:px-4 py-2.5 text-sm text-foreground placeholder:text-muted/40 focus:outline-none focus:border-accent transition-colors rounded-xl sm:rounded-l-xl sm:rounded-r-none sm:border-r-0"
                   style={{ background: 'var(--surface-input)', border: '1px solid var(--border-default)' }}
                 />
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-accent text-white text-sm font-semibold hover:bg-accent-hover transition-colors whitespace-nowrap accent-glow rounded-r-xl"
+                  className="w-full sm:w-auto px-4 sm:px-5 py-2.5 bg-accent text-white text-xs sm:text-sm font-semibold hover:bg-accent-hover transition-colors whitespace-nowrap accent-glow rounded-xl sm:rounded-l-none sm:rounded-r-xl"
                 >
                   Subscribe
                 </button>

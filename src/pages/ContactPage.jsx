@@ -130,10 +130,11 @@ export default function ContactPage() {
                 <input name="email" type="email" placeholder="Email address" value={form.email} onChange={handleInput} required className={inputClass} style={inputStyle} />
                 <div className="relative">
                   <select name="subject" value={form.subject} onChange={handleInput} required
-                    className={`${inputClass} ${form.subject ? '' : 'text-muted/40'} pr-10`}>
-                    <option value="">Subject</option>
+                    className={`${inputClass} ${form.subject ? '' : 'text-muted/40'} pr-10`}
+                    style={{ ...inputStyle, colorScheme: 'dark' }}>
+                    <option value="" style={{ background: 'var(--color-secondary)', color: 'var(--color-muted)' }}>Subject</option>
                     {['Order Issue', 'Product Inquiry', 'Return / Exchange', 'Wholesale', 'Other'].map(s => (
-                      <option key={s} value={s}>{s}</option>
+                      <option key={s} value={s} style={{ background: 'var(--color-secondary)', color: 'var(--color-foreground)' }}>{s}</option>
                     ))}
                   </select>
                   <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">

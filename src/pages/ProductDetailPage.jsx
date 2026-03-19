@@ -25,6 +25,11 @@ export default function ProductDetailPage() {
   const [added,         setAdded]         = useState(false)
 
   useEffect(() => {
+    if (!id) {
+      setNotFound(true)
+      setLoading(false)
+      return
+    }
     setLoading(true)
     fetchProductById(id)
       .then(({ data }) => {
@@ -40,7 +45,7 @@ export default function ProductDetailPage() {
   const { products: related } = useProducts(
     product ? { category: product.category } : {}
   )
-  const relatedFiltered = related.filter(p => p._id !== id).slice(0, 4)
+  const relatedFiltered = related.filter(p => (p._id || p.id) !== id).slice(0, 4)
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) return

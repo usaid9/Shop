@@ -21,15 +21,16 @@ function Dropdown({ value, onChange, options, prefix = '' }) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(o => !o)}
-        className={`flex items-center gap-2 px-3 py-2 bg-secondary border font-medium transition-all duration-200 rounded-xl flex-shrink-0 justify-between ${
+        className={`flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-secondary border font-medium transition-all duration-200 rounded-xl flex-shrink-0 justify-between whitespace-nowrap ${
           open ? 'border-accent text-foreground' : 'text-muted hover:text-foreground'
-        } text-xs sm:text-sm`}
+        } text-[10px] sm:text-sm`}
+        style={{ borderColor: open ? undefined : 'var(--border-default)' }}
       >
-        <span>{prefix && <span className="text-muted mr-1 font-normal">{prefix}</span>}{active?.label}</span>
+        <span className="truncate max-w-[80px] sm:max-w-none">{prefix && <span className="text-muted mr-0.5 sm:mr-1 font-normal">{prefix}</span>}{active?.label}</span>
         <motion.svg
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="w-3.5 h-3.5 flex-shrink-0"
+          className="w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0"
           fill="none" stroke="currentColor" viewBox="0 0 24 24"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -308,14 +309,14 @@ export default function ProductGrid({ products, showFilters = true, title, subti
             <AnimatePresence mode="popLayout">
               {filtered.map((product, i) => (
                 <motion.div
-                  key={product.id}
+                  key={product._id || product.id || `product-${i}`}
                   layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.35, delay: (i % 8) * 0.04 }}
                 >
-                  <ProductCard product={product} listView={gridCols === 'list'} />
+                  <ProductCard product={{ ...product, id: product._id || product.id }} listView={gridCols === 'list'} />
                 </motion.div>
               ))}
             </AnimatePresence>
