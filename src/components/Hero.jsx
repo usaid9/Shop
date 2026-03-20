@@ -156,7 +156,7 @@ export default function Hero({ onShopClick }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="flex gap-10 mt-16 pt-10"
+            className="flex gap-8 sm:gap-12 lg:gap-16 mt-16 pt-10"
             style={{ borderTop: '1px solid var(--border-subtle)' }}
           >
             {[
@@ -164,15 +164,15 @@ export default function Hero({ onShopClick }) {
               { value: '15K+', label: 'Customers' },
               { value: '50+',  label: 'Cities' },
             ].map((s, i) => (
-              <div key={s.label} className="flex flex-col relative">
-                {i > 0 && <div className="absolute -left-5 top-1 bottom-1 w-px" style={{ background: 'var(--border-subtle)' }} />}
+              <div key={s.label} className="flex flex-col relative flex-1 sm:flex-none">
+                {i > 0 && <div className="hidden sm:block absolute -left-4 sm:-left-6 lg:-left-8 top-1 bottom-1 w-px" style={{ background: 'var(--border-subtle)' }} />}
                 <span
-                  className="font-display text-3xl font-bold text-accent leading-none"
+                  className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-accent leading-none"
                   style={{ textShadow: '0 0 20px rgba(200,16,46,0.5), 0 0 40px rgba(200,16,46,0.2)' }}
                 >
                   {s.value}
                 </span>
-                <span className="text-[10px] text-muted tracking-superwide uppercase mt-1.5 font-sans">{s.label}</span>
+                <span className="text-[9px] sm:text-[10px] text-muted tracking-superwide uppercase mt-2 sm:mt-2.5 font-sans">{s.label}</span>
               </div>
             ))}
           </motion.div>

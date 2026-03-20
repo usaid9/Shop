@@ -81,11 +81,22 @@ export default function Header({ onCartClick, onWishlistClick, onSearchClick }) 
       <header
         className="fixed top-0 w-full z-50 transition-all duration-500 backdrop-blur-md"
         style={{
-          background: scrolled ? 'var(--surface-header-scrolled)' : 'rgba(8, 8, 8, 0.4)',
+          background: scrolled 
+            ? 'var(--surface-header-scrolled)' 
+            : 'rgba(8, 8, 8, 0.4)',
           boxShadow: scrolled ? 'var(--shadow-header)' : 'none',
           borderBottom: scrolled ? '1px solid var(--border-default)' : '1px solid transparent',
         }}
       >
+        {/* Light mode header background override when not scrolled */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: -1,
+          background: 'inherit',
+          backdropFilter: 'inherit',
+          WebkitBackdropFilter: 'inherit',
+        }} />
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
           <div className="flex items-center justify-between h-[68px]">
 
