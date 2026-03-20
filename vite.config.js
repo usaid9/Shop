@@ -6,6 +6,7 @@ export default defineConfig({
   base: '/Shop/',
   server: {
     port: 3000,
+    middlewareMode: false,
     proxy: {
       '/api': {
         target: 'http://localhost:5000',
@@ -13,14 +14,31 @@ export default defineConfig({
       },
     },
   },
+  optimizeDeps: {
+    esbuildOptions: {
+      supported: {
+        bigint: true,
+        'top-level-await': true,
+      },
+    },
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      'framer-motion',
+      'three',
+    ],
+    exclude: ['@react-three/fiber', '@react-three/drei'],
+  },
   build: {
     chunkSizeWarningLimit: 1500,
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
-          'react-vendor':  ['react', 'react-dom', 'react-router-dom'],
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'motion-vendor': ['framer-motion'],
-          'three-vendor':  ['three', '@react-three/fiber', '@react-three/drei'],
+          'three-vendor': ['three'],
         },
       },
     },
