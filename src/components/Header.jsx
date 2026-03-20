@@ -134,7 +134,7 @@ export default function Header({ onCartClick, onWishlistClick, onSearchClick }) 
               {/* Search */}
               <motion.button onClick={onSearchClick}
                 whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                className="p-2 text-muted hover:text-foreground transition-colors group relative" 
+                className="p-2 text-muted hover:text-accent transition-all duration-200 group relative rounded-lg hover:bg-accent/5" 
                 aria-label="Search (Ctrl+K)">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
                   <circle cx="11" cy="11" r="7" /><path strokeLinecap="round" d="M21 21l-4.35-4.35" />
@@ -148,7 +148,7 @@ export default function Header({ onCartClick, onWishlistClick, onSearchClick }) 
               {/* Wishlist */}
               <motion.button onClick={onWishlistClick}
                 whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                className="relative p-2 text-muted hover:text-foreground transition-colors" aria-label="Wishlist">
+                className="relative p-2 text-muted hover:text-accent transition-all duration-200 rounded-lg hover:bg-accent/5" aria-label="Wishlist">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
@@ -165,7 +165,7 @@ export default function Header({ onCartClick, onWishlistClick, onSearchClick }) 
               {/* Cart */}
               <motion.button onClick={onCartClick}
                 whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                className="relative p-2 text-muted hover:text-foreground transition-colors" aria-label="Cart">
+                className="relative p-2 text-muted hover:text-accent transition-all duration-200 rounded-lg hover:bg-accent/5" aria-label="Cart">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" />
                 </svg>

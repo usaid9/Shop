@@ -80,7 +80,7 @@ export default function ShoppingCart({ isOpen, onClose, onCheckout }) {
                       initial={{ opacity: 0, x: 30 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 30 }}
-                      className="flex gap-3 p-3 rounded-xl"
+                      className="flex gap-3 p-3 rounded-lg hover:shadow-md transition-all duration-300"
                       style={{
                         background: 'var(--surface-item-card)',
                         border: '1px solid var(--border-item)',

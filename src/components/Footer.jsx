@@ -112,9 +112,9 @@ export default function Footer() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.06 }}
                 viewport={{ once: true }}
-                className="flex items-start gap-3 group"
+                className="flex items-start gap-3 group p-3 sm:p-4 rounded-lg hover:bg-accent/5 transition-all duration-300"
               >
-                <div className="flex-shrink-0 w-9 h-9 flex items-center justify-center text-accent group-hover:border-accent/40 group-hover:bg-accent/[0.06] transition-all duration-300 rounded-xl" style={{ border: '1px solid var(--border-default)' }}>
+                <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center text-accent group-hover:border-accent/60 group-hover:bg-accent/10 transition-all duration-300 rounded-lg font-semibold border-2" style={{ borderColor: 'var(--color-accent)' }}>
                   <Icon />
                 </div>
                 <div>

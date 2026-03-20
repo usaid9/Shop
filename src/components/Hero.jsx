@@ -135,7 +135,7 @@ export default function Hero({ onShopClick }) {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
-                  className="px-5 sm:px-8 py-3 sm:py-3.5 bg-accent text-white text-xs sm:text-sm font-semibold tracking-wide hover:bg-accent-hover transition-colors duration-200 rounded-xl whitespace-nowrap"
+                  className="px-6 sm:px-8 py-3 sm:py-3.5 bg-accent text-white text-xs sm:text-sm font-semibold tracking-wide hover:bg-accent-hover transition-all duration-200 rounded-lg whitespace-nowrap shadow-lg hover:shadow-xl accent-glow"
                 >
                   Shop Now
                 </motion.button>

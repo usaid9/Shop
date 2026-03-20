@@ -262,16 +262,19 @@ export default function ProductGrid({ products, showFilters = true, title, subti
                     key={cat.id}
                     onClick={() => setSelectedCat(cat.id)}
                     whileTap={{ scale: 0.97 }}
-                    className={`relative flex-shrink-0 flex items-center gap-2 px-3 py-2 text-xs sm:text-sm font-medium transition-all duration-200 overflow-hidden group rounded-xl ${
+                    className={`relative flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 overflow-hidden group rounded-lg border ${
                       isActive
-                        ? 'bg-accent text-white'
-                        : 'bg-tertiary text-muted hover:text-foreground'
+                        ? 'bg-accent text-white border-accent/60 shadow-lg'
+                        : 'bg-secondary text-muted hover:text-foreground hover:border-accent/40 border-transparent'
                     }`}
+                    style={{
+                      borderColor: isActive ? undefined : 'var(--border-default)'
+                    }}
                   >
                     <CategoryIcon id={cat.id} className="w-4 h-4 flex-shrink-0" />
                     <span className="whitespace-nowrap">{cat.label}</span>
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-mono ${
-                      isActive ? 'bg-accent/20 text-accent' : 'text-muted hover:text-foreground'
+                    <span className={`text-[10px] px-2 py-0.5 rounded-md font-mono font-semibold ${
+                      isActive ? 'bg-white/20 text-white' : 'bg-accent/10 text-accent'
                     }`}>
                       {count}
                     </span>
