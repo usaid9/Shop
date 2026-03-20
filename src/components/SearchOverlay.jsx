@@ -104,10 +104,10 @@ export default function SearchOverlay({ isOpen, onClose }) {
             style={{ top: 76 }}
           >
             <div
-              className="rounded-2xl overflow-hidden"
+              className="rounded-2xl overflow-hidden backdrop-blur-xl"
               style={{
-                background: 'var(--surface-search)',
-                border: '1px solid var(--border-default)',
+                background: 'rgba(8, 8, 8, 0.8)',
+                border: '1px solid rgba(255,255,255,0.1)',
                 boxShadow: '0 8px 40px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2)',
               }}
             >

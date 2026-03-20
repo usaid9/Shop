@@ -25,11 +25,11 @@ export default function ShoppingCart({ isOpen, onClose, onCheckout }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 22, stiffness: 280 }}
-            className="fixed right-0 top-0 h-screen w-full max-w-md z-50 flex flex-col rounded-l-2xl"
+            className="fixed right-0 top-0 h-screen w-full max-w-md z-50 flex flex-col rounded-l-2xl backdrop-blur-xl"
             style={{
-              background: 'var(--surface-cart)',
+              background: 'rgba(8, 8, 8, 0.7)',
               boxShadow: 'var(--shadow-cart)',
-              borderLeft: '1px solid var(--border-default)',
+              borderLeft: '1px solid rgba(255,255,255,0.1)',
             }}
           >
             {/* Top inner highlight */}

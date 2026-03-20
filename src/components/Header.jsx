@@ -79,24 +79,24 @@ export default function Header({ onCartClick, onWishlistClick, onSearchClick }) 
   return (
     <>
       <header
-        className="fixed top-0 w-full z-50 transition-all duration-500 backdrop-blur-md"
+        className="fixed top-0 w-full z-50 transition-all duration-500 backdrop-blur-xl"
         style={{
           background: scrolled 
-            ? 'var(--surface-header-scrolled)' 
-            : 'rgba(8, 8, 8, 0.4)',
-          boxShadow: scrolled ? 'var(--shadow-header)' : 'none',
-          borderBottom: scrolled ? '1px solid var(--border-default)' : '1px solid transparent',
+            ? 'rgba(8, 8, 8, 0.5)' 
+            : 'rgba(8, 8, 8, 0.3)',
+          boxShadow: scrolled ? '0 4px 12px rgba(0,0,0,0.1)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.1)' : '1px solid transparent',
         }}
+        data-theme="light"
       >
-        {/* Light mode header background override when not scrolled */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: -1,
-          background: 'inherit',
-          backdropFilter: 'inherit',
-          WebkitBackdropFilter: 'inherit',
-        }} />
+        <style>{`
+          [data-theme="light"] header {
+            background: ${scrolled ? 'rgba(249, 248, 246, 0.85)' : 'rgba(249, 248, 246, 0.75)'} !important;
+            border-bottom-color: ${scrolled ? 'rgba(20,20,20,0.1)' : 'transparent'} !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+          }
+        `}</style>
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
           <div className="flex items-center justify-between h-[68px]">
 

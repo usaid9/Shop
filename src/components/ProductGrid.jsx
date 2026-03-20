@@ -21,7 +21,7 @@ function Dropdown({ value, onChange, options, prefix = '' }) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(o => !o)}
-        className={`flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-secondary border font-medium transition-all duration-200 rounded-xl flex-shrink-0 justify-between whitespace-nowrap ${
+        className={`flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-secondary/60 backdrop-blur-md border font-medium transition-all duration-200 rounded-xl flex-shrink-0 justify-between whitespace-nowrap ${
           open ? 'border-accent text-foreground' : 'text-muted hover:text-foreground'
         } text-[10px] sm:text-sm`}
         style={{ borderColor: open ? undefined : 'var(--border-default)' }}
@@ -44,7 +44,7 @@ function Dropdown({ value, onChange, options, prefix = '' }) {
             animate={{ opacity: 1, y: 0, scaleY: 1 }}
             exit={{ opacity: 0, y: -8, scaleY: 0.9 }}
             transition={{ duration: 0.18, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="absolute top-[calc(100%+4px)] left-0 right-0 sm:right-auto z-30 sm:min-w-[170px] bg-secondary shadow-2xl overflow-hidden rounded-xl" style={{ transformOrigin: 'top', border: "1px solid var(--border-default)", boxShadow: "0 12px 40px rgba(0,0,0,0.25)" }}
+            className="absolute top-[calc(100%+4px)] left-0 right-0 sm:right-auto z-30 sm:min-w-[170px] bg-secondary/80 backdrop-blur-lg shadow-2xl overflow-hidden rounded-xl" style={{ transformOrigin: 'top', border: "1px solid var(--border-default)", boxShadow: "0 12px 40px rgba(0,0,0,0.25)" }}
           >
             {options.map((opt, i) => (
               <motion.li
@@ -167,7 +167,7 @@ function GridToggle({ cols, onChange }) {
   return (
     <>
       {/* Desktop toggle — hidden on mobile */}
-      <div className="hidden sm:flex items-center gap-0.5 p-1 rounded-xl" style={{ border: "1px solid var(--border-default)" }}>
+      <div className="hidden sm:flex items-center gap-0.5 p-1 rounded-xl backdrop-blur-md bg-secondary/60" style={{ border: "1px solid var(--border-default)" }}>
         {desktopOpts.map(opt => (
           <button key={opt.id} onClick={() => onChange(opt.id)}
             className={btnClass(opt.id)}
@@ -177,7 +177,7 @@ function GridToggle({ cols, onChange }) {
         ))}
       </div>
       {/* Mobile toggle — 2-col and list only */}
-      <div className="flex sm:hidden items-center gap-0.5 p-1 rounded-xl" style={{ border: "1px solid var(--border-default)" }}>
+      <div className="flex sm:hidden items-center gap-0.5 p-1 rounded-xl backdrop-blur-md bg-secondary/60" style={{ border: "1px solid var(--border-default)" }}>
         {mobileOpts.map(opt => (
           <button key={opt.id} onClick={() => onChange(opt.id)}
             className={btnClass(opt.id)}
@@ -262,10 +262,10 @@ export default function ProductGrid({ products, showFilters = true, title, subti
                     key={cat.id}
                     onClick={() => setSelectedCat(cat.id)}
                     whileTap={{ scale: 0.97 }}
-                    className={`relative flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 overflow-hidden group rounded-lg border ${
+                    className={`relative flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 overflow-hidden group rounded-lg border backdrop-blur-md ${
                       isActive
-                        ? 'bg-accent text-white border-accent/60 shadow-lg'
-                        : 'bg-secondary text-muted hover:text-foreground hover:border-accent/40 border-transparent'
+                        ? 'bg-accent/90 text-white border-accent/60 shadow-lg'
+                        : 'bg-secondary/60 text-muted hover:text-foreground hover:border-accent/40 border-transparent'
                     }`}
                     style={{
                       borderColor: isActive ? undefined : 'var(--border-default)'

@@ -154,7 +154,7 @@ export default function ProductCard({ product, listView = false }) {
 
   // ── GRID VIEW ────────────────────────────────────────────────────────────
   return (
-    <TiltCard className="group relative bg-secondary overflow-hidden card-depth rounded-xl cursor-pointer">
+    <TiltCard className="group relative bg-secondary/50 backdrop-blur-md overflow-hidden card-depth rounded-xl cursor-pointer">
       <div className="absolute top-0 left-0 right-0 h-px pointer-events-none z-10"
         style={{ background: 'linear-gradient(90deg, transparent, var(--border-default), transparent)' }} />
 
@@ -200,7 +200,7 @@ export default function ProductCard({ product, listView = false }) {
       </Link>
 
       {/* Info */}
-      <div className="p-3 sm:p-4 pt-2.5 sm:pt-3" style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(249,248,246,0.6))' }}>
+      <div className="p-3 sm:p-4 pt-2.5 sm:pt-3 backdrop-blur-md" style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(249,248,246,0.7))' }}>
         <p className="text-[8px] sm:text-[10px] text-accent font-semibold uppercase tracking-wider mb-1.5">{product.category}</p>
         <Link to={`/product/${product.id}`}>
           <h3 className="font-medium text-[11px] sm:text-sm line-clamp-2 text-foreground/90 underline-hover leading-tight">{product.name}</h3>
