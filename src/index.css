@@ -153,7 +153,7 @@ body::before {
 
 /* ═══════════════════════════════════════════════════════════════
    UTILITIES
-═════════════════════════════��═════════════════════════════════ */
+═══════════════════════════════════════════════════════════════ */
 .underline-hover { position: relative; display: inline-block; }
 .underline-hover::after {
   content: '';
@@ -287,7 +287,14 @@ body::before {
 ═══════════════════════════════════════════════════════════════ */
 @keyframes float    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
 @keyframes glow     { 0%,100%{box-shadow:0 0 20px rgba(200,16,46,.3),0 0 60px rgba(200,16,46,.1)} 50%{box-shadow:0 0 40px rgba(200,16,46,.6),0 0 80px rgba(200,16,46,.2)} }
-[data-theme="light"] @keyframes glow { 0%,100%{box-shadow:0 0 24px rgba(212,165,116,.4),0 0 72px rgba(212,165,116,.15)} 50%{box-shadow:0 0 48px rgba(212,165,116,.7),0 0 96px rgba(212,165,116,.3)} }
+@keyframes glow-light {
+  0%,100% {
+    box-shadow: 0 0 24px rgba(212,165,116,.4), 0 0 72px rgba(212,165,116,.15);
+  }
+  50% {
+    box-shadow: 0 0 48px rgba(212,165,116,.7), 0 0 96px rgba(212,165,116,.3);
+  }
+}
 @keyframes shimmer  { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
 @keyframes fade-up  { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
 @keyframes pulse-ring { 0%{transform:scale(1);opacity:0.6} 100%{transform:scale(1.8);opacity:0} }

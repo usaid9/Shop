@@ -51,7 +51,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section ref={productsRef} className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden section-divide"
+      <section ref={productsRef} className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden section-divide z-10"
         style={{ background: 'var(--surface-footer)' }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
