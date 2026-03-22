@@ -80,21 +80,29 @@
   --color-muted:      #5a554e;
   --color-accent:     #be5032;
 
-  --surface-card:              linear-gradient(160deg, rgba(255,255,255,0.75) 0%, rgba(252,248,244,0.75) 100%);
-  --surface-cart:              linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(251,249,246,0.8) 100%);
-  --surface-header-scrolled:   linear-gradient(180deg, rgba(249,248,246,0.95) 0%, rgba(245,243,239,0.94) 100%);
-  --surface-mobile-menu:       linear-gradient(160deg, rgba(249,248,246,0.98) 0%, rgba(241,239,235,0.96) 55%, rgba(233,230,224,0.96) 100%);
-  --surface-footer:            linear-gradient(180deg, rgba(245,242,237,0.88) 0%, rgba(240,236,230,0.90) 100%);
-  --surface-footer-trust:      linear-gradient(180deg, rgba(20,20,20,0.03) 0%, transparent 100%);
+  /* ── Section backgrounds: semi-transparent so silk bleeds through ── */
+  --surface-categories:        linear-gradient(180deg, rgba(249,248,246,0.72) 0%, rgba(241,239,235,0.75) 100%);
+  --surface-footer:            linear-gradient(180deg, rgba(245,242,237,0.80) 0%, rgba(240,236,230,0.82) 100%);
   --surface-newsletter:        linear-gradient(135deg, rgba(190,80,50,0.06) 0%, rgba(190,80,50,0.10) 100%);
-  --surface-input:             rgba(255,255,255,0.95);
-  --surface-hero-overlay:      linear-gradient(to bottom, rgba(249,248,246,0.22) 0%, rgba(249,248,246,0.10) 50%, rgba(249,248,246,0.80) 100%);
-  --surface-categories:        linear-gradient(180deg, rgba(249,248,246,0.82) 0%, rgba(241,239,235,0.86) 100%);
+  --surface-hero-overlay:      linear-gradient(to bottom, rgba(249,248,246,0.08) 0%, rgba(249,248,246,0.03) 45%, rgba(249,248,246,0.78) 100%);
+
+  /* ── UI surfaces: solid so content is readable ── */
+  --surface-card:              linear-gradient(160deg, rgba(255,255,255,0.97) 0%, rgba(252,248,244,0.97) 100%);
+  --surface-cart:              linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(251,249,246,0.98) 100%);
+  --surface-header-scrolled:   linear-gradient(180deg, rgba(249,248,246,0.96) 0%, rgba(245,243,239,0.95) 100%);
+  --surface-mobile-menu:       linear-gradient(160deg, rgba(249,248,246,0.99) 0%, rgba(241,239,235,0.99) 55%, rgba(233,230,224,0.99) 100%);
+  --surface-footer-trust:      linear-gradient(180deg, rgba(20,20,20,0.03) 0%, transparent 100%);
+  --surface-input:             rgba(255,255,255,0.98);
   --surface-quick-add-close:   rgba(20,20,20,0.07);
   --surface-quick-add-close-h: rgba(20,20,20,0.14);
-  --surface-checkout:          rgba(255,255,255,0.98);
-  --surface-item-card:         linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(249,248,246,0.85) 100%);
-  --surface-search:            linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(251,249,246,0.95) 100%);
+  --surface-checkout:          rgba(255,255,255,0.99);
+  --surface-item-card:         linear-gradient(135deg, rgba(255,255,255,0.97) 0%, rgba(249,248,246,0.97) 100%);
+  --surface-search:            linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(251,249,246,0.98) 100%);
+
+  /* ── Section rhythm: glassy but readable ── */
+  --section-a: rgba(252,250,247,0.72);
+  --section-b: rgba(245,242,237,0.74);
+  --section-c: rgba(238,234,228,0.76);
 
   --border-default:   rgba(20,20,20,0.12);
   --border-subtle:    rgba(20,20,20,0.08);
@@ -110,13 +118,7 @@
   --ghost-panel: #e8e4de;
   --ghost-shine: rgba(255,255,255,0.8);
 
-  /* Wishlist in light mode - terracotta */
   --wishlist-heart-fill: #b95a3c;
-
-  /* Section alternating rhythm (light) — semi-transparent so 3D canvas shows through */
-  --section-a: rgba(252,250,247,0.82);
-  --section-b: rgba(245,242,237,0.84);
-  --section-c: rgba(238,234,228,0.86);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -469,61 +471,166 @@ select { -webkit-appearance:none; appearance:none; }
 [data-theme="light"] .bg-secondary { background-color: var(--color-secondary); }
 [data-theme="light"] .bg-tertiary  { background-color: var(--color-tertiary); }
 
-/* Hero — overlay for text readability */
-[data-theme="light"] .hero-vignette { background: linear-gradient(to top, var(--color-primary) 0%, var(--color-primary) 15%, transparent 55%) !important; }
+/* ─────────────────────────────────────────────────────────────────
+   LIGHT MODE COMPONENT OVERRIDES — all UI elements solid/opaque
+   Sections transparent, components readable
+───────────────────────────────────────────────────────────────── */
 
-/* Header glass in light mode */
-[data-theme="light"] header.backdrop-blur-md {
-  background: rgba(249, 248, 246, 0.75) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(20, 20, 20, 0.08) !important;
+/* Hero vignette */
+[data-theme="light"] .hero-vignette {
+  background: linear-gradient(to top, var(--color-primary) 0%, var(--color-primary) 15%, transparent 55%) !important;
 }
 
-/* Section contrast bands */
+/* Header — solid enough to be readable over silk */
+[data-theme="light"] header,
+[data-theme="light"] header.backdrop-blur-md,
+[data-theme="light"] header.backdrop-blur-xl {
+  background: rgba(249,248,246,0.96) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid rgba(20,20,20,0.08) !important;
+}
+
+/* Footer */
 [data-theme="light"] footer {
   box-shadow: 0 -1px 0 rgba(35,32,28,0.06);
 }
+
+/* Side panels (cart, wishlist) — fully opaque */
 [data-theme="light"] .fixed.right-0.top-0.h-screen {
+  background: rgba(250,248,246,0.99) !important;
   box-shadow: -4px 0 32px rgba(35,32,28,0.08), -1px 0 0 rgba(35,32,28,0.06) !important;
 }
-[data-theme="light"] .bg-secondary.shadow-2xl {
-  box-shadow: 0 4px 6px rgba(35,32,28,0.04), 0 12px 32px -4px rgba(35,32,28,0.08) !important;
+
+/* Search overlay backdrop */
+[data-theme="light"] .fixed.inset-0[style*="rgba(0,0,0"] {
+  background: rgba(20,18,16,0.35) !important;
 }
 
-/* Wishlist heart active in light */
-[data-theme="light"] .wishlist-btn-active svg { filter: drop-shadow(0 0 6px rgba(185,90,60,0.5)); }
+/* Search panel */
+[data-theme="light"] .fixed.inset-0.z-50 > div[style*="background"] {
+  background: rgba(249,248,246,0.98) !important;
+  border: 1px solid rgba(20,20,20,0.10) !important;
+}
 
-/* Card depth in light mode */
+/* Checkout overlay */
+[data-theme="light"] .fixed.inset-0.z-50.flex.flex-col {
+  background: rgba(249,248,246,0.99) !important;
+}
+
+/* ── Product cards ── */
 [data-theme="light"] .card-depth {
-  background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(252,248,244,0.75) 100%);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(20,20,20,0.12);
+  background: rgba(255,255,255,0.97) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(20,20,20,0.10) !important;
   box-shadow:
-    0 1px 0 rgba(255,255,255,0.95) inset,
-    0 2px 10px rgba(20,20,20,0.04),
-    0 12px 40px -4px rgba(20,20,20,0.08);
+    0 1px 0 rgba(255,255,255,1) inset,
+    0 2px 8px rgba(20,20,20,0.05),
+    0 10px 32px -4px rgba(20,20,20,0.08);
   transition: all 0.3s ease;
 }
 [data-theme="light"] .card-depth:hover {
-  background: linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(252,248,244,0.88) 100%);
+  background: rgba(255,255,255,0.99) !important;
   transform: translateY(-3px);
   box-shadow:
     0 1px 0 rgba(255,255,255,1) inset,
-    0 6px 16px rgba(20,20,20,0.06),
+    0 6px 16px rgba(20,20,20,0.07),
     0 24px 56px -6px rgba(20,20,20,0.12),
-    0 0 0 1px rgba(190,80,50,0.3);
+    0 0 0 1px rgba(190,80,50,0.20);
 }
-
-/* Card info panel in light */
+/* Card info panel */
 [data-theme="light"] .card-depth .p-2\.5,
 [data-theme="light"] .card-depth .p-3\.5 {
-  background: linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(249,248,246,0.6)) !important;
-  backdrop-filter: blur(6px) !important;
-  -webkit-backdrop-filter: blur(6px) !important;
+  background: rgba(255,255,255,0.98) !important;
+}
+[data-theme="light"] .card-depth h3,
+[data-theme="light"] .card-depth .underline-hover { color: #23201c !important; }
+[data-theme="light"] .card-depth .text-accent { color: var(--color-accent) !important; }
+[data-theme="light"] .bg-foreground.text-primary {
+  background: #23201c !important;
+  color: #fcfaf7 !important;
 }
 
-/* Text colors on cards */
+/* ── panel-inset (order cards, checkout sections, contact form) ── */
+[data-theme="light"] .panel-inset {
+  background: rgba(255,255,255,0.97) !important;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,1) inset,
+    0 4px 16px -4px rgba(20,20,20,0.08);
+}
+
+/* ── Filter pills + category pills (bg-secondary/60) ── */
+[data-theme="light"] .bg-secondary\/60 {
+  background-color: rgba(255,255,255,0.97) !important;
+}
+[data-theme="light"] .bg-secondary\/80 {
+  background-color: rgba(255,255,255,0.98) !important;
+}
+
+/* ── Dropdown menus (ProductGrid sort/price) ── */
+[data-theme="light"] [class*="bg-secondary"][class*="backdrop-blur"] {
+  background-color: rgba(255,255,255,0.98) !important;
+}
+
+/* Grid toggle bar (bg-secondary/60 wrapper) */
+[data-theme="light"] .backdrop-blur-md[class*="bg-secondary"] {
+  background: rgba(255,255,255,0.97) !important;
+}
+
+/* ── Category icon tiles on homepage ── */
+[data-theme="light"] a[class*="rounded-2xl"],
+[data-theme="light"] .group a[class*="rounded-2xl"] {
+  background: rgba(255,255,255,0.96) !important;
+}
+
+/* ── List view product row ── */
+[data-theme="light"] .group.flex.gap-5.bg-secondary {
+  background: rgba(255,255,255,0.97) !important;
+  border-color: rgba(35,32,28,0.08) !important;
+  box-shadow: 0 2px 10px rgba(35,32,28,0.05), 0 1px 0 rgba(255,255,255,1) inset;
+}
+
+/* ── Inputs / select / textarea ── */
+[data-theme="light"] input,
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background: rgba(255,255,255,0.98) !important;
+  border-color: rgba(35,32,28,0.14) !important;
+  color: var(--color-foreground) !important;
+}
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder { color: rgba(120,115,108,0.65); }
+
+/* ── bg-primary/80 inputs (admin, orders) ── */
+[data-theme="light"] .bg-primary\/80,
+[data-theme="light"] .bg-primary\/60 {
+  background-color: rgba(255,255,255,0.97) !important;
+}
+
+/* ── Nav links ── */
+[data-theme="light"] nav a {
+  color: var(--color-foreground);
+  transition: color 0.2s ease;
+}
+[data-theme="light"] nav a:hover { color: var(--color-accent); }
+
+/* ── bg-secondary shadow card (collections) ── */
+[data-theme="light"] .bg-secondary.shadow-2xl {
+  background: rgba(255,255,255,0.98) !important;
+  box-shadow: 0 4px 6px rgba(35,32,28,0.04), 0 12px 32px -4px rgba(35,32,28,0.08) !important;
+}
+
+/* Quick-add overlay */
+[data-theme="light"] .fixed.inset-0.z-50.flex.flex-col { background: rgba(249,248,246,0.99) !important; }
+
+/* Wishlist */
+[data-theme="light"] .wishlist-btn-active svg { filter: drop-shadow(0 0 6px rgba(185,90,60,0.5)); }
+
+/* Keep white text white */
 [data-theme="light"] .text-white { color: #ffffff !important; }
-[data-theme="light"] .card-depth .text-accent { color: var(--color-accent) !important; }
+
+/* Mobile menu overlay — opaque */
+[data-theme="light"] [style*="surface-mobile-menu"],
+[data-theme="light"] .fixed.inset-0.z-40 { background: rgba(249,248,246,0.99) !important; }
+

@@ -100,9 +100,9 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative z-20 backdrop-blur-lg" style={{ background: 'rgba(8, 8, 8, 0.4)', boxShadow: 'inset 0 1px 0 var(--inset-highlight)', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+    <footer className="relative z-20 backdrop-blur-lg" style={{ background: 'var(--surface-footer)', boxShadow: 'inset 0 1px 0 var(--inset-highlight)', borderTop: '1px solid var(--border-default)' }}>
       {/* Trust bar */}
-      <div style={{ background: 'rgba(0, 0, 0, 0.15)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      <div style={{ background: 'var(--surface-footer-trust)', borderBottom: '1px solid var(--border-subtle)' }}>
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {trust.map(({ Icon, title, sub }, i) => (
