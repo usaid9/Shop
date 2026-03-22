@@ -21,7 +21,9 @@ export default function OrdersPage() {
     setLoading(true); setError(''); setOrders([]); setNotFound(false)
     try {
       if (type === 'id') {
-        const { data } = await fetchOrderById(query.trim())
+        // Strip decorative prefix (#PRE or PRE) that the UI adds to display IDs
+        const cleanId = query.trim().replace(/^#?PRE/i, '')
+        const { data } = await fetchOrderById(cleanId)
         if (data && data._id) {
           setOrders([data])
         } else {
@@ -82,7 +84,7 @@ export default function OrdersPage() {
             {[{ id: 'id', label: 'Order ID' }, { id: 'phone', label: 'Phone Number' }].map(t => (
               <button
                 key={t.id}
-                onClick={() => { setType(t.id); setQuery(''); setOrder(null); setNotFound(false) }}
+                onClick={() => { setType(t.id); setQuery(''); setOrders([]); setNotFound(false) }}
                 className={`flex-1 py-2.5 text-sm font-semibold transition-all rounded-xl ${
                   type === t.id ? 'bg-accent text-white' : 'text-muted hover:text-foreground'
                 }`}

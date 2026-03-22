@@ -66,7 +66,7 @@ export default function Checkout({ isOpen, onClose }) {
         items: items.map(i => ({ product: i.id, name: i.name, price: i.price, quantity: i.quantity, selectedSize: i.selectedSize, selectedColor: i.selectedColor, image: i.image })),
         shippingAddress: form, paymentMethod, subtotal, shippingCost: shipping, total,
       })
-      setOrderId(order._id ? `PRE${order._id.slice(-6)}` : order.orderId || `PRE${Date.now().toString().slice(-6)}`)
+      setOrderId(order._id ? `${order._id}` : order.orderId || `PRE${Date.now().toString()}`)
       if (paymentMethod === 'jazzcash') {
         const { data: jd } = await initiateJazzCash({ orderId: order._id, amount: total, phone: form.phone, description: `PREMIUM Order - ${items.length} items` })
         if (jd.redirectUrl) window.open(jd.redirectUrl, '_blank')

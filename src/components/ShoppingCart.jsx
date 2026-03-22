@@ -25,7 +25,7 @@ export default function ShoppingCart({ isOpen, onClose, onCheckout }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 22, stiffness: 280 }}
-            className="fixed right-0 top-0 h-screen w-full max-w-md z-50 flex flex-col rounded-l-2xl"
+            className="fixed right-0 top-0 h-screen w-full max-w-md z-50 flex flex-col rounded-l-2xl backdrop-blur-xl"
             style={{
               background: 'var(--surface-cart)',
               boxShadow: 'var(--shadow-cart)',
@@ -80,7 +80,7 @@ export default function ShoppingCart({ isOpen, onClose, onCheckout }) {
                       initial={{ opacity: 0, x: 30 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 30 }}
-                      className="flex gap-3 p-3 rounded-xl"
+                      className="flex gap-3 p-3 rounded-lg hover:shadow-md transition-all duration-300"
                       style={{
                         background: 'var(--surface-item-card)',
                         border: '1px solid var(--border-item)',

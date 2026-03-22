@@ -104,10 +104,10 @@ export default function SearchOverlay({ isOpen, onClose }) {
             style={{ top: 76 }}
           >
             <div
-              className="rounded-2xl overflow-hidden"
+              className="rounded-2xl overflow-hidden backdrop-blur-xl"
               style={{
-                background: 'var(--surface-search)',
-                border: '1px solid var(--border-default)',
+                background: 'rgba(8, 8, 8, 0.8)',
+                border: '1px solid rgba(255,255,255,0.1)',
                 boxShadow: '0 8px 40px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2)',
               }}
             >
@@ -155,10 +155,10 @@ export default function SearchOverlay({ isOpen, onClose }) {
                             to={`/product/${product._id}`}
                             onClick={onClose}
                             onMouseEnter={() => setActiveIdx(i)}
-                            className="flex items-center gap-3 px-4 py-2.5 transition-colors"
+                            className="flex items-center gap-3 px-4 py-3 transition-all duration-200 hover:bg-accent/5"
                             style={{
-                              background: activeIdx === i ? 'rgba(200,16,46,0.07)' : 'transparent',
-                              borderLeft: activeIdx === i ? '2px solid var(--color-accent)' : '2px solid transparent',
+                              background: activeIdx === i ? 'rgba(200,16,46,0.1)' : 'transparent',
+                              borderLeft: activeIdx === i ? '3px solid var(--color-accent)' : '3px solid transparent',
                             }}
                           >
                             {/* Thumbnail */}

@@ -11,6 +11,7 @@ import Checkout from './components/Checkout'
 import WishlistPanel from './components/WishlistPanel'
 import SearchOverlay from './components/SearchOverlay'
 import ScrollVideoBackground from './components/ScrollVideoBackground'
+import ThreeDBackground from './components/ThreeDBackground'
 import HomePage from './pages/HomePage'
 import ShopPage from './pages/ShopPage'
 import CollectionsPage from './pages/CollectionsPage'
@@ -44,7 +45,6 @@ export default function App() {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false)
   const [isSearchOpen,   setIsSearchOpen]   = useState(false)
 
-  // Global keyboard shortcut: Ctrl+K or Cmd+K opens search
   useEffect(() => {
     const handler = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -60,49 +60,51 @@ export default function App() {
     <ThemeProvider>
       <WishlistProvider>
         <CartProvider>
-          <div className="relative w-full min-h-screen bg-primary text-foreground overflow-x-hidden">
-            <ScrollVideoBackground />
-            <div className="relative z-10 flex flex-col min-h-screen">
-              <Header
-                onCartClick={() => setIsCartOpen(true)}
-                onWishlistClick={() => setIsWishlistOpen(true)}
-                onSearchClick={() => setIsSearchOpen(true)}
-              />
-              <main className="flex-1">
-                <Routes>
-                  <Route path="/"             element={<HomePage openCart={() => setIsCartOpen(true)} />} />
-                  <Route path="/shop"         element={<ShopPage />} />
-                  <Route path="/shop/:category" element={<ShopPage />} />
-                  <Route path="/collections"  element={<CollectionsPage />} />
-                  <Route path="/product/:id"  element={<ProductDetailPage />} />
-                  <Route path="/about"        element={<AboutPage />} />
-                  <Route path="/contact"      element={<ContactPage />} />
-                  <Route path="/orders"       element={<OrdersPage />} />
-                  <Route path="/admin"        element={<AdminPage />} />
-                  <Route path="*"             element={<NotFoundPage />} />
-                </Routes>
-              </main>
-              <Footer />
-            </div>
+          {/* ── Global background stack (all pages) ── */}
+          <ThreeDBackground />
+          <div id="glow-ambient" aria-hidden="true" />
+          <ScrollVideoBackground />
 
-            <ShoppingCart
-              isOpen={isCartOpen}
-              onClose={() => setIsCartOpen(false)}
-              onCheckout={() => { setIsCartOpen(false); setIsCheckoutOpen(true) }}
+          <div className="relative z-10 w-full min-h-screen text-foreground overflow-x-hidden flex flex-col">
+            <Header
+              onCartClick={() => setIsCartOpen(true)}
+              onWishlistClick={() => setIsWishlistOpen(true)}
+              onSearchClick={() => setIsSearchOpen(true)}
             />
-            <Checkout
-              isOpen={isCheckoutOpen}
-              onClose={() => setIsCheckoutOpen(false)}
-            />
-            <WishlistPanel
-              isOpen={isWishlistOpen}
-              onClose={() => setIsWishlistOpen(false)}
-            />
-            <SearchOverlay
-              isOpen={isSearchOpen}
-              onClose={() => setIsSearchOpen(false)}
-            />
+            <main className="flex-1">
+              <Routes>
+                <Route path="/"              element={<HomePage openCart={() => setIsCartOpen(true)} />} />
+                <Route path="/shop"          element={<ShopPage />} />
+                <Route path="/shop/:category" element={<ShopPage />} />
+                <Route path="/collections"   element={<CollectionsPage />} />
+                <Route path="/product/:id"   element={<ProductDetailPage />} />
+                <Route path="/about"         element={<AboutPage />} />
+                <Route path="/contact"       element={<ContactPage />} />
+                <Route path="/orders"        element={<OrdersPage />} />
+                <Route path="/admin"         element={<AdminPage />} />
+                <Route path="*"              element={<NotFoundPage />} />
+              </Routes>
+            </main>
+            <Footer />
           </div>
+
+          <ShoppingCart
+            isOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+            onCheckout={() => { setIsCartOpen(false); setIsCheckoutOpen(true) }}
+          />
+          <Checkout
+            isOpen={isCheckoutOpen}
+            onClose={() => setIsCheckoutOpen(false)}
+          />
+          <WishlistPanel
+            isOpen={isWishlistOpen}
+            onClose={() => setIsWishlistOpen(false)}
+          />
+          <SearchOverlay
+            isOpen={isSearchOpen}
+            onClose={() => setIsSearchOpen(false)}
+          />
         </CartProvider>
       </WishlistProvider>
     </ThemeProvider>

@@ -37,19 +37,15 @@ export default function Hero({ onShopClick }) {
         className="absolute inset-0 will-change-transform"
         style={{ transform: `translateY(${parallaxY}px)` }}
       >
-        {/* Fabric texture background for light mode */}
-        <div 
-          className="absolute inset-0"
-          style={{ 
-            backgroundImage: 'url(/fabric-bg.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed'
-          }} 
-        />
         <div className="absolute inset-0" style={{ background: 'var(--surface-hero-overlay)' }} />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-5%,rgba(218,180,105,0.12),transparent)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_30%_at_20%_80%,rgba(218,180,105,0.04),transparent)]" />
+        {/* Centre bloom */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,rgba(200,16,46,0.32),transparent)]" />
+        {/* Top-centre accent */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_35%_at_50%_0%,rgba(200,16,46,0.18),transparent)]" />
+        {/* Bottom-left accent */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_35%_at_15%_85%,rgba(200,16,46,0.14),transparent)]" />
+        {/* Top-right accent */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_35%_25%_at_85%_15%,rgba(200,16,46,0.10),transparent)]" />
       </div>
 
       {/* Grain texture overlay */}
@@ -78,9 +74,9 @@ export default function Hero({ onShopClick }) {
           style={{ transformOrigin: 'top', background: 'linear-gradient(to bottom, transparent, var(--border-default), transparent)' }}
           className="absolute right-[8%] sm:right-[12%] top-0 bottom-0 w-px"
         />
-        {/* Bottom vignette — fades into the section below with smoother blend */}
-        <div className="hero-vignette absolute bottom-0 left-0 right-0 h-64"
-          style={{ background: 'linear-gradient(to top, var(--color-primary) 0%, var(--color-primary) 20%, transparent 100%)' }} />
+        {/* Bottom vignette — fades into the section below */}
+        <div className="hero-vignette absolute bottom-0 left-0 right-0 h-40"
+          style={{ background: 'linear-gradient(to top, var(--color-primary) 0%, transparent 100%)' }} />
       </div>
 
       {/* Content */}
@@ -129,21 +125,21 @@ export default function Hero({ onShopClick }) {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.95 }}
-              className="flex items-center gap-3 sm:gap-4"
+              className="flex items-center gap-4"
             >
               <Link to="/shop">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
-                  className="px-5 sm:px-8 py-3 sm:py-3.5 bg-accent text-white text-xs sm:text-sm font-semibold tracking-wide hover:bg-accent-hover transition-colors duration-200 rounded-xl whitespace-nowrap"
+                  className="px-7 sm:px-8 py-3.5 bg-accent text-white text-sm font-semibold tracking-wide hover:bg-accent-hover transition-colors duration-200 rounded-xl"
                 >
                   Shop Now
                 </motion.button>
               </Link>
               <Link to="/collections">
-                <button className="group flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted font-medium hover:text-foreground transition-colors whitespace-nowrap">
+                <button className="group flex items-center gap-2 text-sm text-muted font-medium hover:text-foreground transition-colors">
                   <span className="underline-hover">Explore Collections</span>
-                  <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-1 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </button>
@@ -156,7 +152,7 @@ export default function Hero({ onShopClick }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="flex gap-10 mt-16 pt-10"
+            className="flex gap-10 mt-16 lg:mt-9 pt-10"
             style={{ borderTop: '1px solid var(--border-subtle)' }}
           >
             {[
@@ -186,7 +182,7 @@ export default function Hero({ onShopClick }) {
         transition={{ delay: 1.6 }}
         className="absolute bottom-8 right-10 flex flex-col items-center gap-3"
       >
-        <span className="text-[9px] text-muted tracking-superwide uppercase rotate-90 origin-center mb-4">Scroll</span>
+        <span className="text-[9px] hidden sm:block text-muted tracking-superwide uppercase rotate-90 origin-center mb-4">Scroll</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}

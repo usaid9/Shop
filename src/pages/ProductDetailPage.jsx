@@ -13,7 +13,7 @@ import { useProducts } from '../hooks/useProducts'
 export default function ProductDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { addToCart } = useCart()
+  const { addItem } = useCart()
   const { toggleItem, isWishlisted } = useWishlist()
 
   const [product, setProduct]   = useState(null)
@@ -49,7 +49,11 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) return
-    addToCart({ ...product, id: product._id, selectedSize, selectedColor, quantity })
+    const productPayload = { ...product, id: product._id || product.id }
+    // addItem increments by 1 each call — loop to honour the selected quantity
+    for (let i = 0; i < quantity; i++) {
+      addItem(productPayload, selectedSize, selectedColor)
+    }
     setAdded(true)
     setTimeout(() => setAdded(false), 1800)
   }
@@ -102,7 +106,7 @@ export default function ProductDetailPage() {
           {/* Details */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col gap-5 py-2">
             <div>
-              <p className="text-[10px] uppercase tracking-widest text-accent font-semibold mb-2 capitalize">{product.category.replace(/-/g,' ')}</p>
+              <p className="text-[10px]  tracking-widest text-accent font-semibold mb-2 capitalize">{product.category.replace(/-/g,' ')}</p>
               <ScrollFloat><h1 className="font-display text-3xl sm:text-4xl font-bold leading-tight">{product.name}</h1></ScrollFloat>
             </div>
 

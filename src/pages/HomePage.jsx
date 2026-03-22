@@ -1,7 +1,6 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import ThreeDBackground from '../components/ThreeDBackground'
 import Hero from '../components/Hero'
 import ProductCard from '../components/ProductCard'
 import { GhostCard, GhostGrid } from '../components/GhostCard'
@@ -17,7 +16,6 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen">
-      <ThreeDBackground />
       <Hero onShopClick={() => productsRef.current?.scrollIntoView({ behavior: 'smooth' })} />
 
       {/* Categories */}
@@ -51,7 +49,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section ref={productsRef} className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden section-divide z-10"
+      <section ref={productsRef} className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden section-divide"
         style={{ background: 'var(--surface-footer)' }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">

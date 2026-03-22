@@ -51,7 +51,14 @@ const addCartKey = (item) => ({
 
 export function CartProvider({ children }) {
   const saved = (() => {
-    try { return JSON.parse(localStorage.getItem('cart') || '[]') } catch { return [] }
+    try {
+      const raw = JSON.parse(localStorage.getItem('cart') || '[]')
+      // Re-hydrate _cartKey so remove/updateQty work after a page reload
+      return raw.map(item => ({
+        ...item,
+        _cartKey: item._cartKey ?? `${item.id}-${item.selectedSize}-${item.selectedColor}`,
+      }))
+    } catch { return [] }
   })()
 
   const [state, dispatch] = useReducer(cartReducer, { items: saved })

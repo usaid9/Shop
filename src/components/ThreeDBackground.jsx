@@ -9,7 +9,7 @@ class ThreeErrorBoundary extends Component {
   render() { return this.state.crashed ? null : this.props.children }
 }
 
-function Particles({ count = 80, isDark }) {
+function Particles({ count = 140, isDark }) {
   const mesh = useRef(null)
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3)
@@ -45,11 +45,11 @@ function Particles({ count = 80, isDark }) {
       </bufferGeometry>
       {/* Light mode: deeper red dots, more visible against warm bg */}
       <pointsMaterial
-        size={isDark ? 0.1 : 0.12}
+        size={isDark ? 0.18 : 0.20}
         color={isDark ? 0xc8102e : 0xb00e28}
         sizeAttenuation
         transparent
-        opacity={isDark ? 0.5 : 0.35}
+        opacity={isDark ? 0.75 : 0.50}
       />
     </points>
   )
@@ -75,21 +75,21 @@ function FloatingMesh({ isDark }) {
     <mesh ref={mesh} position={[0, 0, -10]}>
       <icosahedronGeometry args={[8, 4]} />
       {isDark ? (
-        /* Dark mode: dark mesh with red glow */
+        /* Dark: vivid red wireframe glow */
         <meshPhongMaterial
-          color={0x1a1a1a}
+          color={0x1a0505}
           wireframe
           emissive={0xc8102e}
-          emissiveIntensity={0.15}
+          emissiveIntensity={0.70}
         />
       ) : (
-        /* Light mode: warm parchment mesh with very subtle red tint — nearly invisible, depth only */
+        /* Light: visible terracotta wireframe */
         <meshPhongMaterial
-          color={0xe8d0c4}
+          color={0xb04020}
           wireframe
           emissive={0xc8102e}
-          emissiveIntensity={0.04}
-          opacity={0.18}
+          emissiveIntensity={0.28}
+          opacity={0.40}
           transparent
         />
       )}
@@ -103,54 +103,22 @@ export default function ThreeDBackground() {
   return (
     <ThreeErrorBoundary>
       <Suspense fallback={null}>
-        <div 
-          style={{ 
-            position: 'fixed', 
-            inset: 0, 
-            pointerEvents: 'none', 
-            zIndex: 0,
-            willChange: 'transform',
-            transform: 'translateZ(0)',
-            backfaceVisibility: 'hidden',
-          }}
+        <Canvas
+          style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}
+          gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
         >
-          <Canvas
-            style={{ width: '100%', height: '100%' }}
-            gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
-            frameloop="always"
-          >
-            <PerspectiveCamera makeDefault position={[0, 0, 30]} />
-            <ambientLight intensity={isDark ? 0.15 : 0.7} />
-            <pointLight
-              position={[20, 20, 20]}
-              intensity={isDark ? 0.35 : 0.3}
-              color={0xc8102e}
-            />
-            <pointLight
-              position={[-20, -20, -20]}
-              intensity={isDark ? 0.2 : 0.15}
-              color={isDark ? 0x666666 : 0xd4a89a}
-            />
-            <Particles count={80} isDark={isDark} />
-            <FloatingMesh isDark={isDark} />
-            {/* Stars only in dark mode — look wrong on light bg */}
-            {isDark && (
-              <Stars radius={100} depth={50} count={500} factor={4} fade speed={0.1} />
-            )}
-          </Canvas>
-          {/* Bottom gradient fade to blend with content below - extended and multi-stop */}
-          <div 
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: '50vh',
-              background: 'linear-gradient(to top, var(--color-primary) 0%, var(--color-primary) 15%, rgba(var(--tw-color-primary), 0.8) 40%, rgba(var(--tw-color-primary), 0.4) 70%, transparent 100%)',
-              pointerEvents: 'none',
-            }}
-          />
-        </div>
+          <PerspectiveCamera makeDefault position={[0, 0, 30]} />
+          <ambientLight intensity={isDark ? 0.05 : 0.55} />
+          {/* Primary red key light */}
+          <pointLight position={[20, 20, 20]}  intensity={isDark ? 1.8 : 0.6}  color={0xc8102e} />
+          {/* Fill from opposite corner */}
+          <pointLight position={[-20, -20, -20]} intensity={isDark ? 0.8 : 0.3} color={isDark ? 0xc8102e : 0xd4a89a} />
+          {/* Centre bloom — makes mesh edges glow outward */}
+          <pointLight position={[0, 0, 8]}  intensity={isDark ? 0.6 : 0.25} color={0xc8102e} />
+          <Particles count={140} isDark={isDark} />
+          <FloatingMesh isDark={isDark} />
+          {isDark && <Stars radius={100} depth={50} count={700} factor={4} fade speed={0.15} />}
+        </Canvas>
       </Suspense>
     </ThreeErrorBoundary>
   )

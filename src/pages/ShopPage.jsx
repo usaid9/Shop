@@ -74,11 +74,11 @@ export default function ShopPage() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {loading ? <GhostGrid count={8} /> : products.length === 0 ? (
+        {products.length === 0 && !loading ? (
           <div className="text-center py-24"><p className="text-muted text-lg">No products found</p></div>
         ) : (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <ProductGrid products={products} categories={dynamicCategories} />
+            <ProductGrid products={products} loading={loading} categories={dynamicCategories} />
           </motion.div>
         )}
       </div>

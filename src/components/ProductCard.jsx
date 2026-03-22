@@ -154,7 +154,7 @@ export default function ProductCard({ product, listView = false }) {
 
   // ── GRID VIEW ────────────────────────────────────────────────────────────
   return (
-    <TiltCard className="group relative bg-secondary overflow-hidden card-depth rounded-xl cursor-pointer">
+    <TiltCard className="group relative bg-secondary/50 backdrop-blur-md overflow-hidden card-depth rounded-xl cursor-pointer">
       <div className="absolute top-0 left-0 right-0 h-px pointer-events-none z-10"
         style={{ background: 'linear-gradient(90deg, transparent, var(--border-default), transparent)' }} />
 
@@ -200,18 +200,18 @@ export default function ProductCard({ product, listView = false }) {
       </Link>
 
       {/* Info */}
-      <div className="p-2 sm:p-3.5 pt-2 sm:pt-3" style={{ background: 'linear-gradient(to bottom, var(--color-secondary), var(--color-tertiary))' }}>
-        <p className="text-[8px] sm:text-[10px] text-accent font-semibold uppercase tracking-wider mb-1">{product.category}</p>
+      <div className="p-3 sm:p-4 pt-2.5 sm:pt-3 backdrop-blur-md" style={{ background: 'var(--surface-card)' }}>
+        <p className="text-[8px] sm:text-[10px] text-accent font-semibold uppercase tracking-wider mb-1.5">{product.category}</p>
         <Link to={`/product/${product.id}`}>
-          <h3 className="font-medium text-[11px] sm:text-sm line-clamp-1 text-foreground/90 underline-hover">{product.name}</h3>
+          <h3 className="font-medium text-[11px] sm:text-sm line-clamp-2 text-foreground/90 underline-hover leading-tight">{product.name}</h3>
         </Link>
-        <div className="flex items-center gap-0.5 mt-1 sm:mt-2 mb-1.5 sm:mb-2.5">
+        <div className="flex items-center gap-0.5 mt-2 sm:mt-2.5 mb-2 sm:mb-3">
           {[...Array(5)].map((_, i) => (
             <span key={i} className={`text-[7px] sm:text-[10px] ${i < Math.floor(product.rating) ? 'text-accent' : ''}`} style={{ color: i < Math.floor(product.rating) ? undefined : 'var(--star-empty)' }}>★</span>
           ))}
-          <span className="text-[7px] sm:text-[10px] text-muted ml-0.5">({product.reviews})</span>
+          <span className="text-[7px] sm:text-[10px] text-muted ml-1">({product.reviews})</span>
         </div>
-        <div className="flex items-baseline gap-1 sm:gap-2 flex-wrap">
+        <div className="flex items-baseline gap-1 sm:gap-2 flex-wrap mb-2 sm:mb-3">
           <span className="text-[11px] sm:text-sm font-bold text-accent">Rs {product.price.toLocaleString()}</span>
           {product.originalPrice && (
             <span className="text-[9px] sm:text-xs text-muted line-through">Rs {product.originalPrice.toLocaleString()}</span>
@@ -221,7 +221,7 @@ export default function ProductCard({ product, listView = false }) {
         {product.inStock && (
           <button
             onClick={(e) => { e.preventDefault(); setShowQuick(true) }}
-            className="mt-1.5 sm:mt-2 w-full py-1.5 bg-accent text-white text-[9px] sm:text-xs font-semibold tracking-wider uppercase rounded-lg sm:hidden"
+            className="w-full py-2 bg-accent text-white text-[9px] sm:text-xs font-semibold tracking-wide uppercase rounded-lg sm:hidden hover:bg-accent-hover transition-colors accent-glow"
           >
             Quick Add
           </button>
