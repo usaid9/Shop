@@ -68,7 +68,9 @@ export function useProducts(params = {}, { forceRefresh = false } = {}) {
     fetchProducts(params)
       .then(({ data }) => {
         if (cancelled) return
-        const fresh = data.products || []
+        const fresh = Array.isArray(data)
+          ? data
+          : (data.products ?? data.data ?? data.items ?? data.result ?? [])
         setCacheEntry(cacheKey, fresh)
         seededKey.current = cacheKey
         setProducts(fresh)

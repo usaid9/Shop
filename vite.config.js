@@ -6,10 +6,14 @@ export default defineConfig({
   base: '/Shop/',
   server: {
     port: 3000,
+    allowedHosts: 'all',
     proxy: {
-      '/api': {
-        target: 'http://localhost:5000',
+      '/backend-api': {
+        target: 'https://api.usaidahmad.me',
         changeOrigin: true,
+        secure: true,
+        // /backend-api/products → https://api.usaidahmad.me/api/products
+        rewrite: (path) => path.replace(/^\/backend-api/, '/api'),
       },
     },
   },

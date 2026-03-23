@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -104,7 +105,15 @@ export default function ProductDetailPage() {
           </motion.div>
 
           {/* Details */}
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col gap-5 py-2">
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
+            className="flex flex-col gap-5 py-6 px-6 rounded-2xl"
+            style={{
+              background: 'var(--surface-card)',
+              border: '1px solid var(--border-default)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+            }}
+          >
             <div>
               <p className="text-[10px]  tracking-widest text-accent font-semibold mb-2 capitalize">{product.category.replace(/-/g,' ')}</p>
               <ScrollFloat><h1 className="font-display text-3xl sm:text-4xl font-bold leading-tight">{product.name}</h1></ScrollFloat>

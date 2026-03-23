@@ -1,7 +1,13 @@
 import axios from 'axios'
 
+// In development Vite proxies /backend-api → https://api.usaidahmad.me/api.
+// On GitHub Pages there is no proxy, so we must use the absolute URL directly.
+const BASE_URL = import.meta.env.DEV
+  ? '/backend-api'
+  : 'https://api.usaidahmad.me/api'
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: BASE_URL,
   timeout: 15000,
 })
 

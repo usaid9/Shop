@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'

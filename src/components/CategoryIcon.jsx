@@ -1,3 +1,4 @@
+import React from 'react'
 // Minimal line-art SVG icons for each category
 export default function CategoryIcon({ id, className = 'w-7 h-7' }) {
   const icons = {

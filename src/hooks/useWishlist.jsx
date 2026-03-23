@@ -1,3 +1,4 @@
+import React from 'react'
 import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 
 const WishlistContext = createContext(null)

@@ -125,7 +125,21 @@
    BASE
 ═══════════════════════════════════════════════════════════════ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+
+/*
+  Chrome on Android hides/shows the address bar on scroll, which
+  changes the visual viewport height and causes `position: fixed`
+  elements to resize. Setting background-color on <html> (not just
+  body::after) guarantees the base colour always covers the full
+  screen — including the area revealed when the address bar tucks away.
+*/
+html {
+  scroll-behavior: smooth;
+  background-color: #080808; /* --color-primary dark */
+}
+[data-theme="light"] html {
+  background-color: #f9f8f6; /* --color-primary light */
+}
 
 body {
   background-color: transparent;
@@ -137,10 +151,16 @@ body {
   transition: color 0.35s ease;
 }
 
-/* Full-page tinted backdrop behind the 3D canvas */
+/* Full-page tinted backdrop behind the 3D canvas.
+   Uses --app-height (set by JS on mount, updated only on orientationchange)
+   instead of bottom:0 / inset:0, so Chrome's address-bar animation never
+   causes a resize flash on this layer either. */
 body::after {
   content: '';
-  position: fixed; inset: 0;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: var(--app-height, 100vh);
   z-index: -1;
   background-color: var(--color-primary);
   transition: background-color 0.35s ease;
@@ -148,7 +168,10 @@ body::after {
 
 /* Persistent red ambient bloom — sits between base colour and 3D canvas */
 #glow-ambient {
-  position: fixed; inset: 0;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: var(--app-height, 100vh);
   z-index: 0;
   pointer-events: none;
   background:
@@ -162,7 +185,10 @@ body::after {
 /* Grain overlay */
 body::before {
   content: '';
-  position: fixed; inset: 0;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: var(--app-height, 100vh);
   z-index: 9999; pointer-events: none;
   opacity: 0.028;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");

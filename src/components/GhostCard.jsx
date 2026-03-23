@@ -1,3 +1,4 @@
+import React from 'react'
 /**
  * GhostCard — themed skeleton loader with sweeping shimmer.
  * Uses the .ghost-block utility class defined in index.css.

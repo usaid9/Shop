@@ -1,3 +1,4 @@
+import React from 'react'
 import { Component, Suspense, useRef, useMemo, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Stars, PerspectiveCamera } from '@react-three/drei'
@@ -347,12 +348,48 @@ function useGyro() {
   }, [])
 }
 
+// ─── Lock height to initial innerHeight, only update on orientation change ────
+//
+// Chrome on Android hides/shows the address bar on scroll, which changes the
+// visual viewport height (and therefore 100vh / inset:0 / bottom:0).  Every
+// time that happens Three.js receives a resize event, recalculates the camera
+// aspect ratio, and the mesh deforms for several frames.
+//
+// The fix: capture window.innerHeight ONCE on mount (before any scroll), store
+// it as a CSS custom property AND a React state value, then ONLY update it on
+// orientationchange — never on scroll-driven resize.
+//
+function useLockedHeight() {
+  const getH = () => (typeof window !== 'undefined' ? window.innerHeight : 600)
+  const [height, setHeight] = React.useState(getH)
+
+  useEffect(() => {
+    // Write the CSS variable so body::after / #glow-ambient use the same value
+    document.documentElement.style.setProperty('--app-height', `${getH()}px`)
+
+    const onOrientationChange = () => {
+      // Small delay so the browser has finished the rotation layout
+      setTimeout(() => {
+        const h = window.innerHeight
+        setHeight(h)
+        document.documentElement.style.setProperty('--app-height', `${h}px`)
+      }, 300)
+    }
+
+    window.addEventListener('orientationchange', onOrientationChange)
+    return () => window.removeEventListener('orientationchange', onOrientationChange)
+  }, [])
+
+  return height
+}
+
 // ─── Main export ──────────────────────────────────────────────────────────────
 export default function ThreeDBackground() {
   const { isDark }  = useTheme()
   const location    = useLocation()
   const modelConfig = getModelConfig(location.pathname)
   const isMobile    = typeof window !== 'undefined' && 'ontouchstart' in window
+  const lockedHeight = useLockedHeight()
 
   // Desktop mouse
   useEffect(() => {
@@ -372,9 +409,15 @@ export default function ThreeDBackground() {
       <Suspense fallback={null}>
         <Canvas
           style={{
-            position: 'fixed', inset: 0,
+            position: 'fixed',
+            top: 0, left: 0,
+            width: '100%',
+            // Use the locked pixel height — NOT inset:0 / bottom:0.
+            // inset:0 binds the bottom edge to the visual viewport, so Chrome's
+            // address-bar animation directly resizes the canvas and deforms the mesh.
+            // A pixel height captured before any scroll never changes mid-animation.
+            height: lockedHeight,
             pointerEvents: 'none', zIndex: 0,
-            // Prevent iOS from moving the fixed canvas during scroll bounce
             WebkitTransform: 'translateZ(0)',
             transform: 'translateZ(0)',
           }}

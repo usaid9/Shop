@@ -1,3 +1,4 @@
+import React from 'react'
 /**
  * ProductCardSkeleton — ghost placeholder that perfectly mirrors ProductCard layout.
  * Supports both grid view (default) and list view.
